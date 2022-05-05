@@ -1,0 +1,55 @@
+---
+renderData:
+  language: "{{ data.language }}"
+  title: "{{ data.acf.seo.title }}"
+  description: "{{ data.acf.seo.description }}"
+  image: "{{ data.acf.seo.image.sizes.facebook }}"
+  image_twitter: "{{ data.acf.seo.image.sizes.twitter }}"
+  url: "{{ data.link }}"
+pagination:
+  data: pages
+  size: 1
+  alias: data
+permalink: "{{ data.link }}"
+layout: layout/default
+---
+
+{% set __page = data.acf.options.page or 'default' %}
+{% set __palette = data.acf.options.palette or 'primary' %}
+{% import "flexible.njk" as FlexibleContent with context %}
+{% import "modules/acordion.njk" as acordion with context %}
+
+<article class='default' data-page='{{ __page }}' data-palette='{{ __palette }}'>
+  {{ FlexibleContent.flexible(data.acf.blocks_custom) }}
+
+  <form class="default__form __form" scroll-item
+                  data-subject="Reserva"
+                  data-href="https://cuchillo-mailforms.herokuapp.com/messages"
+                  data-token="e87af843-f43a-4d47-b8ad-56da85733c92"
+                  data-inputs-nok="Hay algún error en los campos."
+                  data-mssg-ok="Muchas gracias, nos pondremos en contacto contigo."
+                  data-mssg-nok="Algo ha salido mal, intentalo de nuevo."
+                  data-type='mailforms'>
+                <div class="default__form__textfield __f">
+                    <label for="reserva-name">Nombre</label>
+                    <input type="text" id="reserva-name" name="name" placeholder="Escribe tu nombre" data-form-required="true"/>
+                </div>
+                <label for="avatar">Choose a profile picture:</label>
+
+<input type="file"
+       id="avatar" name="avatar"
+       accept="image/png, image/jpeg">
+                <button class="default__form__submit __submit" type="submit">
+                    <div class="title__marque-holder __f">
+                        <div class="title__marquee basic-marquee"><span class="--stroke">ENVIAR</span><span aria-hidden="false">ENVIAR</span><span class="--stroke" aria-hidden="false">ENVIAR</span><span aria-hidden="false">ENVIAR</span><span class="aux" aria-hidden="true"><span class="--stroke">ENVIAR</span>ENVIAR<span class="--stroke">ENVIAR</span>ENVIAR</span></div>
+                    </div>
+                    <div class="line-deco __l"></div>
+                </button>
+                <div class="default__form__legal-holder __f">
+                    <div class="default__form__checkbox">
+                        <input type="checkbox" id="reserva-legal" name="reserva-legal" data-form-required="true">
+                        <label for="reserva-legal">He leido y acepto la <a href="./politica-de-privacidad.html" target="_blank" rel="nofollow">política de privacidad</a></label>
+                    </div>
+                </div>
+            </form>
+</article>
