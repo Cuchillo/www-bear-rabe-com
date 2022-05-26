@@ -80,7 +80,7 @@ export default class VScroll {
   constructor(options = {}) {
     this.scroller = new virtualScroll();
 
-    console.log(options.domResize)
+    // console.log(options.domResize)
 
     this._container = options.container;
     this.id = Functions.getId(this._container);
@@ -132,7 +132,7 @@ export default class VScroll {
       this.resize();
     });
 
-    console.log(__dom)
+    // console.log(__dom)
 
     this.resizeObserver.observe(__dom);
   }

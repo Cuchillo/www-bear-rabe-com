@@ -14,18 +14,18 @@
     {# MAIN #}
     <main id='Main'>
         <div class='wrap'>
-            {{ content | safe }}
-
-            {# FOOTER #}
-            {% include "layout/footer.njk" %}
+            {{ content | safe }}        
         </div>
     </main>
-
+    
     {# SCROLLBAR #}
     {% include "layout/scrollbar.njk" %}
 
     {# WINS #}
     {% include "layout/windows.njk" %}
+
+    {# PRELOADER #}
+    {% include "layout/preloader.njk" %}
 
     <script async defer src="/assets/preload.js"></script>
 </body>

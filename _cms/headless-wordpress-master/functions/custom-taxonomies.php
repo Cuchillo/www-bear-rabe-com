@@ -2,8 +2,6 @@
   add_action( "init", "init_create_taxonomies", 0 );
 
   function init_create_taxonomies() {
-    //create_taxonomies("page_categories", "page", "Categoría", "Categorías", "PageCategory", "PageCategories");
-    create_taxonomies("news_categories", "news", "Categoría", "Categorías", "NewsCategory", "NewsCategories");
     create_taxonomies("projects_categories", "projects", "Categoría", "Categorías", "ProjectsCategory", "ProjectsCategories");
   }
 

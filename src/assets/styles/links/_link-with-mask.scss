@@ -1,0 +1,95 @@
+//↗ → ← ↖
+
+@mixin link-with-mask() {
+    --color: var(--primary-color);
+    --border-size: clamp(1px, .055em, 20px);
+    --width-deco: 1em;
+    --size-text: 100px;
+    --size-hide: var(--width-deco);
+    --size-show: calc(var(--width-deco) + var(--size-text) + .05em);
+    --width: var(--size-hide);
+    --ease: var(--ease-out-quad);
+    --steps: 5;
+    --time: calc(var(--steps) * .1s);
+ 
+    @include basic-a();
+    display: inline-block;
+    position: relative;
+    overflow: hidden;
+    width: var(--width);
+    
+    color: var(--color);
+    font-size: var(--font-size);
+    padding-left: var(--width-deco);
+
+    /* ANIMATION */
+    transition: width;
+    transition-duration: var(--time);
+    transition-timing-function: steps(var(--steps), end);
+
+    > .deco {
+        position: absolute;
+        display: block;
+        bottom: .1em;
+        left: 0;
+        width: var(--width-deco);
+        height: var(--width-deco);
+        border-bottom: var(--border-size) solid currentColor;   
+
+        .icon {
+            position: absolute;
+            display: block;
+            bottom:.1em;
+            left:.1em;
+            text-align: right;
+            width: 100%;
+            height: 100%;
+            transform: rotate(90deg);
+            @include font-serif();
+            line-height: 1;
+            text-transform: lowercase;
+        }
+    }
+
+    > .text {
+        @include font-sans();
+        line-height: 1;
+        padding-left: .05em;
+        word-wrap: none;
+        white-space: nowrap;
+    }
+     
+    &:hover {
+        --width: var(--size-show);
+    }
+
+    &.--active,
+    &.__link-active {
+        --pos: var(--pos-hover);
+        pointer-events: none;
+    }
+
+    /// TOUCH
+    @include isTouch() {
+        overflow: visible;
+
+        &:before {
+            opacity: 0;
+            transform: translateX(0);
+        }
+
+        > span {
+            transform: translateX(0);
+        }
+
+        &:hover {
+            &:before {
+            opacity: 1;
+            }
+        }
+    }
+}
+
+.link-with-mask {
+    @include link-with-mask();
+}

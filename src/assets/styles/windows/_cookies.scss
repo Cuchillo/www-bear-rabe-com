@@ -65,7 +65,7 @@
   padding-bottom: 0;
 
   b, strong {
-    @include font-sans-bold();
+    @include font-sans();
   }
 
   a {
@@ -79,7 +79,7 @@
 ///BOTON
 #Cookies button {
   @include basic-a();
-  @include font-sans-bold();
+  @include font-sans();
   line-height: 1;
   font-size: var(--font-size-big);
   letter-spacing: var(--letter-spacing);

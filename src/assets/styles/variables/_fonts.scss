@@ -1,24 +1,26 @@
 @use "sass:math";
 
 :root {
-    --font-sans: 'FKGrotesk-Regular', sans-serif;
-    --font-sans-bold: 'FKGrotesk-Medium', sans-serif;
-    --font-sans-italic: 'FKGrotesk-ThinItalic', sans-serif;
+    --font-sans: 'NHaasGroteskTXPro-55Rg', sans-serif;
+    --font-serif: 'Compagnon-Roman', sans-serif;
+    --font-serif-light: 'Compagnon-Light', sans-serif;
 
-    --font-size-xxlarge: #{math.div(360px, 16px) * 1rem};
-    --font-size-large: #{math.div(80px, 16px) * 1rem};
-    --font-size-xlarge: #{math.div(130px, 16px) * 1rem};
-    --font-size-mid: #{math.div(45px, 16px) * 1rem};
+    --font-size-xxl: #{math.div(360px, 16px) * 1rem};
+    --font-size-xl: #{math.div(130px, 16px) * 1rem};
+    --font-size-l: #{math.div(60px, 16px) * 1rem};
+    --font-size-m: #{math.div(45px, 16px) * 1rem};
     --font-size-base: #{math.div(18px, 16px) * 1rem};
-    --font-size-h2: #{math.div(80px, 16px) * 1rem};
-    --font-size-h3: #{math.div(40px, 16px) * 1rem};
-    --font-size-small: #{math.div(15px, 16px) * 1rem};
-    --font-size-xsmall: #{math.div(12px, 16px) * 1rem};
+    --font-size-s: #{math.div(15px, 16px) * 1rem};
+    --font-size-xs: #{math.div(12px, 16px) * 1rem};
 
-    --line-height-sans: 1.2;
+    --line-height-sans: 1;
+    --line-height-serif: 1;
     --letter-spacing: -0.06em;
 
-    font-size: 1.1111vw;
+    --zoom: 1;
+    --font-size-fluid: calc(1.1111vw * var(--zoom));
+
+    font-size: var(--font-size-fluid);
 
     @media (max-width: $smartphone) {
         font-size: 16px;
@@ -28,19 +30,19 @@
 @mixin font-sans($line-height:0) {
     font-family: var(--font-sans);
     font-weight: normal;
+    letter-spacing: var(--letter-spacing);
     @if $line-height > 0 { line-height: $line-height  }
     @else { line-height: var(--line-height-sans);  }
 }
-@mixin font-sans-bold($line-height:0) {
-  font-family: var(--font-sans-bold);
-  font-weight: 500;
+@mixin font-serif($line-height:0) {
+  font-family: var(--font-serif);
+  font-weight: 400;
     @if $line-height > 0 { line-height: $line-height  }
-    @else { line-height: var(--line-height-sans);  }
+    @else { line-height: var(--line-height-serif);  }
 }
-@mixin font-sans-italic($line-height:0) {
+@mixin font-serif-light($line-height:0) {
   font-family: var(--font-serif);
   font-weight: 200;
-  font-style: italic;
     @if $line-height > 0 { line-height: $line-height  }
-    @else { line-height: var(--line-height-sans);  }
+    @else { line-height: var(--line-height-serif);  }
 }

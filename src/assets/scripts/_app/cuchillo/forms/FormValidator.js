@@ -2,225 +2,183 @@ import { GetBy, C } from '../core/Element';
 import { WinMessage } from '../windows/Message';
 import FormSender from './FormSender';
 
+const EMAIL_FILTER =
+  /^([a-zA-Z0-9_\.\ñ\Ñ\-])+\@(([a-zA-Z0-9\-\ñ\Ñ])+\.)+([a-zA-Z0-9]{2,4})+$/;
+
+const TELF_FILTER = /^([0-9]+){9}$/;
+
 export default class Forms {
   static init() {
     C.forEach(".__form", (e) => { new FormValidator(e); })
   }
 }
 
-class FormValidator {
+export class FormValidator {
   _form;
   _fields = [];
   _dataSend = {};
-  _files = null;
+  _files = [];
+  callback;
 
-  constructor(__form) {
+  constructor(__form, __callback) {
+    this.callback = __callback !== undefined ? __callback : this.defaultCb;
     this._form = __form;
-    this._form.classList.remove("__form");
-    this._form.addEventListener("submit", (e)=> {this.prepareSubmit(e)});
+    this._form.classList.remove('__form');
+    this._form.addEventListener('submit', (e) => {
+      this.prepareSubmit(e);
+    });
 
-    const items = [...GetBy.selector("input"), ...GetBy.selector("select"), ...GetBy.selector("textarea")];
-    C.forEach(items, (e)=> {
+    this._input = (e) => {
+      this.validate(e.target);
+    };
+    this._focus = (e) => {
+      this.focus(e.target);
+    };
+    this._blur = (e) => {
+      this.validate(e.target);
+      this.focus(e.target, false);
+    };
+
+    const items = [
+      ...GetBy.selector('input', this._form),
+      ...GetBy.selector('select', this._form),
+      ...GetBy.selector('textarea', this._form)
+    ];
+    C.forEach(items, (e) => {
       this._fields.push(e);
-      this.setupFocus(e);
+      this.setupValidation(e);
     });
   }
 
-  setupFocus (__item) {
-    __item.addEventListener('input', (e) => { this.isInputOK(e.target) });
-    __item.addEventListener('focus', (e) => { this.isInputOK(e.target) });
-    __item.addEventListener('blur', (e) => {});
+  setupValidation(__item) {
+    __item.addEventListener('change', this._input);
+    __item.addEventListener('focus', this._focus);
+    __item.addEventListener('blur', this._blur);
   }
 
-  isInputOK(__input) {
+  focus(__input, focus = true) {
+    __input.parentNode.classList[focus ? 'add' : 'remove']('--focus');
+  }
 
+  validate(__input) {
+    if (!__input) return false;
+    if (__input.disabled) return true;
 
-    if(!__input) return false;
+    let valid = true;
 
-
-
-    let isOk = true;
-
-    switch(__input.getAttribute("type")) {
-      case "text":
-        if(__input.value.split(" ").join("") === "" && __input.getAttribute("data-form-required") === "true") {
-          isOk = false;
-          __input.parentNode.classList.add("--error");
-          __input.parentNode.classList.remove("--success");
-        } else {
-          isOk = true;
-          __input.parentNode.classList.remove("--error");
-          __input.parentNode.classList.add("--success");
-        }
-        break;
-
-      case "email":
-        var filter = /^([a-zA-Z0-9_\.\ñ\Ñ\-])+\@(([a-zA-Z0-9\-\ñ\Ñ])+\.)+([a-zA-Z0-9]{2,4})+$/;
-        if(__input.value === "" && __input.getAttribute("data-form-required") === "true") {
-          isOk = false;
-          __input.parentNode.classList.add("--error");
-          __input.parentNode.classList.remove("--success");
-        } else if (!filter.test(__input.value)) {
-          isOk = false;
-          __input.parentNode.classList.add("--error");
-          __input.parentNode.classList.remove("--success");
-        } else {
-          isOk = true;
-          __input.parentNode.classList.remove("--error");
-          __input.parentNode.classList.add("--success");
-        }
-        break;
-
-      case "checkbox": {
-        if(__input.getAttribute("data-form-required")==="true" && __input.checked) {
-          __input.parentNode.classList.remove("--error");
-        }
-        break;
-      }
+    if (
+      __input.dataset.formRequired !== undefined &&
+      __input.value.split(' ').join('') === ''
+    ) {
+      valid = false;
     }
 
-    console.log("isOk",isOk)
+    if (
+      __input.dataset.formEmail !== undefined &&
+      !EMAIL_FILTER.test(__input.value)
+    ) {
+      valid = false;
+    }
 
-    return isOk;
+    if (
+      __input.dataset.formTel !== undefined &&
+      !TELF_FILTER.test(__input.value)
+    ) {
+      valid = false;
+    }
+
+    if (__input.dataset.formCheckbox !== undefined && !__input.checked) {
+      valid = false;
+    }
+
+    if (__input.dataset.formRadio !== undefined && !__input.checked) {
+      valid = false;
+    }
+
+    if (__input.dataset.formFile !== undefined) {
+      if (__input.files.length) __input.nextElementSibling.innerHTML = __input.files[0].name;
+      else valid = false;
+    }
+
+    if (valid) {
+      __input.parentNode.classList.remove('--error');
+      __input.parentNode.classList.add('--success');
+    } else {
+      __input.parentNode.classList.add('--error');
+      __input.parentNode.classList.remove('--success');
+    }
+
+    return valid;
   }
 
   check() {
+    let valid = true;
 
-    let bolContinuar = true;
-    let field;
-
-    for(var i = 0,j=this._fields.length; i<j; i++) {
-      field   =   this._fields[i];
-
-      switch(field.getAttribute("type")) {
-        case "text":
-
-          this._dataSend[field.getAttribute("name")] = "";
-
-          if(field.value.split(" ").join("") === "" && field.getAttribute("data-form-required") === "true") {
-            bolContinuar = false;
-            field.parentNode.classList.add("--error");
-            field.parentNode.classList.remove("--success");
-          } else {
-            this._dataSend[field.getAttribute("name")] = field.value;
-          }
-
-          break;
-
-        case "email":
-
-          this._dataSend[field.getAttribute("name")] = "";
-
-          var filter = /^([a-zA-Z0-9_\.\ñ\Ñ\-])+\@(([a-zA-Z0-9\-\ñ\Ñ])+\.)+([a-zA-Z0-9]{2,4})+$/;
-
-          if(field.value.split(" ").join("") === "" && field.getAttribute("data-form-required") === "true") {
-            bolContinuar    =   false;
-            field.parentNode.classList.add("--error");
-            field.parentNode.classList.remove("--success");
-          } else if (!filter.test(field.value)) {
-            bolContinuar    =   false;
-            field.parentNode.classList.add("--error");
-            field.parentNode.classList.remove("--success");
-          } else {
-            this._dataSend[field.getAttribute("name")] = field.value;
-          }
-
-          break;
-
-        case "tel":
-
-          this._dataSend[field.getAttribute("name")] = "";
-
-          var filter  =  /^([0-9]+){9}$/;//<--- con esto vamos a validar el numero
-
-          if(field.value.split(" ").join("") === "" && field.getAttribute("data-form-required") === "true") {
-            bolContinuar = false;
-            field.parentNode.classList.add("--error");
-            field.parentNode.classList.remove("--success");
-          } else if (!filter.test(field.value.split(" ").join("")) && field.getAttribute("data-form-required")) {
-            bolContinuar    =   false;
-            field.parentNode.classList.add("--error");
-            field.parentNode.classList.remove("--success");
-          } else {
-            this._dataSend[field.getAttribute("name")] = field.value;
-          }
-          break;
-
-        case "file": {
-          if(field.getAttribute("data-form-required")==="true" && field.prop('files').length < 1) {
-            bolContinuar = false;
-            field.parentNode.classList.add("--error");
-            field.parentNode.classList.remove("--success");
-          } else {
-            console.log(field.files[0])
-           // this._files = [field.files[0]];
-            this._dataSend["attachments"] = [field.files[0]];
-          }
-
-          break;
+    C.forEach(this._fields, (item) => {
+      if (!this.validate(item)) {
+        valid = false;
+      } else {
+        if (item.dataset.formFile !== undefined) {
+          this._files.push({
+            name: item.getAttribute('name'),
+            value: item.files[0]
+          });
+        } else {
+          this._dataSend[item.getAttribute('name')] = item.value;
         }
-
-        case "checkbox": {
-          if(field.getAttribute("data-form-required")==="true" && !field.checked) {
-            bolContinuar = false;
-            field.parentNode.classList.add("--error");
-            field.parentNode.classList.remove("--success");
-          }
-
-          break;
-        }
-
-        case "radio": {
-          if(field.checked) {
-            this._dataSend[field.getAttribute("name")] = field.value;
-          }
-
-          break;
-        }
-
-        default:
-
-          this._dataSend[field.getAttribute("name")] = "";
-
-          if(field.value.split(" ").join("") === "" && field.getAttribute("data-form-required") === "true") {
-            bolContinuar = false;
-            field.parentNode.classList.add("--error");
-            field.parentNode.classList.remove("--success");
-          } else {
-            this._dataSend[field.getAttribute("name")] = field.value;
-          }
-
-          break;
       }
-    }
+    });
 
-    return bolContinuar;
+    return valid;
   }
 
   prepareSubmit(e) {
     e.preventDefault();
-    if(this.check())  {
+
+    if (this.check()) {
       this.parseToSend();
-    } else if(WinMessage) {
-      const MSSG = this._form.getAttribute("data-inputs-nok")===undefined? "ERROR" :  this._form.getAttribute("data-inputs-nok");
-      WinMessage.error(MSSG);
     }
   }
 
   parseToSend() {
-    this._dataSend["token"] = this._form.getAttribute("data-token");
-    if(this._form.getAttribute("data-to")!==undefined) this._dataSend["to"] = this._form.getAttribute("data-to");
+    this._dataSend['token'] = this._form.getAttribute('data-token');
+
+    if (this._form.getAttribute('data-to') !== undefined) {
+      this._dataSend['to'] = this._form.getAttribute('data-to');
+    }
+
     FormSender.send(this, this._dataSend, this._form, this._files);
   }
 
   reset() {
     this._dataSend = {};
-    for(let i = 0,j=this._fields.length; i<j; i++) {
-      this._fields[i].val("");
-    }
+
+    C.forEach(this._fields, (item) => {
+      item.value = '';
+      item.checked = false;
+      item.parentNode.classList.remove('--error');
+      item.parentNode.classList.add('--success');
+    });
+    this._files = [];
+
+    C.forEach(GetBy.class('__filename', this._form), item => {
+      item.innerHTML = '';
+    });
   }
 
   dispose() {
-
+    C.forEach(this._fields, (item) => {
+      item.removeEventListener('change', this._input);
+      item.removeEventListener('focus', this._focus);
+      item.removeEventListener('blur', this._blur);
+    });
   }
+
+  defaultCb = status => {
+    if (status === 'ok') {
+      WinMessage.success(this._form.dataset.mssgOk);
+    } else {
+      WinMessage.error(this._form.dataset.mssgNok);
+    }
+  };
 }

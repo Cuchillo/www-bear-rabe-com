@@ -1,3 +1,6 @@
+import "core-js/stable";
+import "regenerator-runtime/runtime";
+
 import { Scroll } from './_app/cuchillo/scroll/Scroll';
 import { VSticky } from './_app/cuchillo/scroll/insiders/VSticky';
 import { VScaleZero } from './_app/cuchillo/scroll/insiders/VScaleZero';
@@ -33,6 +36,9 @@ import Cookies from './windows/Cookies';
 import Header from './layout/Header';
 
 import { ScrollItem__SliderScrollHorizontal } from './scroll/ScrollItem__SliderScrollHorizontal';
+import { ScrollItem__WebGLSketch } from './scroll/ScrollItem__WebGLSketch';
+import WinSidemenu from "./windows/Sidemenu";
+import { MaskedLinks } from "./components/MaskedLinks";
 
 export default class Main {
 
@@ -50,6 +56,7 @@ export default class Main {
     Statics.init(); // Si estamos en debug pinta un FPS counter
     Interaction.init({ ajax: true }) // Posiciones del cursor (Movimiento, click...), Acciones links, drag...
     ControllerWindow.init(); // Control ventanas
+    MaskedLinks.init();
 
     BG.init(CMS_COLORS); // Control de paletas y color de fondo de pantallas. Automatico si añadimos un data-palette='loquesea' en el div con data-page
     InterfaceCanvas.init(); // Canvas de interface, se usa con Cursor
@@ -62,7 +69,8 @@ export default class Main {
     LoaderController.init();
 
     this.doCuchilloInfo();
-    this.setWorker();
+
+    if(!isDebug)  this.setWorker();
 
     // LOOP
     if (isDebug) {
@@ -96,6 +104,7 @@ export default class Main {
 
   static resize () {
     Header.resize();
+    MaskedLinks.resize();
     InterfaceCanvas.resize();
     ControllerPage.resize();
   }
@@ -135,7 +144,7 @@ export default class Main {
   }
 
   static setWorker () {
-    if ('serviceWorker' in navigator) {
+    if ('serviceWorker' in navigator && !isDebug) {
       navigator.serviceWorker
         .register('/service-worker.js')
         .then(function () { });

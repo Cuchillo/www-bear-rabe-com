@@ -2,6 +2,8 @@
 
 :root {
   --y-header: 0;
+  --grid-cols: 48;
+  --grid: #{math.div(100vw, 48)};
 
   --padding-xl: #{math.div(120px, 16px) * 1rem};
   --padding-l: #{math.div(90px, 16px) * 1rem};

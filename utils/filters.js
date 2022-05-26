@@ -18,5 +18,14 @@ module.exports = {
         const temp = [...items];
         const half = Math.ceil(temp.length / 2);
         return [temp.slice(0, half), temp.slice(-(half - 1))];
+    },
+    urlico: (text) => {
+        if(text.indexOf("mailto")>-1) {
+            return "m";
+        } if(text.indexOf("instagram")>-1) {
+            return "@";
+        } else {
+            return text.slice(0, 1);
+        }
     }
 };

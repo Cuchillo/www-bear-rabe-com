@@ -1,0 +1,34 @@
+---
+renderData:
+  language: "{{ data.language }}"
+  title: "{{ data.acf.seo.title }}"
+  description: "{{ data.acf.seo.description }}"
+  image: "{{ data.acf.seo.image.sizes.facebook }}"
+  image_twitter: "{{ data.acf.seo.image.sizes.twitter }}"
+pagination:
+  data: projects
+  size: 1
+  alias: data
+permalink: "{{ data.link }}"
+layout: layout/default
+---
+
+{% set __page = 'project' %}
+{% set __palette = data.acf.options.palette or 'primary' %}
+
+{# {% import "flexible.njk" as FlexibleContent with context %}
+{% import "components/header_project.njk" as HeaderProject with context %}
+{% import "components/footer_project.njk" as FooterProject with context %}
+{% import "components/next_project.njk" as NextProject with context %}
+{% import "components/info_project.njk" as InfoProject with context %} #}
+
+{% set __paletteInit = "green-dark" %}
+
+<article class='default project' data-page='{{ __page }}' data-palette='{{ __paletteInit }}'>
+  {# {{ HeaderProject.block(data.title.rendered, data.acf, data.magazine_counter) }}
+  {{ InfoProject.block(data.title.rendered, data.acf, __palette) }}
+  {{ FlexibleContent.flexible(data.acf.blocks_custom) }}
+  {{ FooterProject.block(data.title.rendered, data.acf) }}
+  {% set next = utils.getNext(all[renderData.language].projects, data.id) %}
+  {{ NextProject.block(next) }} #}
+</article>

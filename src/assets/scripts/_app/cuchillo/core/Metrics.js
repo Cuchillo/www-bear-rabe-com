@@ -26,7 +26,7 @@ const Metrics = {
       clearTimeout(this._idTimer);
       this._idTimer = setTimeout(()=> {
         Metrics.update();
-      },100);
+      }, 100);
     });
   },
 
@@ -50,8 +50,11 @@ const Metrics = {
     const VH = window.innerHeight * 0.01;
     document.documentElement.style.setProperty('--vh', `${VH}px`);
 
-    this.FONT_SIZE = parseFloat(getComputedStyle(document.documentElement).fontSize);
+    const zoom = window.devicePixelRatio/Sizes.RATIO;
+    document.documentElement.style.setProperty('--zoom', `${zoom}`);
 
+    this.FONT_SIZE = parseFloat(getComputedStyle(document.documentElement).fontSize);
+   
     this._callResize();
   },
 

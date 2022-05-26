@@ -1,0 +1,53 @@
+#Preloader {
+    --width-logo: 2em;
+    --font-size: var(--font-size-s);
+    --color: var(--white);
+    --bg: var(--black);
+
+    @media (max-width: $smartphone) {
+        --font-size: 4vw;
+    }
+}
+
+#Preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    display: none !important;
+    
+    @include z-index($z-index-loader);
+    color: var(--color);
+    background-color: var(--bg);
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    @include font-serif-light(1);
+    font-size: var(--font-size);
+    text-transform: uppercase;
+
+    .line {
+        overflow: hidden;
+        height: 1.2em;
+        display: flex;
+        align-items: center;
+    }
+
+    span {
+        display: inline-block;
+        margin-left: .4em;
+        transform: translate3d(0, 1.3em, 0);
+    }
+
+    svg {
+        width: auto;
+        height: .8em;
+        fill: currentColor;
+        transform: translate3d(0, 1.3em, 0);
+    }
+}

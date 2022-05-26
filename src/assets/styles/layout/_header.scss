@@ -2,46 +2,41 @@
 
 #Header {
     --width: 100%;
-    --height: var(--header-height);
-    --color: var(--primary-bg);
-    --bg: var(--primary-color);
-    --padding-v: var(--padding-xs);
-    --padding-h: var(--padding-xs);
-    --font-size: var(--font-size-base);
+    --color: var(--primary-color);
+    --bg: transparent;
+    --padding: var(--grid);
+    --font-size: var(--font-size-l);
 }
 
 #Header {
     @include z-index($z-index-header);
     position: fixed;
     width: var(--width);
-    height: var(--height);
-    right: 0;
-    top: 0;
-    padding: var(--padding-v) var(--padding-h);
+    left: 0;
+    bottom: 0;
+    padding: var(--padding);
 
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
 
     color: var(--color);
     background-color: var(--bg);
-
-    transform: translate3d(0, var(--y-header), 10px);
 }
 
+#Header > ul,
 #Header > nav {
-    display: flex;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  flex: 0 0 auto;
+}
 
-    a {
-        @include font-sans(1.2);
-        font-size: var(--font-size);
-        color: inherit;
-        margin: 0 1em;
-
-        &[aria-current="page"] {
-          pointer-events: none;
-        }
-    }
+#Header > ul > li {
+  flex: 0 0 auto;
+  margin-right: .35em;
 }
 
 @media (max-width: $smartphone) {

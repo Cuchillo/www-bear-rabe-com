@@ -23,19 +23,19 @@
     padding: var(--padding-v) var(--padding-h);
 
     h1 {
-        @include font-sans-bold(1);
+        @include font-sans(1);
         font-size: var(--font-size-h1);
         margin: .5em 0;
     }
 
     h2 {
-        @include font-sans-bold(1);
+        @include font-sans(1);
         font-size: var(--font-size-h2);
         margin: .5em 0;
     }
 
     h3 {
-        @include font-sans-bold(1);
+        @include font-sans(1);
         font-size: var(--font-size-h3);
         margin: .5em 0;
     }
@@ -46,13 +46,9 @@
     }
 
     p {
-        i {
-            @include font-sans-italic();
-        }
-
         strong,
         b {
-            @include font-sans-bold();
+            @include font-sans();
         }
         margin: .5em 0;
     }
@@ -64,7 +60,7 @@
 
     a {
         @include basic-a();
-        @include font-sans-bold();
+        @include font-sans();
         text-decoration: underline;
         color: inherit;
     }

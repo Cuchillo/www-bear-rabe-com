@@ -1,29 +1,29 @@
 @font-face {
-  font-family: 'FKGrotesk-Regular';
+  font-family: 'Compagnon-Light';
   src:
-    url('FKGrotesk-Regular.woff2') format('woff2'),
-    url("FKGrotesk-Regular.woff") format("woff");
-  font-weight: normal;
+    url('Compagnon-Light.woff') format('woff'),
+    url("Compagnon-Light.woff") format("woff");
+  font-weight: 200;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'FKGrotesk-Medium';
+  font-family: 'Compagnon-Roman';
   src:
-    url('FKGrotesk-Medium.woff2') format('woff2'),
-    url("FKGrotesk-Medium.woff") format("woff");
-  font-weight: 500;
+    url('Compagnon-Roman.woff') format('woff'),
+    url("Compagnon-Roman.woff") format("woff");
+  font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-    font-family: "FKGrotesk-ThinItalic";
+    font-family: "NHaasGroteskTXPro-55Rg";
     src:
-        url("FKGrotesk-ThinItalic.woff2") format("woff2"),
-        url("FKGrotesk-ThinItalic.woff") format("woff");
-    font-weight: 200;
+        url("NHaasGroteskTXPro-55Rg.woff") format("woff"),
+        url("NHaasGroteskTXPro-55Rg.woff") format("woff");
+    font-weight: 400;
     font-style: italic;
     font-display: swap;
 }

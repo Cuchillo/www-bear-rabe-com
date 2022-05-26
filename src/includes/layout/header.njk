@@ -1,19 +1,30 @@
 <header id="Header">
-  <nav>
-  {% for item in menu[renderData.language] %}
-    {% if item.items.length == 0 %}
-      {# LINK BASICO #}
-      {% set activeLink = 'aria-current=page' if page.url === item.url else "" %}
-      <a class="link-arrow" href="{{ item.url }}" {{ activeLink }}><span>{{ item.title }}</span></a>
-    {%  else %}
-      {# LINK CON SUBLINKS #}
-      {% for subitem in item.items %}
-        {% set activeLink = 'aria-current=page' if page.url === subitem.url else "" %}
-        <a class="link-arrow" href="{{ subitem.url }}" {{ activeLink }}><span>{{ subitem.title }}</span></a>
+
+  <ul aria-label="Take a look at our RRSS">
+     {% if contact[renderData.language].rrss %}
+        {% for item in contact[renderData.language].rrss %}
+        <li>
+            <a class="link-with-mask" href="{{ item.url }}" rel="nofollow" target='_blank' data-masked-link>
+              <span class="deco">
+                <span class="icon">{{ item.url | urlico}}</span>
+              </span>
+              <span class="text">{{ item.text }}</span>
+            </a>
+        </li>
+        {% endfor %}
+      {% endif %}
+      {% for item in menu[renderData.language] %}
+        <li>
+          {% set activeLink = 'aria-current=page' if page.url === item.url else "" %}
+          <a class="link-with-mask" href="{{ item.url }}" {{ activeLink }} data-masked-link>
+            <span class="deco">
+              <span class="icon">{{ item.title | urlico}}</span>
+            </span>
+            <span class="text">{{ item.title }}</span>
+          </a>
+        </li>
       {% endfor %}
-    {% endif %}
-  {% endfor %}
-  </nav>
+  </ul>
 </header>
 
 

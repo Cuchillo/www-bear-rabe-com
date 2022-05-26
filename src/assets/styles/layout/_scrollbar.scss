@@ -1,6 +1,8 @@
 @use "sass:math";
 
 #Scrollbar {
+    display: none;
+    
     --height: #{math.div(80px, 16px) * 1rem};
 
     position: fixed;
