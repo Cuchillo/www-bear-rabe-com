@@ -39,6 +39,8 @@ import { ScrollItem__SliderScrollHorizontal } from './scroll/ScrollItem__SliderS
 import { ScrollItem__WebGLSketch } from './scroll/ScrollItem__WebGLSketch';
 import WinSidemenu from "./windows/Sidemenu";
 import { MaskedLinks } from "./components/MaskedLinks";
+import Guides from "./_app/cuchillo/utils/Guides";
+import TopCanvas from "./components/TopCanvas";
 
 export default class Main {
 
@@ -57,6 +59,10 @@ export default class Main {
     Interaction.init({ ajax: true }) // Posiciones del cursor (Movimiento, click...), Acciones links, drag...
     ControllerWindow.init(); // Control ventanas
     MaskedLinks.init();
+    Guides.init();
+    Guides.add({cols:Metrics.COLS, rows:'auto'});
+    TopCanvas.init();
+
 
     BG.init(CMS_COLORS); // Control de paletas y color de fondo de pantallas. Automatico si añadimos un data-palette='loquesea' en el div con data-page
     InterfaceCanvas.init(); // Canvas de interface, se usa con Cursor
@@ -103,6 +109,8 @@ export default class Main {
   }
 
   static resize () {
+    TopCanvas.resize();
+    Guides.resize();
     Header.resize();
     MaskedLinks.resize();
     InterfaceCanvas.resize();
@@ -111,6 +119,7 @@ export default class Main {
 
   static loop () {
     // ControllerPage.loop();
+    TopCanvas.loop();
     Header.loop();
     InterfaceCanvas.loop();
 

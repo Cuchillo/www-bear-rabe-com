@@ -3,18 +3,24 @@ import { Sizes } from './Sizes';
 import { Maths } from '../utils/Maths';
 
 const Metrics = {
-  set WIDTH(n) { this._WIDTH = n; },
+  set WIDTH(n) { 
+    this._WIDTH = n;
+    this.GRID = this._WIDTH/this.COLS;
+  },
   get WIDTH() { return this._WIDTH; },
   set HEIGHT(n) { this._HEIGHT = n; },
   get HEIGHT() { return this._HEIGHT; },
+  
   _WIDTH: window.innerWidth,
   _HEIGHT: window.innerHeight,
+  GRID:0,
   CENTER_X: 0,
   CENTER_Y: 0,
   ASPECT: 0,
   HEIGHT_INSIDE: 0,
   HEIGHT_SCROLL: 0,
   FONT_SIZE: 16,
+  COLS: 48,
   _callResize: null,
 
   init: function(__call) {

@@ -11,6 +11,8 @@
     --ease: var(--ease-out-quad);
     --steps: 5;
     --time: calc(var(--steps) * .1s);
+    --ico-rotation: 90deg;
+    --offset-x: 0;
  
     @include basic-a();
     display: inline-block;
@@ -44,10 +46,11 @@
             text-align: right;
             width: 100%;
             height: 100%;
-            transform: rotate(90deg);
+            transform: rotate(var(--ico-rotation)) translate3d(var(--offset-x),0,0);
             @include font-serif();
             line-height: 1;
             text-transform: lowercase;
+            transition: transform .3s ease-in-out;
         }
     }
 
@@ -61,6 +64,8 @@
      
     &:hover {
         --width: var(--size-show);
+        --ico-rotation: 0;
+        --offset-x: -.1em;
     }
 
     &.--active,

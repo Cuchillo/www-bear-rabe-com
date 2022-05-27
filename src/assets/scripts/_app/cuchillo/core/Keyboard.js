@@ -41,6 +41,7 @@ const Keyboard = {
   },
 
   _check: function(e) {
+   
     for(let i = 0; i<Keyboard._total; i++) {
       if(e.key === Keyboard._calls[i].key || e.keyCode === Keyboard._calls[i].key) {
         Keyboard._calls[i].call();

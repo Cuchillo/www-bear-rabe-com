@@ -44,11 +44,16 @@ export default class Guides {
     const index = this._guides.length - 1;
     Keyboard.add(`${this._guides.length}`, "Guides" + this._guides.length, ()=> {
       this._guides[index].enabled = !this._guides[index].enabled;
+      this.loop();
     });
+
+    this.loop();
   }
 
   static loop() {
     if(!isDebug) return;
+
+    this.ctx.clearRect(0, 0, this.width, this.height);
 
     this._guides.map(item => {
       if(item.enabled) {
