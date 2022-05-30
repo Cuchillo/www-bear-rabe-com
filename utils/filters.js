@@ -12,6 +12,7 @@ module.exports = {
     lowercase: content => content.toLowerCase(),
     uppercase: content => content.toUpperCase(),
     split: (content,t1,t2) => content.split(t1).join(t2),
+    splitwords: (content) => content.split(" "),
     replace: (text, st1, st2) => text.replace(st1, st2),
     slugify: (str) => str?.replace(/\s+/g, '-').toLowerCase(),
     half: (items) => {
@@ -27,5 +28,6 @@ module.exports = {
         } else {
             return text.slice(0, 1);
         }
-    }
+    },
+    decoName: (text) => text.replace("Be", "<b>Be</b>").replace("Ar", "<b>Ar</b>")
 };

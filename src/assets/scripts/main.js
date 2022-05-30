@@ -37,7 +37,8 @@ import Header from './layout/Header';
 
 import { ScrollItem__SliderScrollHorizontal } from './scroll/ScrollItem__SliderScrollHorizontal';
 import { ScrollItem__WebGLSketch } from './scroll/ScrollItem__WebGLSketch';
-import WinSidemenu from "./windows/Sidemenu";
+
+
 import { MaskedLinks } from "./components/MaskedLinks";
 import Guides from "./_app/cuchillo/utils/Guides";
 import TopCanvas from "./components/TopCanvas";

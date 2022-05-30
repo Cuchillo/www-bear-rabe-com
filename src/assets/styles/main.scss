@@ -24,12 +24,14 @@
 @import "layout/interface";
 @import "layout/scrollbar";
 @import "layout/preloader";
+@import "layout/logos";
 
 @import "links/link-arrow";
 @import "links/link-with-mask";
+@import "links/link-with-label";
 
 @import "blocks/block-default";
-@import "blocks/widget_landing";
+@import "blocks/billboard-home";
 @import "blocks/widget_webgl";
 
 @import "windows/cookies";

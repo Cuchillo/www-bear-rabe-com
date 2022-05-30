@@ -1,0 +1,18 @@
+{% macro block(data) %}
+<section class="billboard-home">
+    {% for item in data.headline %}
+        {% if item.line.link %}
+            <a class="link-with-label" href="{{ item.line.link.url }}">
+                <span class="deco"><span class="icon">{{ item.line.deco_link }}</span></span>
+                <span class="text">{{ item.line.text | decoName | safe }}</span>
+                <span class="mask"></span>
+            </a>
+        {% else %}
+            {% set words = item.line.text | splitwords %}
+            {% for w in words %}
+                <span>{{ w }}<span class="mask"></span></span>
+            {% endfor %}
+        {% endif %}
+    {% endfor %}
+</section>
+{% endmacro %}

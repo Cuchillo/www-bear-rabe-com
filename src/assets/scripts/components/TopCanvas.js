@@ -1,5 +1,6 @@
 import { Keyboard } from "../_app/cuchillo/core/Keyboard";
 import { Maths } from "../_app/cuchillo/utils/Maths";
+import { Functions } from "../_app/cuchillo/utils/Functions";
 import { gsap, Power2 } from "gsap";
 
 class TopCanvas__Image {
@@ -47,7 +48,7 @@ export default class TopCanvas {
   static _cols;
   static total;
   static rows;
-  static progress = 1;
+  static progress = 0;
   static cont=-1;
   static get cols() { return this._cols; }
   static set cols(__cols) {
@@ -75,7 +76,7 @@ export default class TopCanvas {
     this.canvas.style.height = "100%";
     this.canvas.style.zIndex = "99999";
     this.canvas.style.pointerEvents = "none";
-    this.cols = 4;
+    this.cols = 3;
 
     Keyboard.add("a", "a", ()=> {this.cols++});
     Keyboard.add("s", "s", ()=> {this.cols--});
@@ -83,45 +84,27 @@ export default class TopCanvas {
     Keyboard.add("w", "w", ()=> {this.progress-=.1});
     Keyboard.add("n", "n", ()=> {this.loop()});
 
-    setInterval(()=> {gsap.to(this,{progress:Maths.maxminRandom(1,10)/10, duration:.3, ease:Power2.easeOut})}, 400);
-    setInterval(()=> {
+   // setInterval(()=> {this.grid = Functions.arrayRandom(this.grid);}, 1200);
+   // setInterval(()=> {gsap.to(this,{progress:Maths.maxminRandom(1,10)/10, duration:.3, ease:Power2.easeOut})}, 900);
+    /*setInterval(()=> {
       gsap.to(this,{cols:Maths.maxminRandom(1,16), duration:.2, ease:Power2.easeOut})}
-    , 410);
+    , 410);*/
     
   }
 
   static setupGrid() {
     this.grid = [];
-    let limit = 1;
-
-    this.grid.push({
-      x:0,
-      y:0
-    });
     
-    while(this.grid.length < this.total) {
-      let x = limit;
-      let y = 0;
-      for(let i=0; i<=limit; i++) {
-        
-        if(x<this.cols && y<this.rows) {
-          if(this.grid.find(e => e.x == x && e.y == y)) {
-           
-          }
-    
-          this.grid.push({
-            x:x,
-            y:y
-          });
-        } else {
-         
-        }
-        x--;
-        y = Math.min(this.rows, y+1);
+    for(let i=0; i<this.cols; i++) {
+      for(let j=0; j<this.rows; j++) {
+        this.grid.push({
+          x:i,
+          y:j,
+        });
       }
-
-      limit++;
     }
+
+    this.grid = Functions.arrayRandom(this.grid)
   }
 
   static loop() {
@@ -131,6 +114,8 @@ export default class TopCanvas {
     
     const limitProgress = Math.round(this.total * this.progress)
     
+    
+
     for(let i=0; i<limitProgress; i++) {
       if((this.grid[i].x%2===0 && this.grid[i].y%2!=0) || this.grid[i].y%2===0 && this.grid[i].x%2!=0) {
       this.ctx.drawImage(

@@ -1,7 +1,7 @@
 //↗ → ← ↖
 
 @mixin link-with-label() {
-    --font-size: var(--font-size-xl);
+    --font-size: inherit;
     --width-deco: 1em;
     --border-size: clamp(1px, .055em, 20px);
     --color: var(--primary-color);
@@ -45,6 +45,22 @@
         @include font-sans();
         line-height: 1;
         padding-left: .05em;
+    }
+
+    b {
+        font-weight: 400;
+        color: var(--white);
+        position: relative;
+        &::before {
+            content:'';
+            z-index: -1;
+            position: absolute;
+            top:.15em;
+            left:0;
+            width: 100%;
+            height: calc(100% - .3em);
+            background-color: var(--grey);
+        }
     }
      
     &:hover {
