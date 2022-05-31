@@ -15,3 +15,4 @@ CustomEase.create(Ease.EASE_IN_OUT, ".76,0,.32,.99");
 CustomEase.create(Ease.EASE_IN_OUT2, ".46,.06,.56,.9");
 
 export { Ease };
+

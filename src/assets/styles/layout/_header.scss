@@ -37,6 +37,14 @@
 #Header > ul > li {
   flex: 0 0 auto;
   margin-right: .35em;
+
+  &:nth-child(1) {a{--bg-color: var(--grey);}}
+  &:nth-child(2) {a{--bg-color: var(--blue);}}
+  &:nth-child(3) {a{--bg-color: var(--green);}}
+  &:nth-child(4) {a{--bg-color: var(--blue);}}
+  &:nth-child(5) {a{--bg-color: var(--grey);}}
+  &:nth-child(6) {a{--bg-color: var(--green);}}
+  &:nth-child(7) {a{--bg-color: var(--blue);}}
 }
 
 @media (max-width: $smartphone) {

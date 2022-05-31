@@ -19,17 +19,42 @@
     color: var(--color);
     background-color: var(--bg);
 
-    > span {
+    .billboard-item {
         position: relative;
+        opacity: 0;
 
+        > .text {position: relative;}
+        > .bg,
         > .mask {
             position: absolute;
+            @include z-index(2);
             top:0;
             left:0;
-            width: calc(100% + .1em);
+            width: calc(100% + .05em);
             height: 100%;
             background-color: var(--color);
-            transform: scale3d(0,1,1);
+            transform: scale3d(1,1,1);
+            transform-origin: top right;
+        }
+
+        > .bg {
+            background-color: var(--green);
+            @include z-index(0);
+        }
+
+        &.--arrow {
+            padding-right: .5em;
+        }
+
+        &.--arrow::after {
+            position: absolute;
+            @include z-index(1);
+            right: 0;
+            bottom: .16em;
+            content: '↗';
+            @include font-serif();
+            font-size: 1em;
+            color: var(--blue);
         }
     }
 }

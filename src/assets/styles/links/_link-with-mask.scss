@@ -2,6 +2,7 @@
 
 @mixin link-with-mask() {
     --color: var(--primary-color);
+    --bg-color: var(--grey);
     --border-size: clamp(1px, .055em, 20px);
     --width-deco: 1em;
     --size-text: 100px;
@@ -13,7 +14,9 @@
     --time: calc(var(--steps) * .1s);
     --ico-rotation: 90deg;
     --offset-x: 0;
- 
+    --mask-scale: 1;
+    --bg-scale: 1;
+     
     @include basic-a();
     display: inline-block;
     position: relative;
@@ -25,9 +28,9 @@
     padding-left: var(--width-deco);
 
     /* ANIMATION */
-    transition: width;
-    transition-duration: var(--time);
-    transition-timing-function: steps(var(--steps), end);
+    transition: width .1s;
+    //transition-duration: var(--time);
+    //transition-timing-function: steps(var(--steps), end);
 
     > .deco {
         position: absolute;
@@ -50,22 +53,58 @@
             @include font-serif();
             line-height: 1;
             text-transform: lowercase;
-            transition: transform .3s ease-in-out;
+            //transition: transform .3s ease-in-out;
         }
     }
 
     > .text {
+        position: relative;
         @include font-sans();
         line-height: 1;
         padding-left: .05em;
         word-wrap: none;
         white-space: nowrap;
+
+        > span {
+            position: relative;
+        }
+
+        &::before,
+        &::after {
+            position: absolute;
+            content: '';
+            top: 0;
+            left: .04em;
+            width: 100%;
+            height: 100%;
+            background-color: var(--black);
+            transform: scale3d(var(--mask-scale), 1, 1);
+            transform-origin: top right;
+            transition: transform .0s var(--ease-cuchillo-in-out) .1s;
+        }
+
+        &::before {
+            transform: scale3d(var(--bg-scale), 1, 1);
+            background-color: var(--bg-color);
+            transition: transform .0s var(--ease-cuchillo-in-out) .1s;
+        }
     }
      
     &:hover {
         --width: var(--size-show);
-        --ico-rotation: 0;
-        --offset-x: -.1em;
+        /*--ico-rotation: 0;
+        --offset-x: -.1em;*/
+        --mask-scale: 0;
+        --bg-scale: 0;
+
+        > .text {
+            &::after {
+                transition: transform .4s var(--ease-cuchillo-in-out) .2s;
+            }
+            &::before {
+                transition: transform .4s var(--ease-cuchillo-in-out) .7s;
+            }
+        }
     }
 
     &.--active,
