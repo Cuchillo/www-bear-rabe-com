@@ -3,12 +3,20 @@
 @mixin link-with-label() {
     --font-size: inherit;
     --width-deco: 1em;
+    --b-width: 100%;
+    --b-left: 0;
+    --b-color: var(--white);
+    --b-bg: var(--grey);
     --border-size: clamp(1px, .055em, 20px);
     --color: var(--primary-color);
     --pos: 0;
     --pos-hover: 1em;
     --ease: var(--ease-out-quad);
     --time: .4s;
+
+    --hover-scale: 3;
+    --hover-left: 60%;
+    --transform-origin: 0%;
 
     @include basic-a();
     position: relative;
@@ -48,8 +56,9 @@
     }
 
     b {
+        position: relative;
         font-weight: 400;
-        color: var(--white);
+        color: var(--b-color);
         position: relative;
         &::before {
             content:'';
@@ -59,12 +68,20 @@
             left:0;
             width: 100%;
             height: calc(100% - .3em);
-            background-color: var(--grey);
+            background-color: var(--b-bg);
+
+            transform: scale3d(var(--b-size),1,1) translateX(var(--b-left));
+            transition: transform .6s var(--ease-cuchillo-in-out);
+            transform-origin: var(--transform-origin);
         }
     }
      
     &:hover {
      --pos: var(--pos-hover);
+     --b-size: var(--hover-scale);
+     --b-left: var(--hover-left);
+     --b-color: var(--black);
+     --b-bg: var(--green);
     }
 
     &.--active,

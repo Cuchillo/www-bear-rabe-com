@@ -5,6 +5,8 @@ import Wrap from '../layout/Wrap';
 import { GetBy } from '../_app/cuchillo/core/Element';
 import { Functions } from '../_app/cuchillo/utils/Functions';
 import { Ease } from '../_app/cuchillo/utils/Ease';
+import { Basics } from "../_app/cuchillo/core/Basics";
+import { Maths } from "../_app/cuchillo/utils/Maths";
 
 export default class Home extends Page {
 
@@ -54,6 +56,18 @@ export default class Home extends Page {
         cont = 0;
       }
     }
+
+    [...GetBy.class("__link", this.container)].map(item => {
+      item.addEventListener(Basics.mouseOver, (e)=> {
+        const scale = `${Maths.maxminRandom(15, 50)/10}`;
+        const position = `${Maths.maxminRandom(100, -100)}%`;
+        const origin = `${Maths.maxminRandom(20, -10)}%`;
+
+        item.style.setProperty('--hover-scale', scale);
+        item.style.setProperty('--hover-left', position);
+        item.style.setProperty('--transform-origin', origin);
+      });
+    });
   }
 
   //SHOW
