@@ -1,5 +1,5 @@
 {% macro block(data) %}
-<section class="billboard-home">
+<section class="billboard-home __billboard">
     {% for item in data.headline %}
         {% if item.line.is_especial %}
             <span class="billboard-item --arrow">{{ item.line.text }}<span class="mask"></span></span>
