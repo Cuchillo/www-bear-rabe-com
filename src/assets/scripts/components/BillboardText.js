@@ -3,6 +3,7 @@ import { gsap } from "gsap";
 import { Functions } from "../_app/cuchillo/utils/Functions";
 import { Ease } from "../_app/cuchillo/utils/Ease";
 import { Basics } from "../_app/cuchillo/core/Basics";
+import { Maths } from "../_app/cuchillo/utils/Maths";
 
 export default class BillboardText {
   _tl;
@@ -10,6 +11,7 @@ export default class BillboardText {
   constructor(__container) {
     this.container = __container;
     this.setup();
+    this.setupLinks();
   }
 
   setup() {
@@ -44,13 +46,15 @@ export default class BillboardText {
 
       if(cont < 3) {
         cont++
-        time+=incS * 2;
+        time+=incS;
       } else {
         time+=inc * 1.3;
         cont = 0;
       }
     }
+  }
 
+  setupLinks() {
     [...GetBy.class("__link", this.container)].map(item => {
       item.addEventListener(Basics.mouseOver, (e)=> {
         const scale = `${Maths.maxminRandom(15, 50)/10}`;

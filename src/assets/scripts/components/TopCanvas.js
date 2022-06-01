@@ -2,6 +2,7 @@ import { Keyboard } from "../_app/cuchillo/core/Keyboard";
 import { Maths } from "../_app/cuchillo/utils/Maths";
 import { Functions } from "../_app/cuchillo/utils/Functions";
 import { gsap, Power2 } from "gsap";
+import InterfaceCanvas from "../_app/cuchillo/layout/InterfaceCanvas";
 
 class TopCanvas__Image {
   image = new Image();
@@ -37,8 +38,8 @@ class TopCanvas__Image {
 }
 
 export default class TopCanvas {
-  static canvas = document.createElement('canvas');
-  static ctx = this.canvas.getContext('2d');
+  static canvas = InterfaceCanvas.canvas;
+  static ctx = InterfaceCanvas.ctx;
   static width = window.innerWidth * window.devicePixelRatio;
   static height = window.innerHeight * window.devicePixelRatio;
   static ratioGrid = 1372/4801;
@@ -58,11 +59,9 @@ export default class TopCanvas {
     this.rows = Math.ceil(this.height/this.sizeGridV);
     this.total = this.cols * this.rows;
    
-    console.log(this.cols,this.rows,this.total)
-
     this.setupGrid();
   }
-  static isEnabled = true; 
+  static isEnabled = false; 
   static _images = [
     new TopCanvas__Image("/assets/images/load-01.png"),
     new TopCanvas__Image("/assets/images/load-02.png"),
@@ -70,23 +69,18 @@ export default class TopCanvas {
   ] 
 
   static init(__container = document.body) {
-    __container.appendChild(this.canvas);
-    this.canvas.style.position = "fixed";
-    this.canvas.style.width = "100%";
-    this.canvas.style.height = "100%";
-    this.canvas.style.zIndex = "99999";
-    this.canvas.style.pointerEvents = "none";
     this.cols = 3;
+    this.isEnabled = true;
 
-    Keyboard.add("a", "a", ()=> {this.cols++});
+    /*Keyboard.add("a", "a", ()=> {this.cols++});
     Keyboard.add("s", "s", ()=> {this.cols--});
     Keyboard.add("q", "q", ()=> {this.progress+=.1});
     Keyboard.add("w", "w", ()=> {this.progress-=.1});
     Keyboard.add("n", "n", ()=> {this.loop()});
 
-   // setInterval(()=> {this.grid = Functions.arrayRandom(this.grid);}, 1200);
-   // setInterval(()=> {gsap.to(this,{progress:Maths.maxminRandom(1,10)/10, duration:.3, ease:Power2.easeOut})}, 900);
-    /*setInterval(()=> {
+    setInterval(()=> {this.grid = Functions.arrayRandom(this.grid);}, 1200);
+    setInterval(()=> {gsap.to(this,{progress:Maths.maxminRandom(1,10)/10, duration:.3, ease:Power2.easeOut})}, 900);
+    setInterval(()=> {
       gsap.to(this,{cols:Maths.maxminRandom(1,16), duration:.2, ease:Power2.easeOut})}
     , 410);*/
     
@@ -109,22 +103,30 @@ export default class TopCanvas {
 
   static loop() {
     if(!this.isEnabled) return;
-    this.ctx.clearRect(0, 0, this.width, this.height);
+        
     
-    
+    let indexImage = 0;
     const limitProgress = Math.round(this.total * this.progress)
     
-    
+    console.log(0)
 
-    for(let i=0; i<limitProgress; i++) {
+
+
+     for(let i=0; i<limitProgress; i++) {
       if((this.grid[i].x%2===0 && this.grid[i].y%2!=0) || this.grid[i].y%2===0 && this.grid[i].x%2!=0) {
-      this.ctx.drawImage(
-        this._images[0].image, 
-        this.sizeGridH * this.grid[i].x, 
-        this.sizeGridV * this.grid[i].y, 
-        this.sizeGridH, 
-        this.sizeGridV);
+        this.ctx.beginPath();
+        this.ctx.rect(this.sizeGridH * this.grid[i].x, this.sizeGridV * this.grid[i].y, this.sizeGridH, this.sizeGridV);
+        this.ctx.stroke();
+
+        this.ctx.drawImage(
+          this._images[indexImage].image, 
+          this.sizeGridH * this.grid[i].x, 
+          this.sizeGridV * this.grid[i].y, 
+          this.sizeGridH, 
+          this.sizeGridV);
       }
+      indexImage++;
+      if(indexImage === 3) indexImage = 0;
     }
   }
 

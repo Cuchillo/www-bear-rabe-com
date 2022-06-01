@@ -3,15 +3,18 @@ import { ControllerPage } from '../_app/cuchillo/pages/ControllerPage';
 import Wrap from '../layout/Wrap';
 import BillboardText from '../components/BillboardText';
 import { GetBy } from '../_app/cuchillo/core/Element';
+import VisorImage from '../components/VisorImage';
 
 
 export default class Home extends Page {
 
   _billboard;
+  _visor;
 
   constructor() {
     super();
     this._billboard = new BillboardText(GetBy.class("__billboard", this.container)[0]);
+    this._visor = new VisorImage();
   }
 
   //SHOW
@@ -46,6 +49,7 @@ export default class Home extends Page {
   loop() {
     if(this._isActive) {
       super.loop();
+      this._visor.loop();
     }
   }
 }

@@ -8,4 +8,35 @@
       },
     {% endfor %}
   }
+
+  const PROJECTS = [
+        {% for item in all[renderData.language].projects %}
+            {
+              id: {{ loop.index }},
+              title: "{{ item.title.rendered | safe }}",
+              url: "{{ item.link | url }}",
+              images: [ 
+                 {% for image in item.acf.images %}
+                    "{{ image.sizes["@1x"] }}",
+                 {% endfor %}
+                 ]
+            },
+        {% endfor %}
+  ]
+
+  const IMAGES_PROJECTS = [
+        {% for item in all[renderData.language].projects %}
+            {% set index = loop.index - 1 %}
+            {% for image in item.acf.images %}
+            {
+              project: {{ index }},
+              image: "{{ image.sizes['thumb'] }}",
+              width: {{ image.sizes['@1x-width'] }},
+              height: {{ image.sizes['@1x-height'] }},
+            },
+            {% endfor %}            
+        {% endfor %}
+  ]
+
+  
 </script>

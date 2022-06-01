@@ -1,22 +1,11 @@
+{% import "blocks/billboard_text.njk" as billboard_text with context %}
+
 {% macro block(data) %}
-<section class="billboard-home __billboard">
-    {% for item in data.headline %}
-        {% if item.line.is_especial %}
-            <span class="billboard-item --arrow">{{ item.line.text }}<span class="mask"></span></span>
-        {% elif item.line.link %}
-            <a class="billboard-item link-with-label __link" href="{{ item.line.link.url }}">
-                <span class="deco"><span class="icon">{{ item.line.deco_link }}</span></span>
-                <span class="text">{{ item.line.text | decoName | safe }}</span>
-                <span class="mask"></span>
-            </a>
-        {% else %}
-            {% set words = item.line.text | splitwords %}
-            {% for w in words %}
-                {% if w %}
-                    <span class="billboard-item">{{ w }}<span class="mask"></span></span>
-                {% endif %}
-            {% endfor %}
-        {% endif %}
-    {% endfor %}
-</section>
+    {{ billboard_text.block(data.headline) }}
+    <ul class="block-ul-projects" aria-label="{{ texts[renderData.language].projects_list }}">
+        {% for item in all[renderData.language].projects %}
+        <li><a href="{{ item.link | url }}">{{ item.title.rendered }}</a></li>
+        {% endfor %}
+    </ul>
 {% endmacro %}
+                 

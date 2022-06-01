@@ -61,9 +61,10 @@ export default class Main {
     Interaction.init({ ajax: true }) // Posiciones del cursor (Movimiento, click...), Acciones links, drag...
     ControllerWindow.init(); // Control ventanas
     MaskedLinks.init();
+    
     Guides.init();
     Guides.add({cols:Metrics.COLS, rows:'auto'});
-    TopCanvas.init();
+    //TopCanvas.init();
 
 
     BG.init(CMS_COLORS); // Control de paletas y color de fondo de pantallas. Automatico si añadimos un data-palette='loquesea' en el div con data-page
@@ -120,11 +121,11 @@ export default class Main {
   }
 
   static loop () {
-    // ControllerPage.loop();
+    InterfaceCanvas.loop();
+    ControllerPage.loop();
     TopCanvas.loop();
     Header.loop();
-    InterfaceCanvas.loop();
-
+    
     if (Scroll.isScrolling) Scroll.loop();
   }
 
