@@ -6,6 +6,10 @@
     --bg: transparent;
     --padding: var(--grid);
     --font-size: var(--font-size-l);
+
+    @media (max-width: $smartphone) {
+        --font-size: 32px;
+    }
 }
 
 .billboard-text {
