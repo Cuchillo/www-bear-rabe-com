@@ -2,7 +2,7 @@ import { GetBy } from "../_app/cuchillo/core/Element";
 import { gsap, Power2 } from "gsap";
 import { Functions } from "../_app/cuchillo/utils/Functions";
 import { Ease } from "../_app/cuchillo/utils/Ease";
-import { Basics } from "../_app/cuchillo/core/Basics";
+import { Basics, isSmartphone } from "../_app/cuchillo/core/Basics";
 import { Interaction } from "../_app/cuchillo/core/Interaction";
 import { Maths } from "../_app/cuchillo/utils/Maths";
 import InterfaceCanvas from "../_app/cuchillo/layout/InterfaceCanvas";
@@ -42,7 +42,12 @@ class VisorImage__Image {
     if(!this.image) return; 
     
     this.ctx.beginPath();
-    this.ctx.drawImage(this.image, this.x - this.width * .5, this.y - this.height * .5, this.width, this.height);
+    if(isSmartphone) {
+      this.ctx.drawImage(this.image, this.x - this.width * .5, this.y - this.height * 1.1, this.width, this.height);
+    } else {
+      this.ctx.drawImage(this.image, this.x - this.width * .5, this.y - this.height * .5, this.width, this.height);
+    }
+    
     this.ctx.fill();
   }
 }
@@ -95,7 +100,7 @@ export default class VisorImage {
 
   loop() {
     if(Interaction.positions.mouse.y<this.limits.y0 || Interaction.positions.mouse.y>this.limits.y1) return;
-
+    
     const x = Math.floor(Interaction.positions.mouse.x/Metrics.GRID);
     const y = Math.floor(Interaction.positions.mouse.y/Metrics.GRID);
 
@@ -129,7 +134,7 @@ export default class VisorImage {
   }
 
   resize() {
-    this.maxSize = Metrics.GRID * 7;
+    this.maxSize = isSmartphone? Metrics.GRID * 15 : Metrics.GRID * 7;
     this.setupSize();
   }
 }
