@@ -270,6 +270,6 @@ export const ControllerPage = {
   },
 
   isUrlSameHost: function (__hrefURL) {
-    return (__hrefURL.startsWith("/") || new URL(__hrefURL).host === this.host);
+    return (__hrefURL.startsWith("/") || new URL(__hrefURL).host === this.host || !__hrefURL);
   }
 };

@@ -1,6 +1,6 @@
 @use "sass:math";
 
-.billboard-home {
+.billboard-text {
     --width: 100%;
     --color: var(--primary-color);
     --bg: transparent;
@@ -8,7 +8,7 @@
     --font-size: var(--font-size-l);
 }
 
-.billboard-home {
+.billboard-text {
     position: relative;
     padding: var(--padding);
 

@@ -8,7 +8,7 @@ export const Statics = {
     if(isDebug) {
       this.stats = new Stats();
       this.stats.showPanel(0); // 0: fps, 1: ms, 2: mb, 3+: custom
-     // __container.appendChild(this.stats.dom);
+      __container.appendChild(this.stats.dom);
     }
   },
 

@@ -4,6 +4,7 @@ import Wrap from '../layout/Wrap';
 import BillboardText from '../components/BillboardText';
 import { GetBy } from '../_app/cuchillo/core/Element';
 import VisorImage from '../components/VisorImage';
+import Header from '../layout/Header';
 
 
 export default class Home extends Page {
@@ -14,7 +15,9 @@ export default class Home extends Page {
   constructor() {
     super();
     this._billboard = new BillboardText(GetBy.class("__billboard", this.container)[0]);
-    this._visor = new VisorImage();
+    this._visor = new VisorImage(GetBy.class("__visorProjects", this.container)[0]);
+
+    this.addDispose(()=>this._billboard.dispose());
   }
 
   //SHOW
@@ -23,6 +26,7 @@ export default class Home extends Page {
   show__effect(__call) {
     Wrap.directShow();
     this._billboard.show();
+    Header.show();
     this.afterShow();
   }
 
@@ -33,7 +37,13 @@ export default class Home extends Page {
   //HIDE
   beforeHide() {}
   hide__effect() {
-    Wrap.hide(() => {this.afterHide();});
+    Header.hide();
+    this._billboard.hide();
+    setTimeout(()=> {
+      Wrap.directHide();
+      this.afterHide();
+    },1000)
+    
   }
 
   afterHide() {
@@ -43,6 +53,7 @@ export default class Home extends Page {
   //RESIZE
   resize() {
     super.resize();
+    this._visor.resize();
   }
 
   //LOOP

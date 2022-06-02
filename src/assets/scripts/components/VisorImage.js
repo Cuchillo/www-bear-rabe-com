@@ -27,13 +27,11 @@ class VisorImage__Image {
   }
   get width() { return this._width; }
   set width(__w) {
-   // this._width = (__w * Sizes.RATIO);
-    gsap.to(this,{_width:(__w * Sizes.RATIO), ease: Power2.easeOut, duration:.2});
+    gsap.to(this,{_width:(__w * Sizes.RATIO), ease: Power2.easeOut, duration:.2, delay:.01});
   }
   get height() { return this._height; }
   set height(__h) {
-   // this._height = (__h * Sizes.RATIO);
-    gsap.to(this,{_height:(__h * Sizes.RATIO), ease: Power2.easeOut, duration:.2});
+    gsap.to(this,{_height:(__h * Sizes.RATIO), ease: Power2.easeOut, duration:.2, delay:.01});
   }
 
   constructor(__ctx) {
@@ -52,29 +50,42 @@ class VisorImage__Image {
 export default class VisorImage {
   canvas = InterfaceCanvas.canvas;
   ctx = InterfaceCanvas.ctx;
-  image = new VisorImage__Image(this.ctx);
+  visor = new VisorImage__Image(this.ctx);
   images = []
   position = {
     x:0,
     y:0
   }
+  limits = {
+    y0:0,
+    y1:0
+  }
+
   actual = 0;
-  max;
+  maxSize;
         
   constructor(__container) {
     this.container = __container;
-
+    this.setupSize();
     this.setupImages();
   }
 
+  setupSize() {
+    const rect = this.container.getBoundingClientRect();
+    this.limits = {
+      y0:rect.top,
+      y1:rect.bottom,
+    }
+  }
+
   setupImages() {
-    console.log(IMAGES_PROJECTS)
     IMAGES_PROJECTS.map(item => {
       const dom = new Image();
       dom.src = item.image;
 
       this.images.push({
         image: dom,
+        project: item.project,
         width: item.width,
         height: item.height,
       })
@@ -83,30 +94,42 @@ export default class VisorImage {
 
 
   loop() {
+    if(Interaction.positions.mouse.y<this.limits.y0 || Interaction.positions.mouse.y>this.limits.y1) return;
+
     const x = Math.floor(Interaction.positions.mouse.x/Metrics.GRID);
     const y = Math.floor(Interaction.positions.mouse.y/Metrics.GRID);
 
     if(this.position.x != x || this.position.y != y) {
-      this.max = Metrics.GRID * 7;
-      const imgActual = this.images[this.actual];
-      this.actual = this.actual+1 == IMAGES_PROJECTS.length? 0 : this.actual + 1;
-      this.image.image = imgActual.image;
-
-      this.image.x = (x * Metrics.GRID) + (Metrics.GRID *.5);
-      this.image.y = (y * Metrics.GRID) + (Metrics.GRID *.5);
-
-      if (imgActual.width > imgActual.height) {
-        this.image.width = this.max;
-        this.image.height = this.max * (imgActual.height/imgActual.width);
-      } else {
-        this.image.height = this.max;
-        this.image.width = this.max * (imgActual.width/imgActual.height);
-      }
-                 
+      this.changeImage();
+      this.visor.x = (x * Metrics.GRID) + (Metrics.GRID *.5);
+      this.visor.y = (y * Metrics.GRID) + (Metrics.GRID *.5);           
       this.position = { x:x, y:y}
     }
 
-    this.image.loop();  
-    
+    this.visor.loop();   
+  }
+
+  changeImage() {
+    const img = this.images[this.actual];
+  
+    this.visor.image = img.image;
+
+    if (img.width > img.height) {
+      this.visor.width = this.maxSize;
+      this.visor.height = this.maxSize * (img.height/img.width);
+    } else {
+      this.visor.height = this.maxSize;
+      this.visor.width = this.maxSize * (img.width/img.height);
+    }
+
+    this.actual = this.actual+1 == IMAGES_PROJECTS.length? 0 : this.actual + 1;
+
+    //link
+    this.container.setAttribute("href", PROJECTS[img.project].url);
+  }
+
+  resize() {
+    this.maxSize = Metrics.GRID * 7;
+    this.setupSize();
   }
 }

@@ -1,0 +1,14 @@
+.block-ul-projects {
+    visibility: hidden;
+}
+.block-visor-projects {
+    --top: #{gridSize(5)};
+    --bottom: #{gridSize(3)};
+    --height: calc(100% - var(--top) - var(--bottom));
+
+    position: absolute;
+    top: var(--top);
+    left:0;
+    width: 100%;
+    height: var(--height);
+}

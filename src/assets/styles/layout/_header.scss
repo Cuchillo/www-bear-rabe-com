@@ -1,10 +1,8 @@
 @use "sass:math";
 
 #Header {
-    --width: 100%;
     --color: var(--primary-color);
     --bg: transparent;
-    --padding: var(--grid);
     --font-size: var(--font-size-l);
 }
 
@@ -12,9 +10,9 @@
     @include z-index($z-index-header);
     position: fixed;
     width: var(--width);
-    left: 0;
-    bottom: 0;
-    padding: var(--padding);
+    left: var(--grid);
+    bottom: var(--grid);
+    opacity: 0;
 
     display: flex;
     justify-content: flex-start;
@@ -22,6 +20,18 @@
 
     color: var(--color);
     background-color: var(--bg);
+}
+
+#Header > .mask {
+  position: absolute;
+  @include z-index(2);
+  top:0;
+  left:0;
+  width: calc(100% + .05em);
+  height: 100%;
+  background-color: var(--color);
+  transform: scale3d(1,1,1);
+  transform-origin: top right;
 }
 
 #Header > ul,
@@ -35,6 +45,7 @@
 }
 
 #Header > ul > li {
+  position: relative;
   flex: 0 0 auto;
   margin-right: .35em;
 

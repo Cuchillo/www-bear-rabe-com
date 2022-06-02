@@ -17,7 +17,7 @@
               url: "{{ item.link | url }}",
               images: [ 
                  {% for image in item.acf.images %}
-                    "{{ image.sizes["@1x"] }}",
+                    "{{ image.sizes['@1x'] }}",
                  {% endfor %}
                  ]
             },
@@ -30,7 +30,7 @@
             {% for image in item.acf.images %}
             {
               project: {{ index }},
-              image: "{{ image.sizes['thumb'] }}",
+              image: "{{ image.sizes['@1x'] }}",
               width: {{ image.sizes['@1x-width'] }},
               height: {{ image.sizes['@1x-height'] }},
             },

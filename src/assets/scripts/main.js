@@ -52,8 +52,6 @@ export default class Main {
   static init () {
     Basics.id = "w11p_v005"; // ID para cookies
 
-    Header.init();
-
     Metrics.init(() => Main.resize()); // Tamaños y resize
     Keyboard.enable(); // ESC para cerrar ventana
     Accessibility.init(); // Utils accesibilidad
@@ -114,7 +112,7 @@ export default class Main {
   static resize () {
     TopCanvas.resize();
     Guides.resize();
-    Header.resize();
+    
     MaskedLinks.resize();
     InterfaceCanvas.resize();
     ControllerPage.resize();
@@ -124,8 +122,7 @@ export default class Main {
     InterfaceCanvas.loop();
     ControllerPage.loop();
     TopCanvas.loop();
-    Header.loop();
-    
+        
     if (Scroll.isScrolling) Scroll.loop();
   }
 

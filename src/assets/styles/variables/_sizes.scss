@@ -18,3 +18,7 @@
 @media (max-width: $smartphone) {
   :root {}
 }
+
+@function gridSize($n) {
+  @return calc(#{$n} * var(--grid));
+}

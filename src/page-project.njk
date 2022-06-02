@@ -22,9 +22,7 @@ layout: layout/default
 {% import "components/next_project.njk" as NextProject with context %}
 {% import "components/info_project.njk" as InfoProject with context %} #}
 
-{% set __paletteInit = "green-dark" %}
-
-<article class='default project' data-page='{{ __page }}' data-palette='{{ __paletteInit }}'>
+<article class='default project' data-page='{{ __page }}' data-palette='{{ __palette }}'>
   {# {{ HeaderProject.block(data.title.rendered, data.acf, data.magazine_counter) }}
   {{ InfoProject.block(data.title.rendered, data.acf, __palette) }}
   {{ FlexibleContent.flexible(data.acf.blocks_custom) }}
