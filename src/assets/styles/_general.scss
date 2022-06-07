@@ -17,6 +17,7 @@ body {
         overflow: hidden;
         height: 100vh;
 
+        .wrap-out,
         .wrap {
             @include z-index($z-index-wrap);
             position: fixed;

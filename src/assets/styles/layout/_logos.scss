@@ -26,6 +26,7 @@
   width: var(--width);
   height: var(--height);
   pointer-events: none;
+  opacity: 0;
 
   svg {
     position: absolute;

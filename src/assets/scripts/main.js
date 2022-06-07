@@ -21,6 +21,7 @@ import { ControllerPage } from './_app/cuchillo/pages/ControllerPage';
 import { Metrics } from './_app/cuchillo/core/Metrics';
 import Default from './pages/Default';
 import Home from './pages/Home';
+import Project from './pages/Project';
 import Legal from './pages/Legal';
 import EventDispatcher from './_app/cuchillo/core/EventDispatcher';
 import Page from './_app/cuchillo/pages/Page';

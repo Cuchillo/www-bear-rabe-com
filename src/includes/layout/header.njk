@@ -1,30 +1,37 @@
 <header id="Header">
-  <ul aria-label="Take a look at our RRSS">
-     {% if contact[renderData.language].rrss %}
-        {% for item in contact[renderData.language].rrss %}
-        <li>
-            <a class="link-with-mask" href="{{ item.url }}" rel="nofollow" target='_blank' data-masked-link>
+  <h1 class="title-with-label header__title">
+    <span class="deco"><span class="icon"><span>2</span><span>0</span></span></span>
+    <span class="text">Beyond the wall, Ceyond the hole</span>
+  </h1>
+  
+  <nav class="header__nav">
+    <ul aria-label="Take a look at our RRSS">
+      {% if contact[renderData.language].rrss %}
+          {% for item in contact[renderData.language].rrss %}
+          <li>
+              <a class="link-with-mask" href="{{ item.url }}" rel="nofollow" target='_blank' data-masked-link>
+                <span class="deco">
+                  <span class="icon">{{ item.url | urlico}}</span>
+                </span>
+                <span class="text"><span>{{ item.text }}<span></span>
+              </a>
+          </li>
+          {% endfor %}
+        {% endif %}
+        {% for item in menu[renderData.language] %}
+          <li>
+            {% set activeLink = 'aria-current=page' if page.url === item.url else "" %}
+            <a class="link-with-mask" href="{{ item.url }}" {{ activeLink }} data-masked-link>
               <span class="deco">
-                <span class="icon">{{ item.url | urlico}}</span>
+                <span class="icon">{{ item.title | urlico}}</span>
               </span>
-              <span class="text"><span>{{ item.text }}<span></span>
+              <span class="text"><span>{{ item.title }}<span></span>
             </a>
-        </li>
+          </li>
         {% endfor %}
-      {% endif %}
-      {% for item in menu[renderData.language] %}
-        <li>
-          {% set activeLink = 'aria-current=page' if page.url === item.url else "" %}
-          <a class="link-with-mask" href="{{ item.url }}" {{ activeLink }} data-masked-link>
-            <span class="deco">
-              <span class="icon">{{ item.title | urlico}}</span>
-            </span>
-            <span class="text"><span>{{ item.title }}<span></span>
-          </a>
-        </li>
-      {% endfor %}
-  </ul>
-  <span class="mask"></span>
+    </ul>
+    <span class="mask"></span>
+  </nav>
 </header>
 
 
