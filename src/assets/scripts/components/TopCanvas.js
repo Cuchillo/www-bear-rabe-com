@@ -76,13 +76,13 @@ export default class TopCanvas {
     Keyboard.add("s", "s", ()=> {this.cols--});
     Keyboard.add("q", "q", ()=> {this.progress+=.1});
     Keyboard.add("w", "w", ()=> {this.progress-=.1});
-    Keyboard.add("n", "n", ()=> {this.loop()});
+    Keyboard.add("n", "n", ()=> {this.loop()});*/
 
     setInterval(()=> {this.grid = Functions.arrayRandom(this.grid);}, 1200);
     setInterval(()=> {gsap.to(this,{progress:Maths.maxminRandom(1,10)/10, duration:.3, ease:Power2.easeOut})}, 900);
     setInterval(()=> {
       gsap.to(this,{cols:Maths.maxminRandom(1,16), duration:.2, ease:Power2.easeOut})}
-    , 410);*/
+    , 410);
     
   }
 

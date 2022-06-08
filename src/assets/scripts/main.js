@@ -63,7 +63,7 @@ export default class Main {
     
     Guides.init();
     Guides.add({cols:Metrics.COLS, rows:'auto'});
-    //TopCanvas.init();
+    TopCanvas.init();
 
 
     BG.init(CMS_COLORS); // Control de paletas y color de fondo de pantallas. Automatico si añadimos un data-palette='loquesea' en el div con data-page

@@ -28,6 +28,18 @@ export default class Home extends Page {
     this._billboard.show();
     Header.show();
     this.afterShow();
+
+    setTimeout(()=> {this.hidetext()}, 4000);
+  }
+
+  showText() {
+    this._billboard.show();
+    setTimeout(()=> {this.hidetext()}, 4000);
+  }
+
+  hidetext() {
+    this._billboard.hide();
+    setTimeout(()=> {this.showText()}, 4000);
   }
 
   afterShow() {
