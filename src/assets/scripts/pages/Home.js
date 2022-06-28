@@ -29,7 +29,7 @@ export default class Home extends Page {
     Header.show();
     this.afterShow();
 
-    setTimeout(()=> {this.hidetext()}, 4000);
+    
   }
 
   showText() {

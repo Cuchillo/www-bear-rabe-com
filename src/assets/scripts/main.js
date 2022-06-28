@@ -26,7 +26,7 @@ import Legal from './pages/Legal';
 import EventDispatcher from './_app/cuchillo/core/EventDispatcher';
 import Page from './_app/cuchillo/pages/Page';
 import { Interaction, MrInteraction } from './_app/cuchillo/core/Interaction';
-import { gsap } from "gsap";
+import { gsap, Power2 } from "gsap";
 import { ControllerWindow } from './_app/cuchillo/windows/ControllerWindow';
 import Win from './_app/cuchillo/windows/Window';
 
@@ -44,6 +44,7 @@ import { ScrollItem__WebGLSketch } from './scroll/ScrollItem__WebGLSketch';
 import { MaskedLinks } from "./components/MaskedLinks";
 import Guides from "./_app/cuchillo/utils/Guides";
 import TopCanvas from "./components/TopCanvas";
+import BackgroundLogo from "./components/BackgroundLogo";
 
 export default class Main {
 
@@ -90,8 +91,36 @@ export default class Main {
 
   static setup () {
     this.setupEvents();
+    setTimeout(()=>{this.intro()}, 1000); 
     // INIT PAGE
-    ControllerPage.init(Wrap.mainholder);
+  }
+
+  static intro() {
+    InterfaceCanvas.frameSkip = 10;
+    TopCanvas.startAnimation(()=> {
+      InterfaceCanvas.frameSkip = 1;
+      TopCanvas.cols = 0;
+      BG.changeBG("#000000", null, 0);
+      BackgroundLogo.setBlack();
+      
+      setTimeout(()=>{
+        BG.changeBG("#FFFFFF", null, 0);
+        BackgroundLogo.setWhite();
+        BackgroundLogo.setInverted();
+        ControllerPage.init(Wrap.mainholder);
+      }, 1000);
+    })
+   /* setTimeout(()=>{TopCanvas.cols = 18}, 500);
+    setTimeout(()=>{TopCanvas.cols = 6}, 800);
+    setTimeout(()=>{TopCanvas.cols = 9}, 1100);
+    setTimeout(()=>{TopCanvas.cols = 3}, 1400);
+    setTimeout(()=>{TopCanvas.cols = 6}, 1700);    
+    setTimeout(()=>{TopCanvas.cols = 9}, 2000); 
+    setTimeout(()=>{TopCanvas.cols = 2}, 2300); 
+    setTimeout(()=>{TopCanvas.cols = 5}, 2600); 
+    setTimeout(()=>{TopCanvas.cols = 12}, 2900); 
+    setTimeout(()=>{TopCanvas.cols = 7}, 3100); 
+    setTimeout(()=>{TopCanvas.cols = 3}, 3400); */
   }
 
   static setupEvents () {

@@ -1,7 +1,7 @@
 import { Keyboard } from "../_app/cuchillo/core/Keyboard";
 import { Maths } from "../_app/cuchillo/utils/Maths";
 import { Functions } from "../_app/cuchillo/utils/Functions";
-import { gsap, Power2 } from "gsap";
+import { gsap, Power2, Power1 } from "gsap";
 import InterfaceCanvas from "../_app/cuchillo/layout/InterfaceCanvas";
 
 class TopCanvas__Image {
@@ -51,9 +51,12 @@ export default class TopCanvas {
   static rows;
   static progress = 0;
   static cont=-1;
+  static _call;
+  static time=50;
+  
   static get cols() { return this._cols; }
   static set cols(__cols) {
-    this._cols = __cols;
+    this._cols = Math.round(__cols);
     this.sizeGridH = this.width/this._cols;
     this.sizeGridV = this.sizeGridH * this.ratioGrid;
     this.rows = Math.ceil(this.height/this.sizeGridV);
@@ -69,8 +72,9 @@ export default class TopCanvas {
   ] 
 
   static init(__container = document.body) {
-    this.cols = 3;
+    this.cols = 1;
     this.isEnabled = true;
+    this.grid = Functions.arrayRandom(this.grid);
 
     /*Keyboard.add("a", "a", ()=> {this.cols++});
     Keyboard.add("s", "s", ()=> {this.cols--});
@@ -78,12 +82,27 @@ export default class TopCanvas {
     Keyboard.add("w", "w", ()=> {this.progress-=.1});
     Keyboard.add("n", "n", ()=> {this.loop()});*/
 
-    setInterval(()=> {this.grid = Functions.arrayRandom(this.grid);}, 1200);
-    setInterval(()=> {gsap.to(this,{progress:Maths.maxminRandom(1,10)/10, duration:.3, ease:Power2.easeOut})}, 900);
-    setInterval(()=> {
-      gsap.to(this,{cols:Maths.maxminRandom(1,16), duration:.2, ease:Power2.easeOut})}
-    , 410);
+   // setInterval(()=> {this.grid = Functions.arrayRandom(this.grid);}, 1200);
+   // setInterval(()=> {gsap.to(this,{progress:Maths.maxminRandom(1,10)/10, duration:.3, ease:Power2.easeOut})}, 900);
+  }
+
+  static startAnimation(__call) {
+    this.animationLoop();
+    this._call = __call;
+    gsap.to(TopCanvas,{progress:1, duration:2, ease:Power2.easeOut});
+    gsap.to(TopCanvas,{time:400, duration:2, delay: 0, ease:Power1.easeIn});
+  }
+
+  static animationLoop() {
+    this.cont++;
+    const n2 = this.cont%2 === 0? 6 : 20
+    this.cols = Maths.maxminRandom(2,n2);
     
+    if(this.time!=400) {
+      setTimeout(()=> {this.animationLoop()}, this.time);
+    } else {
+      setTimeout(()=> {this._call()}, this.time);
+    }
   }
 
   static setupGrid() {
@@ -108,10 +127,7 @@ export default class TopCanvas {
     let indexImage = 0;
     const limitProgress = Math.round(this.total * this.progress)
     
-    console.log(0)
-
-
-
+   
      for(let i=0; i<limitProgress; i++) {
       if((this.grid[i].x%2===0 && this.grid[i].y%2!=0) || this.grid[i].y%2===0 && this.grid[i].x%2!=0) {
         this.ctx.beginPath();

@@ -148,7 +148,7 @@ export default class BG {
     }
 
     this.actualColor = __color;
-
+    
     if (__time === 0) {
       gsap.set(this.container, { backgroundColor: __color });
       if (__call) __call();

@@ -4,8 +4,8 @@
   --width: calc(100% - var(--grid) * 2);
   --height: calc(100% - var(--grid) * 10);
   --color: var(--black);
-
-  .--white {
+  
+  &.--black {
     --color: var(--white);
   }
 
@@ -26,8 +26,7 @@
   width: var(--width);
   height: var(--height);
   pointer-events: none;
-  opacity: 0;
-
+  
   svg {
     position: absolute;
     top:0;

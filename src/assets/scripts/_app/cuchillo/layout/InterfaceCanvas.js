@@ -5,6 +5,8 @@ export default class InterfaceCanvas {
   static ctx = this.canvas.getContext('2d');
   static width;
   static height;
+  static cont = 0;
+  static frameSkip = 1;
 
   static init(__container = document.body, __id = "Interface__Canvas") {
     this.canvas.id = __id;
@@ -14,7 +16,11 @@ export default class InterfaceCanvas {
   }
 
   static loop() {
-    this.ctx.clearRect(0, 0, this.width, this.height);
+    this.cont++;
+    
+    if(this.cont%this.frameSkip===0) {
+      this.ctx.clearRect(0, 0, this.width, this.height);
+    }
   }
 
   static resize() {
