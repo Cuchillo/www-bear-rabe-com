@@ -10,7 +10,7 @@ export default class BackgroundLogo {
   static container = GetBy.id("Logos");
     
   static show(__call) {
-    gsap.to(this.mainholder, {
+    gsap.to(this.container, {
       alpha: 1,
       duration: .2,
       ease: Power2.easeOut,
@@ -21,7 +21,7 @@ export default class BackgroundLogo {
   }
   
   static hide(__call) {
-    gsap.to(this.mainholder, {
+    gsap.to(this.container, {
       alpha: 0,
       duration: .2,
       ease: Power2.easeOut,
@@ -31,12 +31,12 @@ export default class BackgroundLogo {
     });
   }
 
-  static setBlack() {
-    this.container.classList.add("--black");
+  static setWhite() {
+    this.container.classList.add("--white");
   }
 
-  static setWhite() {
-    this.container.classList.remove("--black");
+  static setBlack() {
+    this.container.classList.remove("--white");
   }
 
   static setInverted() {

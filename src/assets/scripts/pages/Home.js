@@ -5,6 +5,7 @@ import BillboardText from '../components/BillboardText';
 import { GetBy } from '../_app/cuchillo/core/Element';
 import VisorImage from '../components/VisorImage';
 import Header from '../layout/Header';
+import BackgroundLogo from '../components/BackgroundLogo';
 
 
 export default class Home extends Page {
@@ -25,6 +26,7 @@ export default class Home extends Page {
 
   show__effect(__call) {
     Wrap.directShow();
+    BackgroundLogo.show();
     this._billboard.show();
     Header.show();
     this.afterShow();
@@ -50,6 +52,7 @@ export default class Home extends Page {
   beforeHide() {}
   hide__effect() {
     Header.hide();
+    BackgroundLogo.hide();
     this._billboard.hide();
     setTimeout(()=> {
       Wrap.directHide();

@@ -15,8 +15,6 @@
     --font-size: var(--font-size-xl)
 }
 
-
-
 .header__nav {
     @include z-index($z-index-header);
     position: fixed;

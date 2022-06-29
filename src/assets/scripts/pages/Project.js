@@ -6,6 +6,7 @@ import { GetBy } from '../_app/cuchillo/core/Element';
 import VisorImage from '../components/VisorImage';
 import Header from '../layout/Header';
 import BackgroundPanels from '../components/BackgroundPanels';
+import BackgroundLogo from '../components/BackgroundLogo';
 
 
 export default class Project extends Page {
@@ -19,7 +20,8 @@ export default class Project extends Page {
 
   show__effect(__call) {
     Wrap.directShow();
-    BackgroundPanels.show();
+    BackgroundLogo.hide();
+    BackgroundPanels.show();    
     this.afterShow();
   }
 

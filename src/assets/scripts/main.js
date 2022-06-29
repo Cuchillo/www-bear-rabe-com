@@ -91,8 +91,13 @@ export default class Main {
 
   static setup () {
     this.setupEvents();
-    setTimeout(()=>{this.intro()}, 1000); 
-    // INIT PAGE
+
+    if(!isDebug) {
+      setTimeout(()=>{this.intro()}, 1000); 
+    } else {
+      BackgroundLogo.setInverted();
+      ControllerPage.init(Wrap.mainholder);
+    }
   }
 
   static intro() {
@@ -101,11 +106,11 @@ export default class Main {
       InterfaceCanvas.frameSkip = 1;
       TopCanvas.cols = 0;
       BG.changeBG("#000000", null, 0);
-      BackgroundLogo.setBlack();
+      BackgroundLogo.setWhite();
       
       setTimeout(()=>{
         BG.changeBG("#FFFFFF", null, 0);
-        BackgroundLogo.setWhite();
+        BackgroundLogo.setBlack();
         BackgroundLogo.setInverted();
         ControllerPage.init(Wrap.mainholder);
       }, 1000);
