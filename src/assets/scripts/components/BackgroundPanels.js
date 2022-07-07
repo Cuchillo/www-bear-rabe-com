@@ -74,7 +74,31 @@ export default class BackgroundPanels {
       ease: Power2.easeOut
     });
 
-  
+    gsap.to(__panel,{
+      scaleX:position[0], 
+      scaleY:position[1], 
+      duration: 1,
+      ease: Power2.easeOut,
+      onUpdate:()=> {
+        __panel.style.transformOrigin =  `${this.origins[__index].x}% ${this.origins[__index].y}%` 
+      }
+    });
+  }
+
+  static hidePanel(__panel, __index) {
+    __panel.removeAttribute("class");
+
+    const v1 = this.getVal(10);
+    const v2 = this.getVal(v1==1? 0 : 10);
+    const position = Functions.arrayRandom([v1,v2]);
+
+    gsap.to(this.origins[__index],{
+      x:this.positionsH[__index], 
+      y:this.positionsV[__index], 
+      duration: 1,
+      ease: Power2.easeOut
+    });
+
     gsap.to(__panel,{
       scaleX:position[0], 
       scaleY:position[1], 
@@ -92,6 +116,7 @@ export default class BackgroundPanels {
   }
 
   static hide() {
-
+    this.hidePanel(this.panels[0], 0);
+    this.hidePanel(this.panels[1], 1);
   }
 }

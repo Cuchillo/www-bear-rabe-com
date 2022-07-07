@@ -13,6 +13,8 @@
   pointer-events: none;
   
   > span {
+    --bg: #fff;
+
     position: absolute;
     top:0;
     left:0;
@@ -20,9 +22,10 @@
     height: 100%;
     transform: scale3D(0,0,1);
     transition: background-color .2s ease-in;
+    background-color: var(--bg);
 
-    &.--blue {background-color: var(--blue);}
-    &.--green {background-color: var(--green);}
-    &.--grey {background-color: var(--grey);}
+    &.--blue {--bg: var(--blue);}
+    &.--green {--bg: var(--green);}
+    &.--grey {--bg: var(--grey);}
   }
 }

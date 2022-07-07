@@ -1,10 +1,10 @@
 <header id="Header">
-  <h1 class="title-with-label header__title">
-    <span class="deco"><span class="icon"><span>2</span><span>0</span></span></span>
+  <h1 class="__title title-with-label header__title">
+    <span class="deco __maskedText"><span class="icon"><span>2</span><span>0</span></span><span class="mask"></span></span>
     <span class="text">Beyond the wall, Ceyond the hole</span>
   </h1>
   
-  <nav class="header__nav">
+  <nav class="header__nav __nav">
     <ul aria-label="Take a look at our RRSS">
       {% if contact[renderData.language].rrss %}
           {% for item in contact[renderData.language].rrss %}
@@ -30,7 +30,7 @@
           </li>
         {% endfor %}
     </ul>
-    <span class="mask"></span>
+    <span class="mask __mask"></span>
   </nav>
 </header>
 

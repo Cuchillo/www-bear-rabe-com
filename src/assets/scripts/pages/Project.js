@@ -7,12 +7,24 @@ import VisorImage from '../components/VisorImage';
 import Header from '../layout/Header';
 import BackgroundPanels from '../components/BackgroundPanels';
 import BackgroundLogo from '../components/BackgroundLogo';
+import { DataHolder } from '../DataHolder';
+import TextMaskedEffect from '../components/TextMaskedEffect';
 
 
 export default class Project extends Page {
 
+  data;
+
   constructor() {
     super();
+    this.setup();
+  }
+
+  setup() {
+    this.data = DataHolder.getProject(Number(this.container.getAttribute("data-project")));
+    Header.title.subtext = String(this.data.id).padStart(2, "0"); 
+    Header.title.text = this.data.title;
+    TextMaskedEffect.setup();
   }
 
   //SHOW
@@ -21,7 +33,9 @@ export default class Project extends Page {
   show__effect(__call) {
     Wrap.directShow();
     BackgroundLogo.hide();
-    BackgroundPanels.show();    
+    BackgroundPanels.show();   
+    TextMaskedEffect.show();
+    
     this.afterShow();
   }
 
@@ -32,6 +46,7 @@ export default class Project extends Page {
   //HIDE
   beforeHide() {}
   hide__effect() {
+    TextMaskedEffect.hide();
     BackgroundPanels.hide();
     setTimeout(()=> {
       Wrap.directHide();
@@ -47,6 +62,11 @@ export default class Project extends Page {
   //RESIZE
   resize() {
     super.resize();
+  }
+
+  dispose() {
+    TextMaskedEffect.dispose();
+    super.dispose();
   }
 
   //LOOP

@@ -13,6 +13,7 @@
         {% for item in all[renderData.language].projects %}
             {
               id: {{ loop.index }},
+              project_id: {{ item.id }},
               title: "{{ item.title.rendered | safe }}",
               url: "{{ item.link | url }}",
               images: [ 

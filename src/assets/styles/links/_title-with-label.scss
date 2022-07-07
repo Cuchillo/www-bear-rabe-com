@@ -22,6 +22,7 @@
     padding-left: var(--width-deco);
             
     > .deco {
+        opacity: 0;
         position: absolute;
         display: block;
         top: .015em;
@@ -46,6 +47,18 @@
             line-height: 1;
             background-color: aqua
         }
+
+        .mask {
+            position: absolute;
+            @include z-index(2);
+            top:-.03em;
+            left:0;
+            width: calc(100% + .05em);
+            height: 117.5%;
+            background-color: var(--color);
+            transform: scale3d(1,1,1);
+            transform-origin: top right;
+        }
     }
 
     > .text {
@@ -56,7 +69,30 @@
         padding-top: 0;
         padding-bottom: .15em;
     }
+
+    .masked-item {
+        position: relative;
+        opacity: 0;
+        display: inline-block;
+        margin-right: .1em;
+    
+        > .text {position: relative;}
+        > .bg,
+        > .mask {
+            position: absolute;
+            @include z-index(2);
+            top:0;
+            left:0;
+            width: calc(100% + .05em);
+            height: 115%;
+            background-color: var(--color);
+            transform: scale3d(1,1,1);
+            transform-origin: top right;
+        }
+    }
 }
+
+
 
 .title-with-label {
     @include title-with-label();
