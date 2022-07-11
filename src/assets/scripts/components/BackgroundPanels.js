@@ -10,7 +10,7 @@ export default class BackgroundPanels {
   static maxSteps = 10;
 
   static options = {
-    steps: 12,
+    steps: 8,
     timeInit: 10,
     timeInc: 20,
   }
