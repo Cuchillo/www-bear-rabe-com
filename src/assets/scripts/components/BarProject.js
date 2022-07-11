@@ -12,15 +12,18 @@ export default class BarProject {
   static domPrev = GetBy.class("__prev", this.container)[0];
   
   static set next(__id) {
-    const data = DataHolder.getProject(__id);
-    this.domNext.setAttribute("href", data.url);
-    this.domNext.setAttribute("data-cursor-image", data.images[0]);
+    this.setData(this.domNext, __id);
   }
 
   static set prev(__id) {
+    this.setData(this.domPrev, __id);
+  }
+
+  static setData(__dom, __id) {
     const data = DataHolder.getProject(__id);
-    this.domPrev.setAttribute("href", data.url);
-    this.domPrev.setAttribute("data-cursor-image", data.images[0]);
+    __dom.setAttribute("data-temp-value", __id);
+    __dom.setAttribute("href", data.url);
+    __dom.setAttribute("data-cursor-image", data.images[0]);
   }
   
   static show(){}

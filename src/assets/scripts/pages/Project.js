@@ -74,6 +74,7 @@ export default class Project extends Page {
         this.afterHide();
       },1000)
     } else {
+      BackgroundPanels.show();
       setTimeout(()=> {
         Wrap.hide(()=> {
           this.afterHide();

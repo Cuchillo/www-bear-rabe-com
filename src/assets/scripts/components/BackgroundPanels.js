@@ -24,23 +24,33 @@ export default class BackgroundPanels {
     {x:50,y:100},
   ];
   static posV = 50;
+  static _steps;
   static _cont;
   static _call;
+  static _isInfinite = false;
+  static _isRunning = false;
 
-  static show(__call) {
+  static show(__call, __isInfinite = false) {
     this._cont = 0;
-    this.colors = Functions.arrayRandom(this.colors);
-    this.positionsH = Functions.arrayRandom(this.positionsH);
-    this.positionsV = Functions.arrayRandom(this.positionsV);
-    this.showPanel(this.panels[0], 0);
-    this.showPanel(this.panels[1], 1);
+    this._steps = 0;
+    this._isInfinite = __isInfinite;
     this._call = __call;
 
-    this.loop();
+    if(!this._isRunning) {
+      this.colors = Functions.arrayRandom(this.colors);
+      this.positionsH = Functions.arrayRandom(this.positionsH);
+      this.positionsV = Functions.arrayRandom(this.positionsV);
+      this.showPanel(this.panels[0], 0);
+      this.showPanel(this.panels[1], 1);
+      this.loop();
+    }
   }
 
   static loop() {
     this._cont++;
+    this._steps++;
+    this._isRunning = true;
+
     if(this._cont%2 === 0) {
       this.colors = Functions.arrayRandom(this.colors);
     }
@@ -53,13 +63,14 @@ export default class BackgroundPanels {
     this.showPanel(this.panels[0], 0);
     this.showPanel(this.panels[1], 1);
 
-    if(this._cont != this.options.steps) {
+    if(this._steps != this.options.steps || this._isInfinite) {
       setTimeout(()=> {
         this.loop();
         if(this._call) this._call(this.colors[2]);
       }, this.options.timeInit + (this.options.timeInc * this._cont));
     } else {
       if(this._call) this._call(this.colors[2]);
+      this._isRunning = false;
       this._call = null;
     }
   }
@@ -76,14 +87,14 @@ export default class BackgroundPanels {
       x:this.positionsH[__index], 
       y:this.positionsV[__index], 
       duration: 1,
-      ease: Power2.easeOut
+      ease: this._cont === 1? Power2.easeIn : Power2.easeOut
     });
 
     gsap.to(__panel,{
       scaleX:position[0], 
       scaleY:position[1], 
       duration: 1,
-      ease: Power2.easeOut,
+      ease: this._cont === 1? Power2.easeIn : Power2.easeOut,
       onUpdate:()=> {
         __panel.style.transformOrigin =  `${this.origins[__index].x}% ${this.origins[__index].y}%` 
       }
