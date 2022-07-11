@@ -69,12 +69,17 @@ export default class Project extends Page {
     TextMaskedEffect.hide();
     if(!Basics.tempValue) {
       BackgroundPanels.hide();
+      setTimeout(()=> {
+        Wrap.directHide();
+        this.afterHide();
+      },1000)
+    } else {
+      setTimeout(()=> {
+        Wrap.hide(()=> {
+          this.afterHide();
+        });
+      },400)
     }
-    setTimeout(()=> {
-      Wrap.directHide();
-      this.afterHide();
-    },1000)
-    
   }
 
   afterHide() {
