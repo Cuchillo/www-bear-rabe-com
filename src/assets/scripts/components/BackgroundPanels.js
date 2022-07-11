@@ -56,6 +56,7 @@ export default class BackgroundPanels {
     if(this._cont != this.options.steps) {
       setTimeout(()=> {
         this.loop();
+        if(this._call) this._call(this.colors[2]);
       }, this.options.timeInit + (this.options.timeInc * this._cont));
     } else {
       if(this._call) this._call(this.colors[2]);

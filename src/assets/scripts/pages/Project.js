@@ -43,6 +43,9 @@ export default class Project extends Page {
     Wrap.directShow();
     BackgroundLogo.hide();
     BackgroundPanels.show((__color)=> {
+      this.domDescription.classList.remove("--blue")
+      this.domDescription.classList.remove("--green")
+      this.domDescription.classList.remove("--grey")
       this.domDescription.classList.add(__color)
     });   
     TextMaskedEffect.show();
