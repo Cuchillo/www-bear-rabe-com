@@ -10,11 +10,10 @@ export default class BackgroundPanels {
   static maxSteps = 10;
 
   static options = {
-    steps: 10,
+    steps: 12,
     timeInit: 10,
     timeInc: 20,
   }
-
 
   static panels = [...GetBy.selector("[data-bg-panel]")];
   static colors = ["--blue", "--green", "--grey"];
@@ -26,14 +25,16 @@ export default class BackgroundPanels {
   ];
   static posV = 50;
   static _cont;
-  
-  static show() {
+  static _call;
+
+  static show(__call) {
     this._cont = 0;
     this.colors = Functions.arrayRandom(this.colors);
     this.positionsH = Functions.arrayRandom(this.positionsH);
     this.positionsV = Functions.arrayRandom(this.positionsV);
     this.showPanel(this.panels[0], 0);
     this.showPanel(this.panels[1], 1);
+    this._call = __call;
 
     this.loop();
   }
@@ -56,6 +57,9 @@ export default class BackgroundPanels {
       setTimeout(()=> {
         this.loop();
       }, this.options.timeInit + (this.options.timeInc * this._cont));
+    } else {
+      if(this._call) this._call(this.colors[2]);
+      this._call = null;
     }
   }
 

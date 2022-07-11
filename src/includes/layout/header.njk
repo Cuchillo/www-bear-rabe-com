@@ -1,8 +1,14 @@
 <header id="Header">
-  <h1 class="__title title-with-label header__title">
-    <span class="deco __maskedText"><span class="icon"><span>2</span><span>0</span></span><span class="mask"></span></span>
-    <span class="text">Beyond the wall, Ceyond the hole</span>
-  </h1>
+  {% if renderData.h1 %}
+    {% set tag = "h1" %}
+  {% else %}
+    {% set tag = "div" %}
+  {% endif %}
+  
+  <{{ tag }} class="__title title-with-label header__title">
+    <span class="deco __maskedText"><span class="icon"><span></span><span></span></span><span class="mask"></span></span>
+    <span class="text">{{ renderData.h1 }}</span>
+  </{{ tag }}>
   
   <nav class="header__nav __nav">
     <ul aria-label="Take a look at our RRSS">

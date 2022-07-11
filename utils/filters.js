@@ -29,5 +29,12 @@ module.exports = {
             return text.slice(0, 1);
         }
     },
-    decoName: (text) => text.replace("Be", "<b>Be</b>").replace("Ar", "<b>Ar</b>")
+    decoName: (text) => text.replace("Be", "<b>Be</b>").replace("Ar", "<b>Ar</b>"),
+    labelDeco: (text) => {
+        let newText = "";
+        text.split("").map(char => {
+            newText = newText + "<span>" + char + "</span>";
+        });
+        return newText;
+    },
 };

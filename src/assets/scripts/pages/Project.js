@@ -9,11 +9,15 @@ import BackgroundPanels from '../components/BackgroundPanels';
 import BackgroundLogo from '../components/BackgroundLogo';
 import { DataHolder } from '../DataHolder';
 import TextMaskedEffect from '../components/TextMaskedEffect';
+import { Scroll } from '../_app/cuchillo/scroll/Scroll';
+import Scrollbar from '../_app/cuchillo/scroll/Scrollbar';
+import { isMobile } from '../_app/cuchillo/core/Basics';
 
 
 export default class Project extends Page {
 
   data;
+  domDescription;
 
   constructor() {
     super();
@@ -22,18 +26,25 @@ export default class Project extends Page {
 
   setup() {
     this.data = DataHolder.getProject(Number(this.container.getAttribute("data-project")));
+    this.domDescription = GetBy.class("__description", this.container)[0];
     Header.title.subtext = String(this.data.id).padStart(2, "0"); 
     Header.title.text = this.data.title;
     TextMaskedEffect.setup();
   }
 
   //SHOW
-  beforeShow() {}
+  beforeShow() {
+    Scroll.init(Scroll.AXIS_Y, {domResize:this.container, smooth:!isMobile, multiplicator:1});
+    Scroll.setScrollbar(new Scrollbar());
+    Scroll.start();
+  }
 
   show__effect(__call) {
     Wrap.directShow();
     BackgroundLogo.hide();
-    BackgroundPanels.show();   
+    BackgroundPanels.show((__color)=> {
+      this.domDescription.classList.add(__color)
+    });   
     TextMaskedEffect.show();
     
     this.afterShow();
@@ -46,6 +57,7 @@ export default class Project extends Page {
   //HIDE
   beforeHide() {}
   hide__effect() {
+    Scroll.hide();
     TextMaskedEffect.hide();
     BackgroundPanels.hide();
     setTimeout(()=> {

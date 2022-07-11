@@ -63,7 +63,7 @@ export default class Main {
     MaskedLinks.init();
     
     Guides.init();
-    Guides.add({cols:Metrics.COLS, rows:'auto'});
+    Guides.add({cols:Metrics.COLS, rows:'auto', color:'#fa4d56'});
     TopCanvas.init();
 
 

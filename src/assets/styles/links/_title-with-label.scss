@@ -7,12 +7,16 @@
     --color: var(--primary-color);
     --time: .4s;
     --font-size-deco: .5em;
+    --opacity: 0;
 
-    & .--double {
+    &.--double {
         --width-deco: calc(var(--font-size) * 2);
     }
 
-    
+    &.--show {
+        --opacity: 1;
+    }
+
     @include basic-a();
     position: relative;
     overflow: hidden;
@@ -22,7 +26,7 @@
     padding-left: var(--width-deco);
             
     > .deco {
-        opacity: 0;
+        opacity: var(--opacity);
         position: absolute;
         display: block;
         top: .015em;

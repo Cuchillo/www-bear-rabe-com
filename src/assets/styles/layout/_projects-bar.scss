@@ -1,0 +1,13 @@
+.projects-bar {
+  --font-size: var(--font-size-l)
+}
+.projects-bar {
+  opacity: 0;
+  position: fixed;
+  @include z-index($z-index-bar);
+  @include font-serif(1);
+  font-size: var(--font-size);
+  bottom: 0;
+  left: 0;
+  background-color: aqua;
+}

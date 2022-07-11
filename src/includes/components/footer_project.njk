@@ -1,0 +1,17 @@
+{% macro block(data) %}
+<section class="next-project" scroll-item data-class="next-project">
+    <a href="{{ data.link }}" 
+                data-cursor-icon="show-white"
+                data-follower-color="#ffffff"
+                data-arrow-alpha="0"
+                data-arrow-size="2"
+                data-follower-size="150"
+                data-cursor-normal>
+        {% if data.acf.cover %}
+        {% img data.acf.cover %}
+        {% endif %}
+        <div class="label">Siguiente</div>
+        <div class="title"><span class="__title" >{{ data.title.rendered | safe }}</span></div>
+    </a>
+</section>
+{% endmacro %}

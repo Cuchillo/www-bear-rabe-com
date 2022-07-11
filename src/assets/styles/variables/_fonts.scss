@@ -9,12 +9,12 @@
     --font-size-xl: #{math.div(170px, 16px) * 1rem};
     --font-size-l: #{math.div(50px, 16px) * 1rem};
     --font-size-m: #{math.div(45px, 16px) * 1rem};
-    --font-size-base: #{math.div(18px, 16px) * 1rem};
+    --font-size-base: #{math.div(25px, 16px) * 1rem};
     --font-size-s: #{math.div(15px, 16px) * 1rem};
     --font-size-xs: #{math.div(12px, 16px) * 1rem};
 
-    --line-height-sans: 1;
-    --line-height-serif: 1;
+    --line-height-sans: #{math.div(28, 25)};
+    --line-height-serif: #{math.div(28, 25)};
     --letter-spacing: -0.06em;
 
     --zoom: 1;

@@ -1,5 +1,6 @@
 ---
 renderData:
+  h1: "{{ data.title.rendered }}"
   language: "{{ data.language }}"
   title: "{{ data.acf.seo.title }}"
   description: "{{ data.acf.seo.description }}"
@@ -18,114 +19,89 @@ layout: layout/default
 
 {# {% import "flexible.njk" as FlexibleContent with context %}
 {% import "components/header_project.njk" as HeaderProject with context %}
-{% import "components/footer_project.njk" as FooterProject with context %}
+
 {% import "components/next_project.njk" as NextProject with context %}
 {% import "components/info_project.njk" as InfoProject with context %} #}
 
 <article class='default project' data-page='{{ __page }}' data-palette='{{ __palette }}' data-project='{{ data.id }}'>
-  <h1>{{ data.title.rendered }}</h1>
-
   <div class="block-project-info">
-    <h2>{{ data.acf.info.type }}</h2>
-    <h2>{{ data.acf.client.name }}</h2>
-    <h2>{{ data.acf.place.name }}</h2>
-    <h2>{{ data.acf.info.type }}</h2>
-    <h2>{{ data.acf.client.name }}</h2>
-    <h2>{{ data.acf.place.name }}</h2>
-    <h2>{{ data.acf.info.type }}</h2>
-    <h2>{{ data.acf.client.name }}</h2>
-    <h2>{{ data.acf.place.name }}</h2>
-    <h2>{{ data.acf.info.type }}</h2>
-
-    <ul>
-      <li><h2>{{ data.acf.info.type }}</h2></li>
-      <li><h2>{{ data.acf.info.type }}</h2></li>
-      <li><h2>{{ data.acf.info.type }}</h2></li>
-      <li><h2>{{ data.acf.info.type }}</h2></li>
-      <li><h2>{{ data.acf.info.type }}</h2></li>
-      <li><h2>{{ data.acf.info.type }}</h2></li>
-      <li><h2>{{ data.acf.info.type }}</h2></li>
-      <li><h2>{{ data.acf.info.type }}</h2></li>
-      <li><h2>{{ data.acf.info.type }}</h2></li>
-      <li><h2>{{ data.acf.info.type }}</h2></li>
-      <li><h2>{{ data.acf.info.type }}</h2></li>
-      <li><h2>{{ data.acf.info.type }}</h2></li>
-      <li><h2>{{ data.acf.info.type }}</h2></li>
-      <li><h2>{{ data.acf.info.type }}</h2></li>
-      <li><h2>{{ data.acf.info.type }}</h2></li>
-      <li><h2>{{ data.acf.info.type }}</h2></li>
-    </ul>
-
-<ul>
-      <li><h2>{{ data.acf.info.type }}</h2></li>
-      <li><h2>{{ data.acf.info.type }}</h2></li>
-      <li><h2>{{ data.acf.info.type }}</h2></li>
-      <li><h2>{{ data.acf.info.type }}</h2></li>
-      <li><h2>{{ data.acf.info.type }}</h2></li>
-      <li><h2>{{ data.acf.info.type }}</h2></li>
-      <li><h2>{{ data.acf.info.type }}</h2></li>
-      <li><h2>{{ data.acf.info.type }}</h2></li>
-      <li><h2>{{ data.acf.info.type }}</h2></li>
-      <li><h2>{{ data.acf.info.type }}</h2></li>
-      <li><h2>{{ data.acf.info.type }}</h2></li>
-      <li><h2>{{ data.acf.info.type }}</h2></li>
-      <li><h2>{{ data.acf.info.type }}</h2></li>
-      <li><h2>{{ data.acf.info.type }}</h2></li>
-      <li><h2>{{ data.acf.info.type }}</h2></li>
-      <li><h2>{{ data.acf.info.type }}</h2></li>
-    </ul>
-
-
-
-
-
-    <h2>{{ data.acf.client.name }}</h2>
-    <h2>{{ data.acf.place.name }}</h2>
-    <h2>{{ data.acf.info.type }}</h2>
-    <h2>{{ data.acf.client.name }}</h2>
-    <h2>{{ data.acf.place.name }}</h2>
-    <h2>{{ data.acf.info.type }}</h2>
-    <h2>{{ data.acf.client.name }}</h2>
-    <h2>{{ data.acf.place.name }}</h2>
-    <h2>{{ data.acf.info.type }}</h2>
-    <h2>{{ data.acf.client.name }}</h2>
-    <h2>{{ data.acf.place.name }}</h2>
-    <h2>{{ data.acf.info.type }}</h2>
-    <h2>{{ data.acf.client.name }}</h2>
-    <h2>{{ data.acf.place.name }}</h2>
-    <h2>{{ data.acf.info.type }}</h2>
-    <h2>{{ data.acf.client.name }}</h2>
-    <h2>{{ data.acf.place.name }}</h2>
-    <h2>{{ data.acf.info.type }}</h2>
-    <h2>{{ data.acf.client.name }}</h2>
-    <h2>{{ data.acf.place.name }}</h2>
-    <h2>{{ data.acf.info.type }}</h2>
-    <h2>{{ data.acf.client.name }}</h2>
-    <h2>{{ data.acf.place.name }}</h2>
-    <h2>{{ data.acf.info.type }}</h2>
-    <h2>{{ data.acf.client.name }}</h2>
-    <h2>{{ data.acf.place.name }}</h2>
-    <h2>{{ data.acf.info.type }}</h2>
-    <h2>{{ data.acf.client.name }}</h2>
-    <h2>{{ data.acf.place.name }}</h2>
-    <h2>{{ data.acf.info.type }}</h2>
-    <h2>{{ data.acf.client.name }}</h2>
-    <h2>{{ data.acf.place.name }}</h2>
-    <h2>{{ data.acf.info.type }}</h2>
-    <h2>{{ data.acf.client.name }}</h2>
-    <h2>{{ data.acf.place.name }}</h2>
-    <h2>{{ data.acf.info.type }}</h2>
-    <h2>{{ data.acf.client.name }}</h2>
-    <h2>{{ data.acf.place.name }}</h2>
-    <h2>{{ data.acf.info.type }}</h2>
-    <h2>{{ data.acf.client.name }}</h2>
-    <h2>{{ data.acf.place.name }}</h2>
-    <h2>{{ data.acf.info.type }}</h2>
-    <h2>{{ data.acf.client.name }}</h2>
-    <h2>{{ data.acf.place.name }}</h2>
-
-    <div class="left"></div>
-
+    <div class="col-left">
+      <h2 class="block-project-info__title">{{ data.acf.info.type }}</h2>
+      <!-- PROJECT INFO -->
+      <ul aria-label="Project info">
+        {% if data.acf.client.name %}
+        <li>
+          <span class="label">for</span>
+          <a class="link-with-label __link" href="{{ data.acf.client.url }}" target="_blank">
+            <span class="deco"><span class="icon">@</span></span>
+            <span class="text">{{ data.acf.client.name | split(" ", "_")}}</span>
+            <span class="mask"></span>
+          </a>
+        </li>
+        {% endif %}
+        {% if data.acf.place.name %}
+        <li>
+          <span class="label">at</span>
+          <a class="link-with-label __link" href="{{ data.acf.place.url }}" target="_blank">
+            <span class="deco"><span class="icon">@</span></span>
+            <span class="text">{{ data.acf.place.name | split(" ", "_")}}</span>
+            <span class="mask"></span>
+          </a>
+        </li>
+        {% endif %}
+        {% if data.acf.info.state %}
+        <li>
+          <div class="title-with-label --show --double">
+            <span class="deco"><span class="icon">{{ data.acf.info.year | labelDeco | safe }}</span></span>
+            <span class="text">{{ data.acf.info.state | split(" ", "_")}}</span>
+            <span class="mask"></span>
+          </div>
+        </li>
+        {% endif %}
+      </ul>
+      <!-- PROJECT CREDITS -->
+      <ul aria-label="Project credits">
+        {% for item in data.acf.credits %}
+          <li>
+          <span class="label">{{ item.label }}</span>
+          <a class="link-with-label __link" href="{{ item.url }}" target="_blank">
+            <span class="deco"><span class="icon">@</span></span>
+            <span class="text">{{ item.name | split(" ", "_")}}</span>
+            <span class="mask"></span>
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+    <div class="col-right" scroll-item>
+      <h2 class="block-project-info__title">FEATURED ON</h2>
+      <!-- FEATURED -->
+      <ul aria-label="Featured on">
+        {% for item in data.acf.featured %}
+          <li>
+            {% if loop.index < 10 %}
+              {% set cont = '0' +  loop.index %}
+            {% else %}
+              {% set cont = '' +  loop.index + ''%}
+            {% endif %}
+            <a class="block-project-info__a" href="{{ item.url }}" target="_blank">
+              <div class="title-with-label --show">
+                <span class="deco"><span class="icon">{{ cont | labelDeco | safe }}</span></span>
+                <span class="text">{{ item.text }}</span>
+                <span class="mask"></span>
+              </div>
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+     {% if data.acf.description %}
+      <div class="col-text" scroll-item>
+        <div class="block-project-info__description __description">
+          {{ data.acf.description | safe }}
+        </div>
+      </div>
+    {% endif %}
   </div>
 
   <!-- <ul class="block-ul-projects" aria-label="{{ texts[renderData.language].credits }}">
