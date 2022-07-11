@@ -11,7 +11,8 @@ import { DataHolder } from '../DataHolder';
 import TextMaskedEffect from '../components/TextMaskedEffect';
 import { Scroll } from '../_app/cuchillo/scroll/Scroll';
 import Scrollbar from '../_app/cuchillo/scroll/Scrollbar';
-import { isMobile } from '../_app/cuchillo/core/Basics';
+import { Basics, isMobile } from '../_app/cuchillo/core/Basics';
+import BarProject from '../components/BarProject';
 
 
 export default class Project extends Page {
@@ -27,6 +28,8 @@ export default class Project extends Page {
   setup() {
     this.data = DataHolder.getProject(Number(this.container.getAttribute("data-project")));
     this.domDescription = GetBy.class("__description", this.container)[0];
+    BarProject.next = Number(this.container.getAttribute("data-next"));
+    BarProject.prev = Number(this.container.getAttribute("data-prev"));
     Header.title.subtext = String(this.data.id).padStart(2, "0"); 
     Header.title.text = this.data.title;
     TextMaskedEffect.setup();
@@ -43,10 +46,12 @@ export default class Project extends Page {
     Wrap.directShow();
     BackgroundLogo.hide();
     BackgroundPanels.show((__color)=> {
-      this.domDescription.classList.remove("--blue")
-      this.domDescription.classList.remove("--green")
-      this.domDescription.classList.remove("--grey")
-      this.domDescription.classList.add(__color)
+      if(this.domDescription) {
+        this.domDescription.classList.remove("--blue")
+        this.domDescription.classList.remove("--green")
+        this.domDescription.classList.remove("--grey")
+        this.domDescription.classList.add(__color);
+      }
     });   
     TextMaskedEffect.show();
     
@@ -62,7 +67,9 @@ export default class Project extends Page {
   hide__effect() {
     Scroll.hide();
     TextMaskedEffect.hide();
-    BackgroundPanels.hide();
+    if(!Basics.tempValue) {
+      BackgroundPanels.hide();
+    }
     setTimeout(()=> {
       Wrap.directHide();
       this.afterHide();
@@ -71,6 +78,7 @@ export default class Project extends Page {
   }
 
   afterHide() {
+    Basics.tempValue = null;
     super.afterHide();
   }
 

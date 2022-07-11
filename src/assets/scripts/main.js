@@ -29,6 +29,7 @@ import { Interaction, MrInteraction } from './_app/cuchillo/core/Interaction';
 import { gsap, Power2 } from "gsap";
 import { ControllerWindow } from './_app/cuchillo/windows/ControllerWindow';
 import Win from './_app/cuchillo/windows/Window';
+import Cursor from './_app/cuchillo/cursor/Cursor';
 
 import Wrap from './layout/Wrap';
 import InterfaceCanvas from './_app/cuchillo/layout/InterfaceCanvas';
@@ -45,6 +46,7 @@ import { MaskedLinks } from "./components/MaskedLinks";
 import Guides from "./_app/cuchillo/utils/Guides";
 import TopCanvas from "./components/TopCanvas";
 import BackgroundLogo from "./components/BackgroundLogo";
+import { formatWithCursor } from "prettier";
 
 export default class Main {
 
@@ -66,10 +68,16 @@ export default class Main {
     Guides.add({cols:Metrics.COLS, rows:'auto', color:'#fa4d56'});
     TopCanvas.init();
 
-
     BG.init(CMS_COLORS); // Control de paletas y color de fondo de pantallas. Automatico si añadimos un data-palette='loquesea' en el div con data-page
     InterfaceCanvas.init(); // Canvas de interface, se usa con Cursor
     Cookies.init(); // Checkea y saca el aviso de cookies
+    Cursor.init(document.body, {
+      color: "#000000",
+      fontStyle: {
+          size: 16,
+          fontFamily: "SweetSansProMedium"
+      }
+    }, { size: 0,  alpha: 0 }, { alpha: 0, size: 0 });
 
     LoaderController.add(new PagesLoader()); // Carga/Precarga de paginas HTML
     LoaderController.add(new MediaLoader()); // Carga/Precarga de imgs
@@ -130,11 +138,11 @@ export default class Main {
 
   static setupEvents () {
     EventDispatcher.addEventListener(Page.ON_SHOW, () => {
-      //Cursor.start();
+      Cursor.start();
       Loading.stop();
     });
     EventDispatcher.addEventListener(Page.ON_HIDE, () => {
-      //Cursor.hide();
+      Cursor.hide();
     });
     EventDispatcher.addEventListener(Page.ON_HIDE_END, () => {
       Loading.start();
@@ -157,6 +165,8 @@ export default class Main {
     InterfaceCanvas.loop();
     ControllerPage.loop();
     TopCanvas.loop();
+
+    if(!isTouch) Cursor.loop();
         
     if (Scroll.isScrolling) Scroll.loop();
   }

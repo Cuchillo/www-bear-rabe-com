@@ -15,6 +15,18 @@ module.exports = {
         return __collection[index];
     },
 
+    getPrev: (__collection, __id, __field = "id")=> {
+        let index = 0;
+        for(let i in __collection) {
+            if(__collection[i][__field] == __id) {
+                index = i == 0? __collection.length - 1 : Number(i) - 1;
+                break;
+            }
+        }
+
+        return __collection[index];
+    },
+
     get: (__collection, __id, __field = "id") => __collection.filter(item => item[__field] == __id)[0],
 
     getAFC: (__collection, __id, __field = "id")=> {

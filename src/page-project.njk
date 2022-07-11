@@ -1,6 +1,7 @@
 ---
 renderData:
   h1: "{{ data.title.rendered }}"
+  id: "{{ data.id }}"
   language: "{{ data.language }}"
   title: "{{ data.acf.seo.title }}"
   description: "{{ data.acf.seo.description }}"
@@ -23,7 +24,14 @@ layout: layout/default
 {% import "components/next_project.njk" as NextProject with context %}
 {% import "components/info_project.njk" as InfoProject with context %} #}
 
-<article class='default project' data-page='{{ __page }}' data-palette='{{ __palette }}' data-project='{{ data.id }}'>
+<article
+  class='default project'
+  data-page='{{ __page }}'
+  data-palette='{{ __palette }}'
+  data-project='{{ data.id }}'
+  data-next='{{ utils.getNext(all[renderData.language].projects, data.id).id }}'
+  data-prev='{{ utils.getPrev(all[renderData.language].projects, data.id).id }}'>
+
   <div class="block-project-info">
     <div class="col-left">
       <h2 class="block-project-info__title">{{ data.acf.info.type }}</h2>
@@ -34,7 +42,7 @@ layout: layout/default
           <span class="label">for</span>
           <a class="link-with-label __link" href="{{ data.acf.client.url }}" target="_blank">
             <span class="deco"><span class="icon">@</span></span>
-            <span class="text">{{ data.acf.client.name | split(" ", "_")}}</span>
+            <span class="text">{{ data.id }}{{ data.acf.client.name | split(" ", "_")}}</span>
             <span class="mask"></span>
           </a>
         </li>

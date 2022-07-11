@@ -247,6 +247,8 @@ export default class Cursor {
           this._follower.changeTo(item, "follower", target, __type === CursorTypes.COLOR);
           this._icon = this.getIcon(item);
           this._text.text = this.getText(item);
+        } else {
+          
         }
 
         switch(__type) {
@@ -360,6 +362,8 @@ export default class Cursor {
   }
 
   static loop() {
+    
+
     if(this._isEnabledMove) {
       if (!this._isFollowFixed) {
         this._follower.x = Maths.precission(this._follower._xabs + (Interaction.positions.mouse.x - this._follower._xabs) * this._follower._easing);
@@ -385,8 +389,8 @@ export default class Cursor {
     this._arrow.draw();
 
     if(this._icon) {
-      this._icon.x = Interaction.positions.mouse.x;
-      this._icon.y = Interaction.positions.mouse.y;
+      this._icon.x = this._follower.x*.5;
+      this._icon.y = this._follower.y*.5;
       this._icon.draw();
     } else if(this._arrowIcon) {
       this._arrowIcon.x = Interaction.positions.mouse.x;
