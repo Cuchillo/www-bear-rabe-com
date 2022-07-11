@@ -1,13 +1,27 @@
 .projects-bar {
-  --font-size: var(--font-size-l)
+  --font-size: var(--font-size-l);
+  --padding: #{gridSize(1)};
+  --width: 33vw;
 }
 .projects-bar {
-  opacity: 0;
+  display: flex;
   position: fixed;
   @include z-index($z-index-bar);
   @include font-serif(1);
   font-size: var(--font-size);
+  width: var(--width);
+  padding: var(--padding);
   bottom: 0;
-  left: 0;
-  background-color: aqua;
+  right: 0;
+
+  > a {
+    @include basic-a();
+    display: block;
+    width: 33%;
+
+    svg {
+      width: 100%;
+      height: auto;
+    }
+  }
 }
