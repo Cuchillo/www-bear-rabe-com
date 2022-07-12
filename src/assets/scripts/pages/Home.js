@@ -16,7 +16,7 @@ export default class Home extends Page {
   constructor() {
     super();
     this._billboard = new BillboardText(GetBy.class("__billboard", this.container)[0]);
-    this._visor = new VisorImage(GetBy.class("__visorProjects", this.container)[0]);
+    //this._visor = new VisorImage(GetBy.class("__visorProjects", this.container)[0]);
 
     this.addDispose(()=>this._billboard.dispose());
   }
@@ -68,14 +68,14 @@ export default class Home extends Page {
   //RESIZE
   resize() {
     super.resize();
-    this._visor.resize();
+    //this._visor.resize();
   }
 
   //LOOP
   loop() {
     if(this._isActive) {
       super.loop();
-      this._visor.loop();
+      //is._visor.loop();
     }
   }
 }

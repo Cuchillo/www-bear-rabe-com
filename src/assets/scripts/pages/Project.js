@@ -13,6 +13,7 @@ import { Scroll } from '../_app/cuchillo/scroll/Scroll';
 import Scrollbar from '../_app/cuchillo/scroll/Scrollbar';
 import { Basics, isMobile } from '../_app/cuchillo/core/Basics';
 import BarProject from '../components/BarProject';
+import Movable from '../components/Movable';
 
 
 export default class Project extends Page {
@@ -33,6 +34,8 @@ export default class Project extends Page {
     Header.title.subtext = String(this.data.id).padStart(2, "0"); 
     Header.title.text = this.data.title;
     TextMaskedEffect.setup();
+    VisorImage.showImage(this.data.id);
+    Movable.start();
   }
 
   //SHOW

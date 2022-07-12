@@ -1,0 +1,23 @@
+
+.block-project-cover {
+    --ratio: 1;
+    --width: calc(30vw * var(--ratio));
+}
+
+.block-project-cover {
+    position: absolute;
+    top:0;
+    left:0;
+    width: var(--width);
+    height: auto;
+    user-select: none;
+    cursor: grab;
+
+    &:active {
+        cursor: grabbing;
+    }
+
+    img {
+        -webkit-user-drag: none;
+    }
+}

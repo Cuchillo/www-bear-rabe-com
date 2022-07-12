@@ -47,6 +47,8 @@ import Guides from "./_app/cuchillo/utils/Guides";
 import TopCanvas from "./components/TopCanvas";
 import BackgroundLogo from "./components/BackgroundLogo";
 import { formatWithCursor } from "prettier";
+import VisorImage from "./components/VisorImage";
+import { GetBy } from "./_app/cuchillo/core/Element";
 
 export default class Main {
 
@@ -67,7 +69,7 @@ export default class Main {
     Guides.init();
     Guides.add({cols:Metrics.COLS, rows:'auto', color:'#fa4d56'});
     TopCanvas.init();
-
+    VisorImage.init(GetBy.class("__visorProjects")[0]);
     BG.init(CMS_COLORS); // Control de paletas y color de fondo de pantallas. Automatico si añadimos un data-palette='loquesea' en el div con data-page
     InterfaceCanvas.init(); // Canvas de interface, se usa con Cursor
     Cookies.init(); // Checkea y saca el aviso de cookies
@@ -155,7 +157,7 @@ export default class Main {
   static resize () {
     TopCanvas.resize();
     Guides.resize();
-    
+    VisorImage.resize();
     MaskedLinks.resize();
     InterfaceCanvas.resize();
     ControllerPage.resize();
@@ -165,6 +167,7 @@ export default class Main {
     InterfaceCanvas.loop();
     ControllerPage.loop();
     TopCanvas.loop();
+    VisorImage.loop();
 
     if(!isTouch) Cursor.loop();
         

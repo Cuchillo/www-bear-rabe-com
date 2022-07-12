@@ -6,7 +6,8 @@
     --bottom: #{gridSize(3)};
     --height: calc(100% - var(--top) - var(--bottom));
 
-    position: absolute;
+    position: fixed;
+    @include z-index($z-index-header);
     top: var(--top);
     left:0;
     width: 100%;

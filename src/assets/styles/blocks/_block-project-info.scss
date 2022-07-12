@@ -10,6 +10,7 @@
 
 .block-project-info {
     width: 100%;
+    min-height: 100vh;
     font-size: var(--font-size);
     padding: var(--padding-top) var(--padding-h) var(--padding-bottom) ;
     padding-top: #{gridSize(12)};
