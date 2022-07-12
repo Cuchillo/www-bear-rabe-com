@@ -7,11 +7,22 @@ export default class Cursor__Image extends Cursor__Item{
   _width;
   _height;
   _ratio;
+  _frame = 0;
+
+  get x() { return this._x; }
+  set x(__x) {
+    if(this._frame%1===0) {
+    this._xabs = __x - this._sizeabs *.5;
+    this._x = this._xabs * window.devicePixelRatio;
+    }
+  }
 
   get y() { return this._y; }
   set y(__y) {
+    if(this._frame%1===0) {
     this._yabs = __y - this._height *.5;
     this._y = this._yabs * window.devicePixelRatio;
+    }
   }
 
   constructor(__src, __size, __ctx) {
@@ -31,11 +42,12 @@ export default class Cursor__Image extends Cursor__Item{
   }
 
   draw() {
+    this._frame++;
+    
     if(this.enabled) {
       this._ctx.globalAlpha = this.alpha;
       this._ctx.drawImage(this.image, this._x, this._y, this._size, this._size * this._ratio);
       this._ctx.restore();
-      //this._ctx.translate(0,0);
     }
   }
 }

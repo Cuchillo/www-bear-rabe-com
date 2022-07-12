@@ -14,6 +14,7 @@ import Scrollbar from '../_app/cuchillo/scroll/Scrollbar';
 import { Basics, isMobile } from '../_app/cuchillo/core/Basics';
 import BarProject from '../components/BarProject';
 import Movable from '../components/Movable';
+import InterfaceCanvas from '../_app/cuchillo/layout/InterfaceCanvas';
 
 
 export default class Project extends Page {
@@ -36,6 +37,7 @@ export default class Project extends Page {
     Header.title.text = this.data.title;
     TextMaskedEffect.setup();
     Movable.start();
+    InterfaceCanvas.frameSkip = 1;
   }
 
   setupCover() {
@@ -94,6 +96,7 @@ export default class Project extends Page {
 
   afterHide() {
     Basics.tempValue = null;
+    InterfaceCanvas.frameSkip = 1;
     super.afterHide();
   }
 
