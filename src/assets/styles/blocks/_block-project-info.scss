@@ -41,6 +41,7 @@
         @include font-sans();
         display: inline-flex;
         margin-bottom: .1em;
+        pointer-events: all;
 
         > .label {
             margin-right: .1em;

@@ -1,10 +1,13 @@
+import { GetBy } from "../_app/cuchillo/core/Element";
 import { gsap, Power2 } from "gsap";
-import { isSmartphone } from "../_app/cuchillo/core/Basics";
+import { Functions } from "../_app/cuchillo/utils/Functions";
+import { Ease } from "../_app/cuchillo/utils/Ease";
+import { Basics, isSmartphone } from "../_app/cuchillo/core/Basics";
 import { Interaction } from "../_app/cuchillo/core/Interaction";
+import { Maths } from "../_app/cuchillo/utils/Maths";
 import InterfaceCanvas from "../_app/cuchillo/layout/InterfaceCanvas";
 import { Metrics } from "../_app/cuchillo/core/Metrics";
 import { Sizes } from "../_app/cuchillo/core/Sizes";
-import { Maths } from "../_app/cuchillo/utils/Maths";
 
 class VisorImage__Image {
   _width = 0;
@@ -50,52 +53,30 @@ class VisorImage__Image {
 }
 
 export default class VisorImage {
-  static canvas = InterfaceCanvas.canvas;
-  static ctx = InterfaceCanvas.ctx;
-  static visor = new VisorImage__Image(this.ctx);
-  static mode = "home";
-  static images = [];
-  static positionTo = {
+  canvas = InterfaceCanvas.canvas;
+  ctx = InterfaceCanvas.ctx;
+  visor = new VisorImage__Image(this.ctx);
+  images = [];
+  isEnabled = true;
+  position = {
     x:0,
     y:0
   }
-  static position = {
-    x:0,
-    y:0
-  }
-  static limits = {
+  limits = {
     y0:0,
     y1:0
   }
-  static actual = 0;
-  static maxSize;
+
+  actual = 0;
+  maxSize;
         
-  static init(__container) {
+  constructor(__container) {
     this.container = __container;
     this.setupSize();
     this.setupImages();
   }
 
-  static showImage(__id) {
-    for(let i=0; i<this.images.length; i++) {
-      if(this.images[i].project === __id) {
-        this.actual = i;
-        break;
-      }
-    }
-    this.mode = "project";
-
-    //RANDOM
-    const x = Maths.maxminRandom(Metrics.WIDTH*.9, Metrics.WIDTH*.1);
-    const y = Maths.maxminRandom(Metrics.HEIGHT*.9, Metrics.HEIGHT*.1);
-    
-    gsap.to(this.positionTo,{x:x, duration:1, ease: Power2.easeInOut});  
-    gsap.to(this.positionTo,{y:y, duration:1, ease: Power2.easeInOut});  
-
-    this.changeImage();
-  }
-
-  static setupSize() {
+  setupSize() {
     const rect = this.container.getBoundingClientRect();
     this.limits = {
       y0:rect.top,
@@ -103,7 +84,7 @@ export default class VisorImage {
     }
   }
 
-  static setupImages() {
+  setupImages() {
     IMAGES_PROJECTS.map(item => {
       const dom = new Image();
       dom.src = item.image;
@@ -117,29 +98,17 @@ export default class VisorImage {
     });
   }
 
-  static loopHome() {
-    if(Interaction.positions.mouse.y<this.limits.y0 || Interaction.positions.mouse.y>this.limits.y1) return false;
 
-    this.positionTo = {
-      x: Interaction.positions.mouse.x,
-      y: Interaction.positions.mouse.y
-    }
+  loop() {
+    if(!this.isEnabled) return;
     
-    return true;
-  }
-
-  static loop() {
-    if(this.mode === "home") {
-      if(!this.loopHome()) return;
-    }
-
-    const x = Math.floor(this.positionTo.x/Metrics.GRID);
-    const y = Math.floor(this.positionTo.y/Metrics.GRID);
+    if(Interaction.positions.mouse.y<this.limits.y0 || Interaction.positions.mouse.y>this.limits.y1) return;
     
+    const x = Math.floor(Interaction.positions.mouse.x/Metrics.GRID);
+    const y = Math.floor(Interaction.positions.mouse.y/Metrics.GRID);
+
     if(this.position.x != x || this.position.y != y) {
-      if(this.mode === "home") {
-        this.changeImage();
-      }
+      this.changeImage();
       this.visor.x = (x * Metrics.GRID) + (Metrics.GRID *.5);
       this.visor.y = (y * Metrics.GRID) + (Metrics.GRID *.5);           
       this.position = { x:x, y:y}
@@ -148,7 +117,7 @@ export default class VisorImage {
     this.visor.loop();   
   }
 
-  static changeImage() {
+  changeImage() {
     const img = this.images[this.actual];
   
     this.visor.image = img.image;
@@ -167,8 +136,8 @@ export default class VisorImage {
     this.container.setAttribute("href", PROJECTS[img.project].url);
   }
 
-  static resize() {
-    this.maxSize = isSmartphone? Metrics.GRID * 15 : Metrics.GRID * 15;
+  resize() {
+    this.maxSize = isSmartphone? Metrics.GRID * 15 : Metrics.GRID * 7;
     this.setupSize();
   }
 }

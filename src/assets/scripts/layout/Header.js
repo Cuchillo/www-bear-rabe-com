@@ -1,5 +1,5 @@
 import { gsap, Power2 } from "gsap";
-import { GetBy } from '../_app/cuchillo/core/Element';
+import { C, GetBy } from '../_app/cuchillo/core/Element';
 import { Ease } from "../_app/cuchillo/utils/Ease";
 
 class Header__Title {
@@ -56,6 +56,7 @@ class Header__Title {
 
 export default class Header {
   static container = GetBy.id("Header");
+  static cover;
   static nav = GetBy.class("__nav", this.container)[0];
   static mask = GetBy.class("__mask", this.container)[0];
   static title = new Header__Title(GetBy.class("__title", this.container)[0]);
@@ -68,6 +69,22 @@ export default class Header {
   static hide() {
     gsap.set(this.mask, {scaleX: 1});
     gsap.to(this.nav,{alpha:0, ease: Power2.easeOut, duration:.1, delay:.3});
+  }
+
+  static addCover(__dom) {
+    this.cover = __dom;
+    this.container.appendChild(__dom);
+  }
+
+  static showCover() {
+    gsap.to(this.cover,{alpha:1, ease: Power2.easeOut, duration:.2, delay:.3});
+  }
+
+  static hideCover(__dom) {
+    if(this.cover) {
+      C.remove(this.cover);
+      this.cover = false;
+    }
   }
 }
 

@@ -33,7 +33,8 @@ layout: layout/default
   data-prev='{{ utils.getPrev(all[renderData.language].projects, data.id).id }}'>
 
   {% set ratio = data.acf.images[0].sizes['@1x-width']/data.acf.images[0].sizes['@1x-height'] %}
-  <div class="block-project-cover __movable" style="--ratio:{{ ratio }}">
+  
+  <div class="block-project-cover __imgcover __movable" style="--ratio:{{ ratio }}">
     {% img data.acf.images[0] %}
   </div>
 

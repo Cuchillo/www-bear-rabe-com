@@ -1,1 +1,5 @@
-.default {}
+.default {
+    &:not(.project) {
+        pointer-events: all;
+    }
+}

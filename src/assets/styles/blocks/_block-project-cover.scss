@@ -1,16 +1,28 @@
 
 .block-project-cover {
+    --position: absolute;
     --ratio: 1;
-    --width: calc(30vw * var(--ratio));
+    --scale: 1;
+    --width: calc(38vw * var(--ratio));
+}
+
+#Header > .block-project-cover {
+    @include z-index($z-index-header-title);
+    opacity: 0;
+    transform: 
+        scale3d(var(--scale), var(--scale), var(--scale))
+        translate3d(0,0,3px);
+    --position: fixed;
 }
 
 .block-project-cover {
-    position: absolute;
+    position: var(--position);
     top:0;
     left:0;
     width: var(--width);
     height: auto;
     user-select: none;
+   
     cursor: grab;
 
     &:active {

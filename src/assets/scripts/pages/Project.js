@@ -29,13 +29,17 @@ export default class Project extends Page {
   setup() {
     this.data = DataHolder.getProject(Number(this.container.getAttribute("data-project")));
     this.domDescription = GetBy.class("__description", this.container)[0];
+    this.setupCover();
     BarProject.next = Number(this.container.getAttribute("data-next"));
     BarProject.prev = Number(this.container.getAttribute("data-prev"));
     Header.title.subtext = String(this.data.id).padStart(2, "0"); 
     Header.title.text = this.data.title;
     TextMaskedEffect.setup();
-    VisorImage.showImage(this.data.id);
     Movable.start();
+  }
+
+  setupCover() {
+    Header.addCover(GetBy.class("__imgcover", this.container)[0]);
   }
 
   //SHOW
@@ -57,6 +61,7 @@ export default class Project extends Page {
       }
     });   
     TextMaskedEffect.show();
+    Header.showCover();
     
     this.afterShow();
   }
@@ -69,6 +74,7 @@ export default class Project extends Page {
   beforeHide() {}
   hide__effect() {
     Scroll.hide();
+    Header.hideCover();
     TextMaskedEffect.hide();
     if(!Basics.tempValue) {
       BackgroundPanels.hide();

@@ -1,3 +1,6 @@
+import { Metrics } from "../_app/cuchillo/core/Metrics";
+import { Maths } from "../_app/cuchillo/utils/Maths";
+
 export default class Movable {
   static items = [];
 
@@ -31,6 +34,18 @@ export default class Movable {
     
     this.setupOptions();
     this.setupEvents();
+    this.setupPosition();
+  }
+
+  setupPosition() {
+    const xMod = this.container.offsetWidth;
+    const yMod = this.container.offsetHeight;
+    
+    this._position.x = Maths.maxminRandom(Metrics.WIDTH - xMod * .75, -xMod * .25);
+    this._position.y = Maths.maxminRandom(Metrics.HEIGHT - yMod * .75, Metrics.GRID * 4);
+    this._position.z = 10;
+
+    this.container.style.transform = `translate3d(${this._position.x}px, ${this._position.y}px, ${this._position.z}px)`;
   }
 
   setupEvents() {
