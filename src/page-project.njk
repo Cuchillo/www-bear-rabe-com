@@ -34,59 +34,59 @@ layout: layout/default
 
   <div class="block-project-info">
     <div class="col-left">
-      <h2 class="block-project-info__title">{{ data.acf.info.type }}</h2>
+      <h2 class="block-project-info__title masked-item __maskedText">{{ data.acf.info.type }}<span class="mask"></span></h2>
       <!-- PROJECT INFO -->
       <ul aria-label="Project info">
         {% if data.acf.client.name %}
-        <li>
+        <li class="masked-item __maskedText">
           <span class="label">for</span>
           <a class="link-with-label __link" href="{{ data.acf.client.url }}" target="_blank">
             <span class="deco"><span class="icon">@</span></span>
             <span class="text">{{ data.acf.client.name | split(" ", "_")}}</span>
-            <span class="mask"></span>
           </a>
+          <span class="mask"></span>
         </li>
         {% endif %}
         {% if data.acf.place.name %}
-        <li>
+        <li class="masked-item __maskedText">
           <span class="label">at</span>
           <a class="link-with-label __link" href="{{ data.acf.place.url }}" target="_blank">
             <span class="deco"><span class="icon">@</span></span>
             <span class="text">{{ data.acf.place.name | split(" ", "_")}}</span>
-            <span class="mask"></span>
           </a>
+          <span class="mask"></span>
         </li>
         {% endif %}
         {% if data.acf.info.state %}
-        <li>
+        <li class="masked-item __maskedText">
           <div class="title-with-label --show --double">
             <span class="deco"><span class="icon">{{ data.acf.info.year | labelDeco | safe }}</span></span>
             <span class="text">{{ data.acf.info.state | split(" ", "_")}}</span>
-            <span class="mask"></span>
           </div>
+          <span class="mask"></span>
         </li>
         {% endif %}
       </ul>
       <!-- PROJECT CREDITS -->
       <ul aria-label="Project credits">
         {% for item in data.acf.credits %}
-          <li>
+          <li class="masked-item __maskedText">
           <span class="label">{{ item.label }}</span>
           <a class="link-with-label __link" href="{{ item.url }}" target="_blank">
             <span class="deco"><span class="icon">@</span></span>
             <span class="text">{{ item.name | split(" ", "_")}}</span>
-            <span class="mask"></span>
           </a>
+          <span class="mask"></span>
         </li>
         {% endfor %}
       </ul>
     </div>
     <div class="col-right" scroll-item>
-      <h2 class="block-project-info__title">FEATURED ON</h2>
+      <h2 class="block-project-info__title masked-item __maskedText">FEATURED ON<span class="mask"></span></h2>
       <!-- FEATURED -->
       <ul aria-label="Featured on">
         {% for item in data.acf.featured %}
-          <li>
+          <li class="masked-item __maskedText">
             {% if loop.index < 10 %}
               {% set cont = '0' +  loop.index %}
             {% else %}
@@ -96,9 +96,9 @@ layout: layout/default
               <div class="title-with-label --show">
                 <span class="deco"><span class="icon">{{ cont | labelDeco | safe }}</span></span>
                 <span class="text">{{ item.text }}</span>
-                <span class="mask"></span>
               </div>
             </a>
+            <span class="mask"></span>
           </li>
         {% endfor %}
       </ul>
