@@ -6,23 +6,28 @@ import { GetBy } from '../_app/cuchillo/core/Element';
 import VisorImage from '../components/VisorImage';
 import Header from '../layout/Header';
 import BackgroundLogo from '../components/BackgroundLogo';
+import Scene from '../3D/Scene';
 
 
 export default class Home extends Page {
 
   _billboard;
+  _scene;
   _visor;
 
   constructor() {
     super();
     this._billboard = new BillboardText(GetBy.class("__billboard", this.container)[0]);
+    this._scene = new Scene();
     this._visor = new VisorImage(GetBy.class("__visorProjects", this.container)[0]);
 
     this.addDispose(()=>this._billboard.dispose());
   }
 
   //SHOW
-  beforeShow() {}
+  beforeShow() {
+    this._scene.start();
+  }
 
   show__effect(__call) {
     Wrap.directShow();
@@ -66,6 +71,14 @@ export default class Home extends Page {
     super.afterHide();
   }
 
+  //DISPOSE
+  dispose() {
+    this._scene.stop();
+    this._scene.dispose();
+    this._billboard.dispose();
+    super.dispose();
+  }
+
   //RESIZE
   resize() {
     super.resize();
@@ -76,6 +89,7 @@ export default class Home extends Page {
   loop() {
     if(this._isActive) {
       super.loop();
+      this._scene.loop();
       this._visor.loop();
     }
   }

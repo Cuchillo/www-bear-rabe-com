@@ -20,7 +20,6 @@ export default class Default extends Page {
 
   //SHOW
   beforeShow() {
-    alert("before")
     Scroll.init(Scroll.AXIS_Y, {domResize:this.container, smooth:!isMobile, multiplicator:1});
     Scroll.setScrollbar(new Scrollbar());
     Scroll.start();

@@ -129,6 +129,7 @@ export default class Page {
   }
 
 
+  dispose() { this._dispose();  }
   _dispose() {
     for(var i = 0,j=this._nDisposes; i<j; i++) {
       this._disposes[i]();

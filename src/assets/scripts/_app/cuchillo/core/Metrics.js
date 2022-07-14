@@ -27,6 +27,7 @@ const Metrics = {
     this._callResize = __call;
 
     this.ASPECT = window.innerWidth/window.innerHeight;
+    this.update(true);
 
     window.addEventListener("resize", () => {
       clearTimeout(this._idTimer);
@@ -36,7 +37,7 @@ const Metrics = {
     });
   },
 
-  update: function(){
+  update: function(__isFirstTime = false){
     this.WIDTH = window.innerWidth;
     this.HEIGHT = window.innerHeight;
     this.CENTER_X = this.WIDTH/2;
@@ -49,10 +50,6 @@ const Metrics = {
     }
     this.ASPECT = newAspect;
 
-    const limit = 1400 * 900;
-    const pixels =  Metrics.WIDTH * Metrics.HEIGHT;
-    Sizes.RATIO_CANVAS = Math.min(window.devicePixelRatio, Math.max(1,Maths.precission((limit * window.devicePixelRatio)/pixels,1)));
-
     const VH = window.innerHeight * 0.01;
     document.documentElement.style.setProperty('--vh', `${VH}px`);
 
@@ -61,7 +58,7 @@ const Metrics = {
 
     this.FONT_SIZE = parseFloat(getComputedStyle(document.documentElement).fontSize);
    
-    this._callResize();
+    if(!this.__isFirstTime) this._callResize();
   },
 
   parseSize(__s, __target = null) {

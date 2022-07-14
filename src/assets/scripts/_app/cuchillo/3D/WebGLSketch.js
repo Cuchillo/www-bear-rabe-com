@@ -3,6 +3,7 @@ import { Clock, OrthographicCamera, PerspectiveCamera, Scene, Vector2, WebGLRend
 
 import { GetBy } from "../core/Element";
 import { Metrics } from "../core/Metrics";
+import { Sizes } from "../core/Sizes";
 
 export default class WebGLSketch {
 	_started = false;
@@ -24,7 +25,10 @@ export default class WebGLSketch {
 		cameraPos: new Vector3(),
 		near: .1,
 		far: 10000,
-		clearColor: '#000000'
+		clearColor: '#000000',
+		is2D: false,
+		distance2D: 0,
+		pixelRatio: Sizes.RATIO_CANVAS
 	}
 
 	constructor (opts = {}) {
@@ -37,6 +41,35 @@ export default class WebGLSketch {
 			...opts
 		};
 
+		const container = GetBy.id(this.defaults.container)
+		this.renderer = new WebGLRenderer({
+			canvas: container,
+			antialias: this.defaults.antialias,
+			alpha: this.defaults.alpha
+		});
+
+		this.size.set(Metrics.WIDTH, Metrics.HEIGHT);
+		this.renderer.setClearColor(this.defaults.clearColor, 1);
+		this.renderer.setSize(this.size.x, this.size.y);
+		this.renderer.setPixelRatio(this.defaults.pixelRatio);
+
+		this.setupCamera();
+
+		// this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+    	// this.controls.enabled = true;
+		// this.raycaster = new THREE.Raycaster();
+
+        if (opts.debug) {
+			const axesHelper = new AxesHelper(2000);
+			this.scene.add(axesHelper);
+		}
+	}
+
+	get domElement () {
+		return this.renderer.domElement;
+	}
+
+	setupCamera() {
 		if (this.defaults.ortho) {
 			this.camera = new OrthographicCamera(
 				-Metrics.WIDTH / 2,
@@ -48,6 +81,10 @@ export default class WebGLSketch {
 			);
 		}
 		else {
+			if(this.defaults.is2D) {
+				this.defaults.fov = this._getFov2D(this.size.x/this.size.y);
+			}
+
 			this.camera = new PerspectiveCamera(
 				this.defaults.fov,
 				Metrics.WIDTH / Metrics.HEIGHT,
@@ -55,36 +92,9 @@ export default class WebGLSketch {
 				this.defaults.far
 			);
 		}
+
 		this.camera.position.copy(this.defaults.cameraPos);
 		this.scene.add(this.camera);
-
-		const container = GetBy.id(this.defaults.container)
-		this.renderer = new WebGLRenderer({
-			canvas: container,
-			antialias: this.defaults.antialias,
-			alpha: this.defaults.alpha
-		});
-
-		this.size.set(Metrics.WIDTH, Metrics.HEIGHT);
-		this.renderer.setSize(this.size.x, this.size.y);
-
-		this.renderer.setClearColor(this.defaults.clearColor, 1);
-		this.renderer.setSize(this.size.x, this.size.y);
-		this.renderer.setPixelRatio(window.devicePixelRatio);
-
-		// this.controls = new OrbitControls(this.camera, this.renderer.domElement);
-    	// this.controls.enabled = true;
-
-		// this.raycaster = new THREE.Raycaster();
-
-        if (opts.debug) {
-			const axesHelper = new AxesHelper(2000);
-			this.scene.add(axesHelper);
-		}
-	}
-
-	get domElement () {
-		return this.renderer.domElement;
 	}
 
 	start() {
@@ -130,7 +140,12 @@ export default class WebGLSketch {
 		this.renderer.setSize(this.size.x, this.size.y);
 		
 		if (this.camera.type == "PerspectiveCamera") {
+			if(this.defaults.is2D) {
+				this.defaults.fov = this._getFov2D();
+			}
+
 			this.camera.aspect = this.size.x / this.size.y;
+			this.camera.fov = this.defaults.fov;
 		} else {
 			this.camera.left = -Metrics.WIDTH / 2;
 			this.camera.right = Metrics.WIDTH / 2;
@@ -142,4 +157,13 @@ export default class WebGLSketch {
 	}
 
 	dispose () {}
+
+	//PRIVATE
+
+	_getFov2D(__aspect) {
+		if(!__aspect) {
+			__aspect = this.camera.aspect;
+		}
+		return 2 * Math.atan(this.size.x / __aspect / (2 * this.defaults.distance2D)) * (180 / Math.PI);
+	}
 }
