@@ -18,7 +18,7 @@ export default class Home extends Page {
   constructor() {
     super();
     this._billboard = new BillboardText(GetBy.class("__billboard", this.container)[0]);
-    this._scene = new Scene();
+   // this._scene = new Scene();
     this._visor = new VisorImage(GetBy.class("__visorProjects", this.container)[0]);
 
     this.addDispose(()=>this._billboard.dispose());
@@ -26,7 +26,7 @@ export default class Home extends Page {
 
   //SHOW
   beforeShow() {
-    this._scene.start();
+   // this._scene.start();
   }
 
   show__effect(__call) {
@@ -73,8 +73,8 @@ export default class Home extends Page {
 
   //DISPOSE
   dispose() {
-    this._scene.stop();
-    this._scene.dispose();
+  //  this._scene.stop();
+  //  this._scene.dispose();
     this._billboard.dispose();
     super.dispose();
   }
@@ -83,13 +83,14 @@ export default class Home extends Page {
   resize() {
     super.resize();
     this._visor.resize();
+  //  this._scene.resize();
   }
 
   //LOOP
   loop() {
     if(this._isActive) {
       super.loop();
-      this._scene.loop();
+    //  this._scene.loop();
       this._visor.loop();
     }
   }

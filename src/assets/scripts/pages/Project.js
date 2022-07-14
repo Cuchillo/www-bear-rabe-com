@@ -53,6 +53,7 @@ export default class Project extends Page {
 
   show__effect(__call) {
     Wrap.directShow();
+    BarProject.show();
     BackgroundLogo.hide();
     BackgroundPanels.show((__color)=> {
       if(this.domDescription) {
@@ -80,6 +81,7 @@ export default class Project extends Page {
     TextMaskedEffect.hide();
     if(!Basics.tempValue) {
       BackgroundPanels.hide();
+      BarProject.hide();
       setTimeout(()=> {
         Wrap.directHide();
         this.afterHide();

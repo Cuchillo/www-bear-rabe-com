@@ -26,8 +26,15 @@ export default class BarProject {
     __dom.setAttribute("data-cursor-image", data.images[0]);
   }
   
-  static show(){}
-  static hide(){}
+  static show(){
+    gsap.to(this.container,{autoAlpha:1, duration: .2, ease: Power2.easeIn});
+  }
+  static hide(){
+    gsap.to(this.container,{autoAlpha:0, duration: .2, ease: Power2.easeIn});
+  }
+  static directHide(){
+    gsap.set(this.container,{autoAlpha:0});
+  }
 }
 
 
