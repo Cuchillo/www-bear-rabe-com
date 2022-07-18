@@ -35,14 +35,14 @@ layout: layout/default
   {% set ratio = data.acf.images[0].sizes['@1x-width']/data.acf.images[0].sizes['@1x-height'] %}
   
 
-  <div class="block-project-cover __imgcover" style="--ratio:{{ ratio }}" scroll-item data-speed=".3">
+  <div class="block-project-cover __imgcover" style="--ratio:{{ ratio }}" scroll-item data-speed=".5">
     <div class="__movable">
     {% img data.acf.images[0] %}
     </div>
   </div>
 
   <div class="block-project-info">
-    <div class="col-left">
+    <div class="col-left" scroll-item data-speed=".1">
       <h2 class="block-project-info__title masked-item __maskedText">{{ data.acf.info.type }}<span class="mask"></span></h2>
       <!-- PROJECT INFO -->
       <ul aria-label="Project info">
@@ -90,7 +90,7 @@ layout: layout/default
         {% endfor %}
       </ul>
     </div>
-    <div class="col-right" scroll-item>
+    <div class="col-right" scroll-item data-speed="1.1">
       <h2 class="block-project-info__title masked-item __maskedText">FEATURED ON<span class="mask"></span></h2>
       <!-- FEATURED -->
       <ul aria-label="Featured on">

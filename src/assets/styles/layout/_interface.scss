@@ -16,3 +16,7 @@ body > canvas {
   width: 100vw;
   height: 100vh;
 }
+
+#SpriteSheetTexture {
+  @include z-index($z-index-interface);
+}

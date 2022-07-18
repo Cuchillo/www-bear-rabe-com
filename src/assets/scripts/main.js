@@ -49,6 +49,7 @@ import BackgroundLogo from "./components/BackgroundLogo";
 import { formatWithCursor } from "prettier";
 import VisorImage from "./components/VisorImage";
 import { GetBy } from "./_app/cuchillo/core/Element";
+import SpriteSheetGenerator from "./utils/SpriteSheetGenerator";
 
 export default class Main {
 
@@ -65,7 +66,7 @@ export default class Main {
     Interaction.init({ ajax: true }) // Posiciones del cursor (Movimiento, click...), Acciones links, drag...
     ControllerWindow.init(); // Control ventanas
     MaskedLinks.init();
-    
+    SpriteSheetGenerator.init();
     Guides.init();
     Guides.add({cols:Metrics.COLS, rows:'auto', color:'#fa4d56'});
     TopCanvas.init();
@@ -99,14 +100,16 @@ export default class Main {
   }
 
   static setup () {
-    this.setupEvents();
+    SpriteSheetGenerator.start(IMAGES_PROJECTS, ()=> {
+      this.setupEvents();
 
-    if(!isDebug) {
-      setTimeout(()=>{this.intro()}, 1000); 
-    } else {
-      BackgroundLogo.setInverted();
-      ControllerPage.init(Wrap.mainholder);
-    }
+      if(!isDebug) {
+        setTimeout(()=>{this.intro()}, 1000); 
+      } else {
+        BackgroundLogo.setInverted();
+        ControllerPage.init(Wrap.mainholder);
+      }
+    });
   }
 
   static intro() {

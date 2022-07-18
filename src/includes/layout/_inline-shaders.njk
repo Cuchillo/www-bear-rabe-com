@@ -1,0 +1,37 @@
+<script type="x-shader/x-vertex" id="vertex-shader">
+  attribute float size;
+  attribute float alpha;
+  varying vec3 vColor;
+  varying vec2 vUv;
+  
+  void main() {
+      vUv = uv;
+      vColor = color;
+      vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
+      gl_PointSize = size * ( 300.0 / -mvPosition.z );
+      gl_Position = projectionMatrix * mvPosition;
+  }
+</script>
+
+<script type="x-shader/x-fragment" id="fragment-shader">
+    uniform sampler2D t1;
+    uniform vec4 resolution;
+    varying vec3 vColor;
+    varying vec2 vUv;
+
+    void main() {
+        /*float scaleCenter = 0.1;
+        vec2 newUV = vUv;
+        vec4 color = texture2D(t1,newUV);
+        gl_FragColor =  vec4(color.rgb, 1.0);*/
+
+          float scaleCenter = .5;
+          float progress = 1.0;
+          vec2 newUVScale = (gl_PointCoord - scaleCenter) * progress + scaleCenter;
+          vec2 newUV = (newUVScale - vec2(progress))*resolution.zw + vec2(progress);
+          vec4 color = texture2D(t1,newUV);
+
+        
+        gl_FragColor = vec4(color.rgb, 1.0);
+    }
+</script>

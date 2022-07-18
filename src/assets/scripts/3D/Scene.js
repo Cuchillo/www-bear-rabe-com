@@ -3,10 +3,9 @@ import { BoxGeometry, MeshBasicMaterial, Mesh } from 'three';
 import WebGLObject from '../_app/cuchillo/3D/WebGLObject';
 import WebGLSketch from "../_app/cuchillo/3D/WebGLSketch";
 import { Metrics } from '../_app/cuchillo/core/Metrics';
+import Particles from './Particles';
 
 export default class Scene extends WebGLSketch {
-    cube; 
-
     constructor () {
         super({
             container: 'SceneParticles',
@@ -16,26 +15,28 @@ export default class Scene extends WebGLSketch {
             distance2D: 1500
         });
 
-        const size = 400;
+        //this.initTest();
+        this.initParticles();
+    }
 
+    initTest() {
         const geometry = new PlaneGeometry();
         const material = new MeshBasicMaterial({ color: 0x00ff00 });
-        this.cube = new WebGLObject(geometry, material, {
+        const cube = new WebGLObject(geometry, material, {
             size: new Vector3(400, 400, 400)
         });
-        this.cube.active = true;
+        cube.active = true;
+        this.scene.add(cube);
+    }
 
-        this.scene.add(this.cube);
+    initParticles() {
+        this.particles = new Particles(this);
+		this.scene.add(this.particles.container);
+        this.particles.init("/assets/images/logo-sample.jpg");
     }
 
     update () {
-                
-        /*const rot = {
-            x: this.cube.rotation.x += .002,
-            y: this.cube.rotation.y += .002,
-            z: 0
-        }*/
-       // this.cube.rot = rot;
+        this.particles.update(this.tick);
     }
 
     resize () {

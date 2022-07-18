@@ -11,6 +11,7 @@ export default class WebGLSketch {
 	renderer;
 	scene;
 	camera;
+	tick = 0;
 	// clock;
 	size;
 	// controls;
@@ -128,6 +129,8 @@ export default class WebGLSketch {
 
 	loop () {
         if (!this._started || this._paused) return;
+		
+		this.tick++;
 
         this.update();
         this.render();

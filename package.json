@@ -61,6 +61,7 @@
   "dependencies": {
     "aws-sdk": "^2.1131.0",
     "busboy": "^1.6.0",
+    "glslify": "^7.1.1",
     "gsap": "npm:@gsap/shockingly@^3.10.4",
     "node-fetch": "^2.6.1",
     "three": "^0.140.1"
