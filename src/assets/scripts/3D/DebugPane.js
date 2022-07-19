@@ -29,18 +29,21 @@ export default class DebugPane {
         });
     }
 
-    static setupParticleOptions() {
+    static setupParticleOptions(__data) {
         const subpane = this.pane.addFolder({   title: 'Particles' });
-        
-        const params = {
-            particles:2000
-        }
 
-        subpane.addInput(params, 'particles', {
-            label: 'Particles',
+        subpane.addInput(__data, 'total', {
+            label: 'Total',
             step: 1,
             min: 100,
             max: 10000,
+        });
+
+        subpane.addInput(__data, 'particleSize', {
+            label: 'Size',
+            step: 1,
+            min: 1,
+            max: 200,
         });
     }
 }

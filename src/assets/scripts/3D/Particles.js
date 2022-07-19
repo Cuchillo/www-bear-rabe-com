@@ -11,17 +11,20 @@ import { Metrics } from '../_app/cuchillo/core/Metrics';
 import { Maths } from '../_app/cuchillo/utils/Maths';
 import { GetBy } from '../_app/cuchillo/core/Element';
 import SpriteSheetGenerator from '../utils/SpriteSheetGenerator';
+import DebugPane from './DebugPane';
 
 export default class Particles {
 
-	mesh;
-	amount = 10;
-	count = 5000; //Math.pow( this.amount, 3 );
+	defaults = {
+		total: 2000,
+		particleSize: Metrics.parseSize("15fpx"),
+	}
+
+	mesh;	
 	points = [];
 	dummy = new THREE.Object3D();
-	geometry = new PlaneBufferGeometry(50,50);
-	material = new THREE.MeshBasicMaterial({color:0xFF0000, map:SpriteSheetGenerator.texture});
-	
+	geometry = new PlaneBufferGeometry(1,1);
+		
 	constructor(webgl) {
 		this.webgl = webgl;
 		this.container = new THREE.Object3D();
@@ -29,7 +32,6 @@ export default class Particles {
 
 	init(src) {
 		const loader = new THREE.TextureLoader();
-
 		loader.load(src, (texture) => {
 			this.texture = texture;
 			this.texture.minFilter = THREE.LinearFilter;
@@ -45,19 +47,33 @@ export default class Particles {
 			this.initTouch();
 			this.resize();
 			this.show();
+			SpriteSheetGenerator.dispose();
 		});
+
+		DebugPane.setupParticleOptions(this.defaults);
 	}
 
 	initPoints() {
-        const box = new THREE.Mesh(new THREE.BoxGeometry( Metrics.WIDTH * .8, Metrics.HEIGHT * .6, 400 ));
+        const box = new THREE.Mesh(new THREE.BoxGeometry( Metrics.WIDTH * .8, Metrics.HEIGHT * .6, 200 ));
+		box.position.z = -100;
         const sampler = new MeshSurfaceSampler(box).build();
 	
-		for (let i = 0; i < this.count; i++) {   
-			let tempPosition = new THREE.Vector3();
-			sampler.sample(tempPosition);
-			console.log(tempPosition.z)
-			
-			this.points.push(tempPosition)
+		for (let i = 0; i < this.defaults.total; i++) {
+			const position = new THREE.Vector3();
+			const index = Maths.maxminRandom(IMAGES_PROJECTS.length, 1);
+			const image = IMAGES_PROJECTS[index-1];
+			const item = {
+				index: index,
+				scaleX: image.width > image.height? 1 : image.height/image.width,
+				scaleY: image.width < image.height? 1 : image.width/image.height
+			}
+
+			sampler.sample(position);
+						
+			this.points.push({
+					...item,
+					...position
+				});
 		}
 	}
 
@@ -92,14 +108,18 @@ export default class Particles {
           });
 
 		const sprites = [];
-		this.mesh = new THREE.InstancedMesh( this.geometry, material, this.count );		
+		this.mesh = new THREE.InstancedMesh( this.geometry, material, this.defaults.total );		
 		this.mesh.instanceMatrix.setUsage( THREE.DynamicDrawUsage );
 
-		for ( let i = 0; i < this.count; i ++ ) {
-			sprites.push(Maths.maxminRandom(IMAGES_PROJECTS.length, 1));
-			this.dummy.position.set(this.points[i].x,this.points[i].y,this.points[i].z);
+		for ( let i = 0; i < this.defaults.total; i ++ ) {
+			sprites.push(this.points[i].index);
+
+			this.dummy.scale.set(this.points[i].scaleX * this.defaults.particleSize,this.points[i].scaleY * this.defaults.particleSize, 1)
+			this.dummy.position.set(this.points[i].x,this.points[i].y,0);
 			this.dummy.updateMatrix();
+			
 			this.mesh.setMatrixAt(i, this.dummy.matrix );
+
 		}
 		
 		this.mesh.geometry.setAttribute('nSprite', new THREE.InstancedBufferAttribute(new Float32Array(sprites), 1, false));
@@ -393,9 +413,14 @@ export default class Particles {
 
 		if ( this.mesh ) {
 
-			
+			for ( let i = 0; i < this.defaults.total; i ++ ) {	
+				this.dummy.scale.set(this.points[i].scaleX * this.defaults.particleSize, this.points[i].scaleY * this.defaults.particleSize, 1)
+				this.dummy.position.set(this.points[i].x,this.points[i].y,this.points[i].z);
+				this.dummy.updateMatrix();
+				
+				this.mesh.setMatrixAt(i, this.dummy.matrix );
+			}
 			this.mesh.instanceMatrix.needsUpdate = true;
-
 		}
 	}
 

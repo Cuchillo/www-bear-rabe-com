@@ -25,8 +25,8 @@ export const IMAGE_VERTEXT = `
     void main() {
         vSprite = nSprite;
        
-        vec3 transformed = vec3( position );
-        vec4 mvPosition = vec4( transformed, 1.0 );
+        vec3 transformed = vec3(position);
+        vec4 mvPosition = vec4(transformed, 1.0);
         
         #ifdef USE_INSTANCING
             mvPosition = instanceMatrix * mvPosition;

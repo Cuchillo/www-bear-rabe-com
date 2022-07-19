@@ -73,11 +73,12 @@ export default class SpriteSheetGenerator {
 
   static end() {
     this.texture = new THREE.TextureLoader().load(this.canvas.toDataURL(), ()=> {
-      setTimeout(()=> {this.dispose()},500);
+      this.call();
+      /*setTimeout(()=> {this.dispose()},1000);
       if(this.call) {
         this.call();
         this.call = null;
-      }
+      }*/
     });    
   }
 
@@ -93,6 +94,7 @@ export default class SpriteSheetGenerator {
     this.position = null;
     this.limits = null;
     this.defaults = null;
+    this.call = null;
   }
 
   static resize() {
