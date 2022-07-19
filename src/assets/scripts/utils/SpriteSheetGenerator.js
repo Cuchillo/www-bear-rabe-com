@@ -74,11 +74,6 @@ export default class SpriteSheetGenerator {
   static end() {
     this.texture = new THREE.TextureLoader().load(this.canvas.toDataURL(), ()=> {
       this.call();
-      /*setTimeout(()=> {this.dispose()},1000);
-      if(this.call) {
-        this.call();
-        this.call = null;
-      }*/
     });    
   }
 
@@ -87,7 +82,6 @@ export default class SpriteSheetGenerator {
 
     this.ctx = this.canvas.getContext('2d');
     this.cont = null;
-    this.texture = null;
     this.img = null;
     this.data = null;
     this.options = null;

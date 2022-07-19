@@ -23,6 +23,8 @@ export const PARTICLE_FRAGMENT = `
 `;
 
 export const SPRITESHEET_FRAGMENT = `
+    uniform sampler2D texture1;
+    
     uniform float cols;
     uniform float sprite;
     uniform float offsetPosition;
@@ -30,10 +32,7 @@ export const SPRITESHEET_FRAGMENT = `
     uniform float progress;
     uniform float opacity;
     uniform float burn;
-    uniform float aspectRatio;
-    uniform vec2 scaleCenter;
-    uniform sampler2D texture1;
-    uniform vec4 resolution;
+
     varying vec2 vUv;
     varying float vSprite;
     
@@ -42,7 +41,6 @@ export const SPRITESHEET_FRAGMENT = `
         vec2 vCenter = vec2((mod(nTile,cols) * offsetPosition), 1.0 - floor(nTile/cols) * offsetPosition);
 
         vec2 newUVScale = (vUv - vCenter) * offsetSprite + vCenter;
-        vec2 newUV = (newUVScale - vec2(progress))*resolution.zw + vec2(progress);
         vec4 color = texture2D(texture1,newUVScale);
         gl_FragColor = vec4(color.rgb * burn, color.a * opacity);
     }

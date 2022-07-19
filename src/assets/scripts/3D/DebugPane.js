@@ -29,15 +29,24 @@ export default class DebugPane {
         });
     }
 
-    static setupParticleOptions(__data) {
+    static setupParticleOptions(__data, __call) {
         const subpane = this.pane.addFolder({   title: 'Particles' });
 
-        subpane.addInput(__data, 'total', {
+        const params = {
+            total: __data.total
+        }
+
+        subpane.addInput(params, 'total', {
             label: 'Total',
-            step: 1,
+            step: 100,
             min: 100,
             max: 10000,
-        });
+        }).on('change', (ev) => {
+            if (ev.last ) {
+                __data.total = params.total;
+                if(__call) __call();
+            }
+          });
 
         subpane.addInput(__data, 'particleSize', {
             label: 'Size',
