@@ -123,14 +123,14 @@ export default class Particles {
 		if ( this.mesh ) {
 			const sprites = [];
 			for ( let i = 0; i < this.defaults.total; i ++ ) {	
-				
+				sprites.push(Maths.maxminRandom(IMAGES_PROJECTS.length, 1));
 				this.dummy.scale.set(this.points[i].scaleX * this.defaults.particleSize, this.points[i].scaleY * this.defaults.particleSize, 1)
 				this.dummy.position.set(this.points[i].x,this.points[i].y,this.points[i].z);
 				this.dummy.updateMatrix();
 				
 				this.mesh.setMatrixAt(i, this.dummy.matrix );
 			}
-			
+			this.mesh.geometry.setAttribute('nSprite', new THREE.InstancedBufferAttribute(new Float32Array(sprites), 1, false));
 			this.mesh.instanceMatrix.needsUpdate = true;
 		}
 	}
