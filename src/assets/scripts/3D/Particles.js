@@ -121,13 +121,16 @@ export default class Particles {
 
 	update(delta) {
 		if ( this.mesh ) {
+			const sprites = [];
 			for ( let i = 0; i < this.defaults.total; i ++ ) {	
+				
 				this.dummy.scale.set(this.points[i].scaleX * this.defaults.particleSize, this.points[i].scaleY * this.defaults.particleSize, 1)
 				this.dummy.position.set(this.points[i].x,this.points[i].y,this.points[i].z);
 				this.dummy.updateMatrix();
 				
 				this.mesh.setMatrixAt(i, this.dummy.matrix );
 			}
+			
 			this.mesh.instanceMatrix.needsUpdate = true;
 		}
 	}
