@@ -47,7 +47,7 @@ export default class Particles {
 	}
 
 	initPoints() {
-        const box = new THREE.Mesh(new THREE.BoxGeometry( Metrics.WIDTH * .8, Metrics.HEIGHT * .6, 200 ));
+        const box = new THREE.Mesh(new THREE.TorusGeometry( Metrics.HEIGHT * .4, Metrics.HEIGHT * .2, 16, 100 ));
 		box.position.z = -100;
         const sampler = new MeshSurfaceSampler(box).build();
 	
