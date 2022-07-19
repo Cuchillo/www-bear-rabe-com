@@ -67,8 +67,8 @@ export default class Main {
     ControllerWindow.init(); // Control ventanas
     MaskedLinks.init();
     SpriteSheetGenerator.init();
-    Guides.init();
-    Guides.add({cols:Metrics.COLS, rows:'auto', color:'#fa4d56'});
+    /*Guides.init();
+    Guides.add({cols:Metrics.COLS, rows:'auto', color:'#fa4d56'});*/
     TopCanvas.init();
     BG.init(CMS_COLORS); // Control de paletas y color de fondo de pantallas. Automatico si añadimos un data-palette='loquesea' en el div con data-page
     InterfaceCanvas.init(); // Canvas de interface, se usa con Cursor

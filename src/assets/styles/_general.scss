@@ -57,3 +57,7 @@ body {
         transform-origin: top right;
     }
 }
+
+.tp-dfwv {
+    @include z-index(999999)
+}

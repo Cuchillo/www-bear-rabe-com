@@ -14,3 +14,37 @@ export const PARTICLE_VERTEXT = `
         gl_Position = projectionMatrix * mvPosition;
     }
 `;
+
+export const IMAGE_VERTEXT = `
+    attribute float nSprite;
+    attribute float nAlpha;
+
+    varying vec2 vUv;
+    varying float vSprite;
+    
+    void main() {
+        vSprite = nSprite;
+       
+        vec3 transformed = vec3( position );
+        vec4 mvPosition = vec4( transformed, 1.0 );
+        
+        #ifdef USE_INSTANCING
+            mvPosition = instanceMatrix * mvPosition;
+        #endif
+        
+        vec4 modelViewPosition = modelViewMatrix * mvPosition;
+        vUv = uv;
+        gl_Position = projectionMatrix * modelViewPosition;
+    }
+`;
+
+export const TEXT_VERTEX = `
+    #define PI 3.1415926538
+
+    varying vec2 vUv;
+
+    void main() {
+        vUv = uv;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+    }
+`;
