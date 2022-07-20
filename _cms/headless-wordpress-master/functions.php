@@ -25,6 +25,7 @@ add_image_size( '@3x', 2748);
 add_image_size( '@2x', 1832);
 add_image_size( '@1x', 916);
 add_image_size( 'thumb', 200);
+add_image_size( 'thumb_mobile', 100);
 add_image_size( 'facebook', 1200, 630, true);
 add_image_size( 'twitter', 600, 330, true);
 
