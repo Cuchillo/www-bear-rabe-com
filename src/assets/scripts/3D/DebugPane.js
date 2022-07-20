@@ -55,4 +55,51 @@ export default class DebugPane {
             max: 200,
         });
     }
+
+    static setupObject(obj, __call) {
+        const subpane = this.pane.addFolder({   title: 'Object 3D' });
+
+        
+        const params = {
+            scale: obj.scale.x
+        }
+
+        subpane.addInput(obj.material, 'visible');
+
+        subpane.addInput(params, 'scale', {
+            label: 'Scale',
+            step: .01,
+            min: 1,
+            max: 100,
+        }).on('change', (ev) => {
+            obj.scale.x = params.scale;
+            obj.scale.y = params.scale;
+            obj.scale.z = params.scale;
+
+            if (ev.last ) {
+                if(__call) __call();
+            }
+          });
+
+        subpane.addInput(obj.position, 'x', {
+            label: 'Pos x',
+            step: .1,
+            min: -1000,
+            max: 1000,
+        });
+
+        subpane.addInput(obj.position, 'y', {
+            label: 'Pos y',
+            step: .1,
+            min: -1000,
+            max: 1000,
+        });
+
+        subpane.addInput(obj.position, 'z', {
+            label: 'Pos z',
+            step: .1,
+            min: -1000,
+            max: 1000,
+        });
+    }
 }

@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
 import { PlaneGeometry, Vector3 } from 'three';
 import { BoxGeometry, MeshBasicMaterial, Mesh } from 'three';
 import { SPRITESHEET_FRAGMENT } from '../shaders/fragment';
@@ -20,38 +21,13 @@ export default class Scene extends WebGLSketch {
             distance2D: 1500
         });
 
-        //this.initTest();
-        this.initParticles();
+       // this.initTest();
+       this.initParticles();
     }
 
     initTest() {
-        const cols = 10;
-        const uniforms = {
-            sprite: { type: 'f', value:1.0 },
-            cols: { type: 'f', value:cols },
-            offsetSprite: { type: 'f', value:1/cols },
-            offsetPosition: { type: 'f', value:1/(cols-1) },
-
-            texture1: { type: 't', value: SpriteSheetGenerator.texture },
-            progress: { type: 'f', value: .1 },
-            scaleCenter: { type: 'v2',value: { x:0, y:1}},
-            alpha: { type: 'f', value: 1.0 },
-            burn: { type: 'f', value: 1.0 },
-            aspectRatio: { type: 'f', value: 1.0 },
-            opacity: { type: 'f', value: 1.0 },
-            resolution: {
-              type: 'v2',
-              value: { x:1, y:1, z:1, w:1 }
-            }
-          };
-
-        const geometry = new PlaneGeometry();
-        const material = new THREE.ShaderMaterial({
-            uniforms,
-            fragmentShader: SPRITESHEET_FRAGMENT,
-            vertexShader: IMAGE_VERTEXT,
-            transparent: true
-          });
+        const geometry = new BoxGeometry();
+        const material = new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true });
         
         const cube = new WebGLObject(geometry, material, {
             size: new Vector3(50, 50, 50)
@@ -59,8 +35,7 @@ export default class Scene extends WebGLSketch {
         cube.active = true;
         this.scene.add(cube);
 
-        DebugPane.uniforms_image = material.uniforms;
-        DebugPane.init();
+        DebugPane.setupObject(cube);
     }
 
     initParticles() {

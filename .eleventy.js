@@ -50,6 +50,7 @@ module.exports = (config) => {
   config.addPassthroughCopy('src/assets/fonts');
   config.addPassthroughCopy('src/assets/social');
   config.addPassthroughCopy('src/assets/images');
+  config.addPassthroughCopy('src/assets/obj');
   config.addPassthroughCopy({'src/assets/scripts/preload.js': 'assets/preload.js'});
   config.addPassthroughCopy({'src/assets/scripts/service-worker.js': 'service-worker.js'});
   config.addPassthroughCopy({'src/off/index.html': 'off/index.html'});

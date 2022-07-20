@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
 import Perlin from '../utils/Perlin';
 import { SPRITESHEET_FRAGMENT } from '../shaders/fragment';
 import { IMAGE_VERTEXT, PARTICLE_VERTEXT } from '../shaders/vertex';
@@ -11,15 +12,20 @@ import { Maths } from '../_app/cuchillo/utils/Maths';
 import { GetBy } from '../_app/cuchillo/core/Element';
 import SpriteSheetGenerator from '../utils/SpriteSheetGenerator';
 import DebugPane from './DebugPane';
+import { isDebug } from '../_app/cuchillo/core/Basics';
 
 export default class Particles {
 
 	tick = 0;
 	defaults = {
-		total: 1000,
-		particleSize: Metrics.parseSize("20fpx"),
+		total: 5000,
+		scale: Metrics.parseSize("5.12fpx"),
+		logoVisible: true,
+		particleSize: Metrics.parseSize("10fpx"),
 		spritesheetCols: 10
 	}
+
+	logoMesh;;
 	mesh;	
 	points = [];
 	noise = new Perlin(Math.random());
@@ -32,24 +38,65 @@ export default class Particles {
 	}
 
 	init() {
-		this.initPoints();
-		this.initGeometry();
-		
-		SpriteSheetGenerator.dispose();
+		this.loadLogo(()=> {
+			this.initPoints();
+			this.initGeometry();
+			
+			SpriteSheetGenerator.dispose();
+			DebugPane.setupParticleOptions(this.defaults, ()=> {this.reset();});
+		})
+	}
 
-		DebugPane.setupParticleOptions(this.defaults, ()=> {this.reset();});
+	loadLogo(__call) {
+		console.log("LOAD")
+		const loader = new OBJLoader();
+		loader.load(
+			'/assets/obj/logo_v02.obj',
+			( object ) => {
+				object.traverse((child) => {
+					if (child.isMesh) {
+						this.logoMesh = child;
+						this.logoMesh.scale.x = this.defaults.scale;
+						this.logoMesh.scale.y = this.defaults.scale;
+					}
+				})
+
+				if(isDebug && false) {
+					const mat = new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true });
+					this.logoMesh.material = mat					
+					this.logoMesh.material.visible = this.defaults.logoVisible;
+
+					this.container.add(this.logoMesh);
+					DebugPane.setupObject(this.logoMesh, ()=> {
+						this.defaults.scale = this.logoMesh.scale.x;
+						this.reset();
+					});
+				}
+
+				if(__call) __call();
+			},
+			function ( xhr ) {},
+			function ( error ) {}
+		);
 	}
 
 	reset() {
 		this.dispose();
 		this.initPoints();
 		this.initGeometry();
+
+		if(isDebug) {
+			this.logoMesh.material.visible = this.defaults.logoVisible;
+		}
 	}
 
 	initPoints() {
-        const box = new THREE.Mesh(new THREE.TorusGeometry( Metrics.HEIGHT * .3, Metrics.HEIGHT * .15, 16, 100 ));
-		box.position.z = -100;
-        const sampler = new MeshSurfaceSampler(box).build();
+        //const box = new THREE.Mesh(new THREE.TorusGeometry( Metrics.HEIGHT * .3, Metrics.HEIGHT * .15, 16, 100 ));
+
+		const box = new THREE.Mesh(new THREE.BoxGeometry( Metrics.WIDTH * .6, Metrics.HEIGHT * .4));
+
+		
+        const sampler = new MeshSurfaceSampler(this.logoMesh).build();
 	
 		for (let i = 0; i < this.defaults.total; i++) {
 			const position = new THREE.Vector3();
@@ -62,6 +109,9 @@ export default class Particles {
 			}
 
 			sampler.sample(position);
+			position.x *= this.defaults.scale;
+			position.y *= this.defaults.scale;
+			position.z *= this.defaults.scale;
 						
 			this.points.push({
 					...item,
@@ -120,20 +170,23 @@ export default class Particles {
 	// ---------------------------------------------------------------------------------------------
 
 	update(delta) {
-		this.tick+=.01;
+		this.tick+=.001;
 
 		if ( this.mesh ) {
 			const sprites = [];
 			let x = 0;
 			let y = 0;
-			
+			let z = 0;
+
+		
 			for ( let i = 0; i < this.defaults.total; i ++ ) {
-
-				x = this.points[i].x + (this.noise.simplex3(this.points[i].x/50, this.points[i].z/50, this.tick) * Math.PI * 2)*10;
-				y = this.points[i].y + (this.noise.simplex3(this.points[i].x/100 + 40000, this.points[i].z/100 + 40000, this.tick))*10;
-
+				
+				x = this.points[i].x + this.noise.simplex3(this.points[i].x, this.points[i].y, this.tick) * 100;
+				y = this.points[i].y + this.noise.simplex3(this.points[i].x/100 + 40000, this.points[i].y/100 + 40000, this.tick) * 100;
+				z = this.points[i].z + this.noise.simplex3(this.points[i].x/100 + 40000, this.points[i].y/100 + 40000, this.tick) * 210;
+				
 				this.dummy.scale.set(this.points[i].scaleX * this.defaults.particleSize, this.points[i].scaleY * this.defaults.particleSize, 1)
-				this.dummy.position.set(x,y,this.points[i].z);
+				this.dummy.position.set(x,y,z);
 				this.dummy.updateMatrix();
 				
 				this.mesh.setMatrixAt(i, this.dummy.matrix );
