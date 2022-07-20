@@ -6,6 +6,7 @@ const Metrics = {
   set WIDTH(n) { 
     this._WIDTH = n;
     this.GRID = this._WIDTH/this.COLS;
+    this.GRIDSUB = this.GRID * .5;
   },
   get WIDTH() { return this._WIDTH; },
   set HEIGHT(n) { this._HEIGHT = n; },
@@ -14,6 +15,7 @@ const Metrics = {
   _WIDTH: window.innerWidth,
   _HEIGHT: window.innerHeight,
   GRID:0,
+  GRIDSUB:0,
   CENTER_X: 0,
   CENTER_Y: 0,
   ASPECT: 0,

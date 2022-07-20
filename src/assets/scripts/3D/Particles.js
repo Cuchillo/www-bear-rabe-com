@@ -13,15 +13,18 @@ import { GetBy } from '../_app/cuchillo/core/Element';
 import SpriteSheetGenerator from '../utils/SpriteSheetGenerator';
 import DebugPane from './DebugPane';
 import { isDebug } from '../_app/cuchillo/core/Basics';
+import { Sizes } from '../_app/cuchillo/core/Sizes';
 
 export default class Particles {
 
 	tick = 0;
 	defaults = {
-		total: 5000,
+		speed: 2.5,
+		total: 10000,
 		scale: Metrics.parseSize("5.12fpx"),
 		logoVisible: true,
-		particleSize: Metrics.parseSize("10fpx"),
+		isPixelMove: false,
+		particleSize: Metrics.parseSize("14fpx"),
 		spritesheetCols: 10
 	}
 
@@ -100,10 +103,12 @@ export default class Particles {
 	
 		for (let i = 0; i < this.defaults.total; i++) {
 			const position = new THREE.Vector3();
-			const index = Maths.maxminRandom(IMAGES_PROJECTS.length, 1);
-			const image = IMAGES_PROJECTS[index-1];
+			const index = Maths.maxminRandom(IMAGES_PROJECTS.length + 2, 1);
+			const isPixel = index >= IMAGES_PROJECTS.length;
+			const image = !isPixel? IMAGES_PROJECTS[index-1] : {width:1,height:1};
 			const item = {
 				index: index,
+				isPixel: isPixel,
 				scaleX: image.width > image.height? 1 : image.height/image.width,
 				scaleY: image.width < image.height? 1 : image.width/image.height
 			}
@@ -170,22 +175,45 @@ export default class Particles {
 	// ---------------------------------------------------------------------------------------------
 
 	update(delta) {
-		this.tick+=.001;
+		this.tick+=.001*this.defaults.speed;
 
 		if ( this.mesh ) {
 			const sprites = [];
 			let x = 0;
 			let y = 0;
 			let z = 0;
-
+			let scaleX;
+			let scaleY;
 		
 			for ( let i = 0; i < this.defaults.total; i ++ ) {
 				
-				x = this.points[i].x + this.noise.simplex3(this.points[i].x, this.points[i].y, this.tick) * 100;
+				x = this.points[i].x +  this.noise.simplex3(this.points[i].x, this.points[i].y, this.tick) * 100;
 				y = this.points[i].y + this.noise.simplex3(this.points[i].x/100 + 40000, this.points[i].y/100 + 40000, this.tick) * 100;
-				z = this.points[i].z + this.noise.simplex3(this.points[i].x/100 + 40000, this.points[i].y/100 + 40000, this.tick) * 210;
+				z = this.points[i].z + this.noise.simplex3(this.points[i].x/10 + 4000, this.points[i].y/10 + 4000, this.tick) * 210;
+
+				if(this.points[i].isPixel) {
+					scaleX = this.defaults.particleSize;
+					scaleY = this.defaults.particleSize;
+					//z = 0;
+				} else {
+					scaleX = (this.points[i].scaleX + this.noise.simplex3(x/100 + 40000, y/100 + 40000, this.tick * .10)) * this.defaults.particleSize;
+					scaleY = (this.points[i].scaleY + this.noise.simplex3(x/100 + 40000, y/100 + 40000, this.tick * .10)) * this.defaults.particleSize;
+				}
 				
-				this.dummy.scale.set(this.points[i].scaleX * this.defaults.particleSize, this.points[i].scaleY * this.defaults.particleSize, 1)
+
+
+				if(this.defaults.isPixelMove || this.points[i].isPixel) {
+					x = Math.floor(x/5) * 5;
+					y = Math.floor(y/5) * 5;
+				}
+
+				if(this.points[i].isPixel) {
+					x = Math.floor(x/Metrics.GRIDSUB) * Metrics.GRIDSUB;
+					y = Math.floor(y/Metrics.GRIDSUB) * Metrics.GRIDSUB;
+					z = 0;//Math.floor(z/5) * 5;
+				}
+				
+				this.dummy.scale.set(scaleX,scaleY,1)
 				this.dummy.position.set(x,y,z);
 				this.dummy.updateMatrix();
 				

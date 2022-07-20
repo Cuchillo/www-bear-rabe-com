@@ -36,6 +36,21 @@ export default class DebugPane {
             total: __data.total
         }
 
+        subpane.addInput(__data, 'isPixelMove',{label: 'Pixel'});
+
+        
+        subpane.addInput(__data, 'scale', {
+            label: 'Scale',
+            step: .01,
+            min: 1,
+            max: 10,
+        }).on('change', (ev) => {
+            if (ev.last ) {
+                if(__call) __call();
+            }
+          });
+
+       
         subpane.addInput(params, 'total', {
             label: 'Total',
             step: 100,
@@ -50,9 +65,16 @@ export default class DebugPane {
 
         subpane.addInput(__data, 'particleSize', {
             label: 'Size',
-            step: 1,
-            min: 1,
-            max: 200,
+            step: .1,
+            min: .1,
+            max: 40,
+        });
+
+        subpane.addInput(__data, 'speed', {
+            label: 'Speed',
+            step: .1,
+            min: 0.1,
+            max: 100,
         });
     }
 

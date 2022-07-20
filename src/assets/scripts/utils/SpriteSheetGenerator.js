@@ -56,7 +56,7 @@ export default class SpriteSheetGenerator {
       this.end();
     }
   }
-
+  
   static draw() {
     this.position = {
       x: (this.cont%this.limits.x) * this.options.size,
@@ -71,7 +71,30 @@ export default class SpriteSheetGenerator {
     );
   }
 
+  static drawSquare(__color) {
+    console.log("drawSquare")
+
+    this.position = {
+      x: (this.cont%this.limits.x) * this.options.size,
+      y: Math.floor(this.cont/this.limits.x) * this.options.size
+    }
+
+    this.ctx.beginPath();
+    this.ctx.fillStyle = __color;
+    this.ctx.fillRect(
+      this.position.x,
+      this.position.y,
+      this.options.size,
+      this.options.size,
+    );
+    this.cont++;
+  }
+
   static end() {
+    this.drawSquare("#0000FF");
+    this.drawSquare("#00FF00");
+    this.drawSquare("#959595");
+
     this.texture = new THREE.TextureLoader().load(this.canvas.toDataURL(), ()=> {
       this.call();
     });    
