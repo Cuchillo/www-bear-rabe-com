@@ -1,6 +1,6 @@
 const Sizes = {
   RATIO: window.devicePixelRatio,
-  RATIO_CANVAS: Math.min(window.devicePixelRatio,1.4),
+  RATIO_CANVAS: Math.min(window.devicePixelRatio,1),
   SMARTPHONE: 480,
   TABLET_PORTRAIT:  768,
   TABLET_LANDSCAPE:  1024,

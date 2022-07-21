@@ -30,32 +30,32 @@ export default class Particles {
 			speed: 2.5
 		},
 		x: {
-			force:239,
-			amplitude:326,
-			period: 32609,
-			z_dif: 0.033
+			force:119,//239,
+			amplitude:511,//326,
+			period: 45109,//32609,
+			z_dif: 0.22,//0.033
 		},
 		y: {
-			force:100,
-			amplitude:100,
+			force:54.3,//100,
+			amplitude:413,//100,
 			period: 40000,
 			z_dif: 0
 		},
 		z: {
-			force:210,
-			amplitude:10,
-			period: 14674,
-			z_dif: 0.807
+			force:130,//210,
+			amplitude:446,//10,
+			period: 37500,//14674,
+			z_dif: 0.152,//0.807
 		},
 		scale: {
-			force:30,
-			amplitude:348,
+			force:50,//30,
+			amplitude:522,//348,
 			period: 40000,
-			z_dif: 0.054
+			z_dif: 0.163,//0.054
 		},
 		particles: {
 			total: 10000,
-			size: Metrics.parseSize("14fpx"),
+			size: Metrics.parseSize("10fpx")//Metrics.parseSize("14fpx"),
 		},
 		pixels: {
 			snap: true,
