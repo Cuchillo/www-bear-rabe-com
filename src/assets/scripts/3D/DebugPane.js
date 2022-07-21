@@ -34,6 +34,18 @@ export default class DebugPane {
         this.pane.refresh();
     }
 
+    static setupRender(__renderer) {
+        const PARAMS = {
+            bg: '#ffffff',
+        };
+          
+        this.pane.addInput(PARAMS, 'bg',{label: 'Background'}).on('change', (ev) => {
+            if (ev.last ) {
+                __renderer.setClearColor(PARAMS.bg, 1);
+            }
+        });
+    }
+
     static setupAnimation(__data) {
        
         this.pane.addInput(__data, 'hasAnimation',{label: 'Animation'}).on('change', (ev) => {
