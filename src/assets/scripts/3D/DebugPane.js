@@ -1,4 +1,5 @@
 import {Pane} from 'tweakpane';
+import { Maths } from '../_app/cuchillo/utils/Maths';
 
 export default class DebugPane {
     static pane = new Pane();
@@ -33,57 +34,40 @@ export default class DebugPane {
         this.pane.refresh();
     }
 
-    static setupParticleOptions(__data, __call) {
-        const subpane = this.pane.addFolder({   title: 'Particles' });
+    static setupAnimation(__data) {
+        const subpane = this.pane.addFolder({   title: 'Animation' });
+        subpane.addInput(__data, 'hasAnimation',{label: 'Animation'}).on('change', (ev) => {
+            __data.finePosition = 0;
+            this.pane.refresh();
+          });
+        subpane.addInput(__data, 'isPixelMove',{label: 'Pixel'});
+        subpane.addInput(__data, 'speed', {
+            label: 'Speed',
+            step: .1,
+            min: 0.1,
+            max: 100,
+        });
+        subpane.addInput(__data, 'finePosition', {
+            label: 'Fine',
+            step: .1,
+            min: 0,
+            max: 1000,
+        });
+        subpane.addButton({
+            title: 'Random',
+          }).on('click', () => {
+            __data.finePosition = 500;
+            __data.tick = Maths.maxminRandom(10000, 1);
+            this.pane.refresh();
+          });
+    }
 
+    static setupParticles(__data, __call) {
+        const subpane = this.pane.addFolder({   title: 'Particles' });
         const params = {
             total: __data.total
         }
 
-        subpane.addInput(__data, 'hasAnimation',{label: 'Animation'});
-        subpane.addInput(__data, 'isPixelMove',{label: 'Pixel'});
-
-        subpane.addInput(__data, 'timelinePosition', {
-            label: 'Fine Progress',
-            step: .01,
-            min: 0,
-            max: 100,
-        });
-
-        subpane.addInput(__data, 'pixelRandom', {
-            label: 'Pixel Radom',
-            step: 1,
-            min: 0,
-            max: 100,
-        }).on('change', (ev) => {
-            if (ev.last ) {
-                if(__call) __call();
-            }
-          });
-        
-        subpane.addInput(__data, 'scale', {
-            label: 'Box Size',
-            step: .01,
-            min: 1,
-            max: 10,
-        }).on('change', (ev) => {
-            if (ev.last ) {
-                if(__call) __call();
-            }
-          });
-
-          subpane.addInput(__data, 'scaleZ', {
-            label: 'Distancia Z',
-            step: 1,
-            min: 0,
-            max: 1000,
-        }).on('change', (ev) => {
-            if (ev.last ) {
-                if(__call) __call();
-            }
-          });
-
-       
         subpane.addInput(params, 'total', {
             label: 'Total',
             step: 100,
@@ -96,47 +80,105 @@ export default class DebugPane {
             }
           });
 
-        subpane.addInput(__data, 'particleSize', {
+          subpane.addInput(__data, 'size', {
             label: 'Size',
             step: .1,
             min: .1,
             max: 40,
         });
+    }
 
-        subpane.addInput(__data, 'speed', {
-            label: 'Speed',
-            step: .1,
-            min: 0.1,
+    static setupPixeles(__data, __call) {
+        const subpane = this.pane.addFolder({   title: 'Pixels' });
+
+        subpane.addInput(__data, 'porcentaje', {
+            label: '%',
+            step: 1,
+            min: 0,
             max: 100,
-        });
+        }).on('change', (ev) => {
+            if (ev.last ) {
+                if(__call) __call();
+            }
+          });
 
-        subpane.addInput(__data.forces, 'x', {
-            label: 'Force x',
+          subpane.addInput(__data, 'size', {
+            label: 'Size',
             step: .1,
-            min: 0,
-            max: 1000,
+            min: .1,
+            max: 40,
         });
+    }
 
-        subpane.addInput(__data.forces, 'y', {
-            label: 'Force y',
-            step: .1,
-            min: 0,
-            max: 1000,
-        });
+    static setupContainer(__data, __call) {
+        const subpane = this.pane.addFolder({   title: 'Container' });
 
-        subpane.addInput(__data.forces, 'z', {
-            label: 'Force z',
-            step: .1,
-            min: 0,
-            max: 1000,
-        });
-
-        subpane.addInput(__data.forces, 'scale', {
-            label: 'Force Size',
-            step: .1,
+        subpane.addInput(__data, 'scale', {
+            label: 'Size',
+            step: .01,
             min: 1,
-            max: 100,
+            max: 10,
+        }).on('change', (ev) => {
+            if (ev.last ) {
+                if(__call) __call();
+            }
+          });
+
+        subpane.addInput(__data, 'scaleZ', {
+            label: 'Depth',
+            step: 1,
+            min: 0,
+            max: 1000,
+        }).on('change', (ev) => {
+            if (ev.last ) {
+                if(__call) __call();
+            }
+          });
+    }
+
+    static setupParticleOptions(__data, __call) {
+        this.setupAnimation(__data.animation, __call);
+        this.setupContainer(__data.container, __call);
+        this.setupParticles(__data.particles, __call);
+        this.setupPixeles(__data.pixels, __call);
+        this.setupAxis(__data.x, "X");
+        this.setupAxis(__data.y, "Y");
+        this.setupAxis(__data.z, "Z");
+        this.setupAxis(__data.scale, "Scale");        
+    }
+
+    static setupAxis(__data, __title) {
+        const subpane = this.pane.addFolder({   title: __title });
+       
+        subpane.addInput(__data, 'force', {
+            label: 'Force',
+            step: .1,
+            min: 0,
+            max: 1000
         });
+
+        subpane.addInput(__data, 'amplitude', {
+            label: 'Amplitude',
+            step: 1,
+            min: 0,
+            max: 1000
+        });
+
+        subpane.addInput(__data, 'period', {
+            label: 'Period',
+            step: 1,
+            min: 0,
+            max: 50000
+        });
+
+        subpane.addInput(__data, 'z_dif', {
+            label: 'Depth mod',
+            step: .001,
+            min: 0,
+            max: 1
+        });
+
+        
     }
 
     static setupObject(obj, __call) {

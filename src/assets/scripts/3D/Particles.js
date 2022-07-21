@@ -20,22 +20,51 @@ export default class Particles {
 	tick = 0;
 	tickAux = 0;
 	defaults = {
-		hasAnimation: false,
-		timelinePosition: 0,
-		pixelRandom: 5,
-		speed: 2.5,
-		total: 10000,
-		scale: Metrics.parseSize("4.3fpx"),
-		scaleZ: 4,
-		logoVisible: true,
-		isPixelMove: false,
-		particleSize: Metrics.parseSize("14fpx"),
 		spritesheetCols: 20,
-		forces: {
-			x:100,
-			y:100,
-			z:210,
-			scale:30
+
+		animation: {
+			tick: 0,
+			hasAnimation: false,
+			finePosition: 500,
+			isPixelMove: false,
+			speed: 2.5
+		},
+		x: {
+			force:100,
+			amplitude:1,
+			period: 1,
+			z_dif: 0
+		},
+		y: {
+			force:100,
+			amplitude:100,
+			period: 40000,
+			z_dif: 0
+		},
+		z: {
+			force:210,
+			amplitude:10,
+			period: 4000,
+			z_dif: 0
+		},
+		scale: {
+			force:30,
+			amplitude:100,
+			period: 40000,
+			z_dif: 0
+		},
+		particles: {
+			total: 10000,
+			size: Metrics.parseSize("14fpx"),
+		},
+		pixels: {
+			porcentaje: 5,	
+			size: Metrics.parseSize("14fpx"),
+		},
+		container: {
+			scale: Metrics.parseSize("4.3fpx"),
+			logoVisible: true,
+			scaleZ: 4,
 		}
 	}
 
@@ -70,8 +99,8 @@ export default class Particles {
 				object.traverse((child) => {
 					if (child.isMesh) {
 						this.logoMesh = child;
-						this.logoMesh.scale.x = this.defaults.scale;
-						this.logoMesh.scale.y = this.defaults.scale;
+						this.logoMesh.scale.x = this.defaults.container.scale;
+						this.logoMesh.scale.y = this.defaults.container.scale;
 					}
 				})
 
@@ -82,7 +111,7 @@ export default class Particles {
 
 					this.container.add(this.logoMesh);
 					DebugPane.setupObject(this.logoMesh, ()=> {
-						this.defaults.scale = this.logoMesh.scale.x;
+						this.defaults.container.scale = this.logoMesh.scale.x;
 						this.reset();
 					});
 				}
@@ -110,8 +139,8 @@ export default class Particles {
 		const box = new THREE.Mesh(new THREE.BoxGeometry( Metrics.WIDTH * .6, Metrics.HEIGHT * .4));
 		const sampler = new MeshSurfaceSampler(this.logoMesh).build();
 	
-		for (let i = 0; i < this.defaults.total; i++) {
-			const isPixel = Maths.maxminRandom(100, 0) <= 100 * (this.defaults.pixelRandom/100) && this.defaults.pixelRandom > 0;
+		for (let i = 0; i < this.defaults.particles.total; i++) {
+			const isPixel = Maths.maxminRandom(100, 0) <= 100 * (this.defaults.pixels.porcentaje/100) && this.defaults.pixels.porcentaje > 0;
 			const position = new THREE.Vector3();
 			const index = !isPixel? Maths.maxminRandom(IMAGES_PROJECTS.length, 1) : Maths.maxminRandom(IMAGES_PROJECTS.length + 2, IMAGES_PROJECTS.length + 1);
 			const image = !isPixel? IMAGES_PROJECTS[index-1] : {width:1,height:1};
@@ -123,9 +152,9 @@ export default class Particles {
 			}
 
 			sampler.sample(position);
-			position.x *= this.defaults.scale;
-			position.y *= this.defaults.scale;
-			position.z *= (this.defaults.scale * this.defaults.scaleZ);
+			position.x *= this.defaults.container.scale;
+			position.y *= this.defaults.container.scale;
+			position.z *= (this.defaults.container.scale * this.defaults.container.scaleZ);
 						
 			this.points.push({
 					...item,
@@ -159,13 +188,13 @@ export default class Particles {
 
 		  
 
-		this.mesh = new THREE.InstancedMesh( this.geometry, material, this.defaults.total );		
+		this.mesh = new THREE.InstancedMesh( this.geometry, material, this.defaults.particles.total );		
 		this.mesh.instanceMatrix.setUsage( THREE.DynamicDrawUsage );
 
-		for ( let i = 0; i < this.defaults.total; i ++ ) {
+		for ( let i = 0; i < this.defaults.particles.total; i ++ ) {
 			sprites.push(this.points[i].index);
 
-			this.dummy.scale.set(this.points[i].scaleX * this.defaults.particleSize,this.points[i].scaleY * this.defaults.particleSize, 1)
+			this.dummy.scale.set(this.points[i].scaleX * this.defaults.particles.size,this.points[i].scaleY * this.defaults.particles.size, 1)
 			this.dummy.position.set(this.points[i].x,this.points[i].y,this.points[i].z);
 			this.dummy.updateMatrix();
 			
@@ -184,16 +213,13 @@ export default class Particles {
 	// ---------------------------------------------------------------------------------------------
 
 	update(delta) {
-		if(this.defaults.hasAnimation) {
-			this.tick+=.001*this.defaults.speed;
-			this.tickAux = this.tick;
-			this.defaults.timelinePosition = 0;
-			DebugPane.resetTimeline();
+		if(this.defaults.animation.hasAnimation) {
+			this.tick+=.001*this.defaults.animation.speed;
+			this.defaults.animation.tick = this.tick;
+			this.defaults.animation.finePosition = 0;
 		} else {
-			this.tick = this.tickAux + this.defaults.timelinePosition/100;
+			this.tick = this.defaults.animation.tick + this.defaults.animation.finePosition/100;
 		}
-
-		
 
 		if ( this.mesh ) {
 			const sprites = [];
@@ -202,25 +228,42 @@ export default class Particles {
 			let z = 0;
 			let scaleX;
 			let scaleY;
-		
-			for ( let i = 0; i < this.defaults.total; i ++ ) {
+			
+			for ( let i = 0; i < this.defaults.particles.total; i ++ ) {
 				
-				x = this.points[i].x +  this.noise.simplex3(this.points[i].x, this.points[i].y, this.tick) * this.defaults.forces.x;
-				y = this.points[i].y + this.noise.simplex3(this.points[i].x/100 + 40000, this.points[i].y/100 + 40000, this.tick) * this.defaults.forces.y;
-				z = this.points[i].z + this.noise.simplex3(this.points[i].x/10 + 4000, this.points[i].y/10 + 4000, this.tick) * this.defaults.forces.z;
+				x = this.points[i].x + this.noise.simplex3(
+					this.points[i].x/this.defaults.x.amplitude + this.defaults.x.period + this.points[i].z*this.defaults.x.z_dif,
+					this.points[i].y/this.defaults.x.amplitude + this.defaults.x.period + this.points[i].z*this.defaults.x.z_dif,
+					this.tick) * this.defaults.x.force;
+
+				y = this.points[i].y + this.noise.simplex3(
+					this.points[i].x/this.defaults.y.amplitude + this.defaults.y.period + this.points[i].z*this.defaults.y.z_dif,
+					this.points[i].y/this.defaults.y.amplitude + this.defaults.y.period + this.points[i].z*this.defaults.y.z_dif,
+					this.tick) * this.defaults.y.force;
+
+				z = this.points[i].z + this.noise.simplex3(
+					this.points[i].x/this.defaults.z.amplitude + this.defaults.z.period + this.points[i].z*this.defaults.z.z_dif,
+					this.points[i].y/this.defaults.z.amplitude + this.defaults.z.period + this.points[i].z*this.defaults.z.z_dif,
+					this.tick) * this.defaults.z.force;
+
+				//y = this.points[i].y + this.noise.simplex3(this.points[i].x/100 + 40000, this.points[i].y/100 + 40000, this.tick) * this.defaults.forces.y;
+				//z = this.points[i].z + this.noise.simplex3(this.points[i].x/10 + 4000, this.points[i].y/10 + 4000, this.tick) * this.defaults.forces.z;
 
 				if(this.points[i].isPixel) {
-					scaleX = this.defaults.particleSize;
-					scaleY = this.defaults.particleSize;
+					scaleX = this.defaults.pixels.size;
+					scaleY = this.defaults.pixels.size;
 					//z = 0;
 				} else {
-					scaleX = this.points[i].scaleX * this.defaults.particleSize + (this.noise.simplex3(x/100 + 40000, y/100 + 40000, this.tick * .10) * this.defaults.forces.scale);
-					scaleY = this.points[i].scaleY * this.defaults.particleSize + (this.noise.simplex3(x/100 + 40000, y/100 + 40000, this.tick * .10) * this.defaults.forces.scale);
+					const tempScale = this.noise.simplex3(
+						this.points[i].x/this.defaults.scale.amplitude + this.defaults.scale.period,
+						this.points[i].y/this.defaults.scale.amplitude + this.defaults.scale.period,
+						this.tick) * this.defaults.scale.force;
+
+					scaleX = this.points[i].scaleX * this.defaults.particles.size + tempScale;
+					scaleY = this.points[i].scaleY * this.defaults.particles.size + tempScale;
 				}
-				
 
-
-				if(this.defaults.isPixelMove || this.points[i].isPixel) {
+				if(this.defaults.animation.isPixelMove || this.points[i].isPixel) {
 					x = Math.floor(x/5) * 5;
 					y = Math.floor(y/5) * 5;
 				}
