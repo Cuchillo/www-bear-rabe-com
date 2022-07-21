@@ -58,6 +58,7 @@ export default class Particles {
 			size: Metrics.parseSize("14fpx"),
 		},
 		pixels: {
+			snap: true,
 			porcentaje: 2,	
 			size: Metrics.parseSize("14fpx"),
 		},
@@ -249,7 +250,7 @@ export default class Particles {
 				//y = this.points[i].y + this.noise.simplex3(this.points[i].x/100 + 40000, this.points[i].y/100 + 40000, this.tick) * this.defaults.forces.y;
 				//z = this.points[i].z + this.noise.simplex3(this.points[i].x/10 + 4000, this.points[i].y/10 + 4000, this.tick) * this.defaults.forces.z;
 
-				if(this.points[i].isPixel) {
+				if(this.points[i].isPixel && this.defaults.pixels.snap) {
 					scaleX = this.defaults.pixels.size;
 					scaleY = this.defaults.pixels.size;
 					//z = 0;
@@ -263,12 +264,12 @@ export default class Particles {
 					scaleY = this.points[i].scaleY * this.defaults.particles.size + tempScale;
 				}
 
-				if(this.defaults.animation.isPixelMove || this.points[i].isPixel) {
-					x = Math.floor(x/5) * 5;
-					y = Math.floor(y/5) * 5;
+				if(this.defaults.animation.isPixelMove || (this.points[i].isPixel && this.defaults.pixels.snap)) {
+					x = Math.floor(x/Metrics.GRIDSUB) * Metrics.GRIDSUB;
+					y = Math.floor(y/Metrics.GRIDSUB) * Metrics.GRIDSUB;
 				}
 
-				if(this.points[i].isPixel) {
+				if(this.points[i].isPixel && this.defaults.pixels.snap) {
 					x = Math.floor(x/Metrics.GRIDSUB) * Metrics.GRIDSUB;
 					y = Math.floor(y/Metrics.GRIDSUB) * Metrics.GRIDSUB;
 					z = 0;//Math.floor(z/5) * 5;

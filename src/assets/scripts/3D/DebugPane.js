@@ -90,7 +90,7 @@ export default class DebugPane {
 
     static setupPixeles(__data, __call) {
         const subpane = this.pane.addFolder({   title: 'Pixels' });
-
+        subpane.addInput(__data, 'snap',{label: 'Snap'});
         subpane.addInput(__data, 'porcentaje', {
             label: '%',
             step: 1,
@@ -126,9 +126,9 @@ export default class DebugPane {
 
         subpane.addInput(__data, 'scaleZ', {
             label: 'Depth',
-            step: 1,
+            step: .1,
             min: 0,
-            max: 1000,
+            max: 100,
         }).on('change', (ev) => {
             if (ev.last ) {
                 if(__call) __call();
@@ -157,11 +157,14 @@ export default class DebugPane {
     static setupAxis(__data, __title) {
         const subpane = this.pane.addFolder({   title: __title });
        
+        const step = __title === "Scale"? 0.01 : .1;
+        const max = __title === "Scale"? 100 : 1000;
+
         subpane.addInput(__data, 'force', {
             label: 'Force',
-            step: .1,
+            step: step,
             min: 0,
-            max: 1000
+            max: max
         });
 
         subpane.addInput(__data, 'amplitude', {
