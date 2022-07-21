@@ -88,7 +88,7 @@ export default class DebugPane {
             label: 'Total',
             step: 100,
             min: 100,
-            max: 20000,
+            max: 50000,
         }).on('change', (ev) => {
             if (ev.last ) {
                 __data.total = params.total;
