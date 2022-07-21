@@ -2,7 +2,7 @@ import {Pane} from 'tweakpane';
 import { Maths } from '../_app/cuchillo/utils/Maths';
 
 export default class DebugPane {
-    static pane = new Pane();
+    static pane = new Pane({title: 'BEAR Options'});
     static uniforms_image;
 
     static init() {               
@@ -35,25 +35,25 @@ export default class DebugPane {
     }
 
     static setupAnimation(__data) {
-        const subpane = this.pane.addFolder({   title: 'Animation' });
-        subpane.addInput(__data, 'hasAnimation',{label: 'Animation'}).on('change', (ev) => {
+       
+        this.pane.addInput(__data, 'hasAnimation',{label: 'Animation'}).on('change', (ev) => {
             __data.finePosition = 0;
             this.pane.refresh();
           });
-        subpane.addInput(__data, 'isPixelMove',{label: 'Pixel'});
-        subpane.addInput(__data, 'speed', {
+          this.pane.addInput(__data, 'isPixelMove',{label: 'Pixel'});
+          this.pane.addInput(__data, 'speed', {
             label: 'Speed',
             step: .1,
             min: 0.1,
             max: 100,
         });
-        subpane.addInput(__data, 'finePosition', {
+        this.pane.addInput(__data, 'finePosition', {
             label: 'Fine',
             step: .1,
             min: 0,
             max: 1000,
         });
-        subpane.addButton({
+        this.pane.addButton({
             title: 'Random',
           }).on('click', () => {
             __data.finePosition = 500;
@@ -144,7 +144,14 @@ export default class DebugPane {
         this.setupAxis(__data.x, "X");
         this.setupAxis(__data.y, "Y");
         this.setupAxis(__data.z, "Z");
-        this.setupAxis(__data.scale, "Scale");        
+        this.setupAxis(__data.scale, "Scale");    
+
+        const subpane = this.pane.addFolder({   title: 'Misc' });
+        subpane.addMonitor(__data, 'x', {
+            multiline: true,
+        });
+
+          
     }
 
     static setupAxis(__data, __title) {
@@ -177,7 +184,6 @@ export default class DebugPane {
             min: 0,
             max: 1
         });
-
         
     }
 

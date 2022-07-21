@@ -30,10 +30,10 @@ export default class Particles {
 			speed: 2.5
 		},
 		x: {
-			force:100,
-			amplitude:1,
-			period: 1,
-			z_dif: 0
+			force:239,
+			amplitude:326,
+			period: 32609,
+			z_dif: 0.033
 		},
 		y: {
 			force:100,
@@ -44,14 +44,14 @@ export default class Particles {
 		z: {
 			force:210,
 			amplitude:10,
-			period: 4000,
-			z_dif: 0
+			period: 14674,
+			z_dif: 0.807
 		},
 		scale: {
 			force:30,
-			amplitude:100,
+			amplitude:348,
 			period: 40000,
-			z_dif: 0
+			z_dif: 0.054
 		},
 		particles: {
 			total: 10000,
