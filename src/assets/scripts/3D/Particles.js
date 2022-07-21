@@ -62,7 +62,7 @@ export default class Particles {
 			size: Metrics.parseSize("14fpx"),
 		},
 		container: {
-			scale: Metrics.parseSize("4.3fpx"),
+			scale: Metrics.parseSize("5.1fpx"),
 			logoVisible: true,
 			scaleZ: 4,
 		}
