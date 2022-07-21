@@ -24,7 +24,7 @@ export default class Particles {
 
 		animation: {
 			tick: 0,
-			hasAnimation: false,
+			hasAnimation: true,
 			finePosition: 500,
 			isPixelMove: false,
 			speed: 2.5
@@ -58,7 +58,7 @@ export default class Particles {
 			size: Metrics.parseSize("14fpx"),
 		},
 		pixels: {
-			porcentaje: 5,	
+			porcentaje: 2,	
 			size: Metrics.parseSize("14fpx"),
 		},
 		container: {
