@@ -18,14 +18,23 @@ import { Sizes } from '../_app/cuchillo/core/Sizes';
 export default class Particles {
 
 	tick = 0;
+	tickAux = 0;
 	defaults = {
+		hasAnimation: false,
+		timelinePosition: 0,
+		pixelRandom: 5,
 		speed: 2.5,
 		total: 10000,
-		scale: Metrics.parseSize("5.12fpx"),
+		scale: Metrics.parseSize("4.3fpx"),
 		logoVisible: true,
 		isPixelMove: false,
 		particleSize: Metrics.parseSize("14fpx"),
-		spritesheetCols: 10
+		spritesheetCols: 20,
+		forces: {
+			x:100,
+			y:100,
+			z:210
+		}
 	}
 
 	logoMesh;;
@@ -97,14 +106,12 @@ export default class Particles {
         //const box = new THREE.Mesh(new THREE.TorusGeometry( Metrics.HEIGHT * .3, Metrics.HEIGHT * .15, 16, 100 ));
 
 		const box = new THREE.Mesh(new THREE.BoxGeometry( Metrics.WIDTH * .6, Metrics.HEIGHT * .4));
-
-		
-        const sampler = new MeshSurfaceSampler(this.logoMesh).build();
+		const sampler = new MeshSurfaceSampler(this.logoMesh).build();
 	
 		for (let i = 0; i < this.defaults.total; i++) {
+			const isPixel = Maths.maxminRandom(100, 0) <= 100 * (this.defaults.pixelRandom/100) && this.defaults.pixelRandom > 0;
 			const position = new THREE.Vector3();
-			const index = Maths.maxminRandom(IMAGES_PROJECTS.length + 2, 1);
-			const isPixel = index >= IMAGES_PROJECTS.length;
+			const index = !isPixel? Maths.maxminRandom(IMAGES_PROJECTS.length, 1) : Maths.maxminRandom(IMAGES_PROJECTS.length + 2, IMAGES_PROJECTS.length + 1);
 			const image = !isPixel? IMAGES_PROJECTS[index-1] : {width:1,height:1};
 			const item = {
 				index: index,
@@ -116,7 +123,7 @@ export default class Particles {
 			sampler.sample(position);
 			position.x *= this.defaults.scale;
 			position.y *= this.defaults.scale;
-			position.z *= this.defaults.scale;
+			position.z *= (this.defaults.scale * 4);
 						
 			this.points.push({
 					...item,
@@ -157,7 +164,7 @@ export default class Particles {
 			sprites.push(this.points[i].index);
 
 			this.dummy.scale.set(this.points[i].scaleX * this.defaults.particleSize,this.points[i].scaleY * this.defaults.particleSize, 1)
-			this.dummy.position.set(this.points[i].x,this.points[i].y,0);
+			this.dummy.position.set(this.points[i].x,this.points[i].y,this.points[i].z);
 			this.dummy.updateMatrix();
 			
 			this.mesh.setMatrixAt(i, this.dummy.matrix );
@@ -175,7 +182,16 @@ export default class Particles {
 	// ---------------------------------------------------------------------------------------------
 
 	update(delta) {
-		this.tick+=.001*this.defaults.speed;
+		if(this.defaults.hasAnimation) {
+			this.tick+=.001*this.defaults.speed;
+			this.tickAux = this.tick;
+			this.defaults.timelinePosition = 0;
+			DebugPane.resetTimeline();
+		} else {
+			this.tick = this.tickAux + this.defaults.timelinePosition/100;
+		}
+
+		
 
 		if ( this.mesh ) {
 			const sprites = [];
@@ -187,9 +203,9 @@ export default class Particles {
 		
 			for ( let i = 0; i < this.defaults.total; i ++ ) {
 				
-				x = this.points[i].x +  this.noise.simplex3(this.points[i].x, this.points[i].y, this.tick) * 100;
-				y = this.points[i].y + this.noise.simplex3(this.points[i].x/100 + 40000, this.points[i].y/100 + 40000, this.tick) * 100;
-				z = this.points[i].z + this.noise.simplex3(this.points[i].x/10 + 4000, this.points[i].y/10 + 4000, this.tick) * 210;
+				x = this.points[i].x +  this.noise.simplex3(this.points[i].x, this.points[i].y, this.tick) * this.defaults.forces.x;
+				y = this.points[i].y + this.noise.simplex3(this.points[i].x/100 + 40000, this.points[i].y/100 + 40000, this.tick) * this.defaults.forces.y;
+				z = this.points[i].z + this.noise.simplex3(this.points[i].x/10 + 4000, this.points[i].y/10 + 4000, this.tick) * this.defaults.forces.z;
 
 				if(this.points[i].isPixel) {
 					scaleX = this.defaults.particleSize;

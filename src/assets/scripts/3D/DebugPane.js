@@ -29,6 +29,10 @@ export default class DebugPane {
         });
     }
 
+    static resetTimeline() {
+        this.pane.refresh();
+    }
+
     static setupParticleOptions(__data, __call) {
         const subpane = this.pane.addFolder({   title: 'Particles' });
 
@@ -36,8 +40,26 @@ export default class DebugPane {
             total: __data.total
         }
 
+        subpane.addInput(__data, 'hasAnimation',{label: 'Animation'});
         subpane.addInput(__data, 'isPixelMove',{label: 'Pixel'});
 
+        subpane.addInput(__data, 'timelinePosition', {
+            label: 'Fine Progress',
+            step: .01,
+            min: 0,
+            max: 100,
+        });
+
+        subpane.addInput(__data, 'pixelRandom', {
+            label: 'Pixel Radom',
+            step: 1,
+            min: 0,
+            max: 100,
+        }).on('change', (ev) => {
+            if (ev.last ) {
+                if(__call) __call();
+            }
+          });
         
         subpane.addInput(__data, 'scale', {
             label: 'Scale',
@@ -55,7 +77,7 @@ export default class DebugPane {
             label: 'Total',
             step: 100,
             min: 100,
-            max: 10000,
+            max: 20000,
         }).on('change', (ev) => {
             if (ev.last ) {
                 __data.total = params.total;
@@ -75,6 +97,27 @@ export default class DebugPane {
             step: .1,
             min: 0.1,
             max: 100,
+        });
+
+        subpane.addInput(__data.forces, 'x', {
+            label: 'Force x',
+            step: .1,
+            min: 0,
+            max: 1000,
+        });
+
+        subpane.addInput(__data.forces, 'y', {
+            label: 'Force y',
+            step: .1,
+            min: 0,
+            max: 1000,
+        });
+
+        subpane.addInput(__data.forces, 'z', {
+            label: 'Force z',
+            step: .1,
+            min: 0,
+            max: 1000,
         });
     }
 

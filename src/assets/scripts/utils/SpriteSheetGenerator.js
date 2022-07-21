@@ -18,8 +18,8 @@ export default class SpriteSheetGenerator {
   static defaults = {
     container: document.body,
     id: "SpriteSheetTexture",
-    width: 2000,
-    height: 2000,
+    width: 4000,
+    height: 4000,
     size: 200,
   }
   
