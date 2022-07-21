@@ -62,10 +62,21 @@ export default class DebugPane {
           });
         
         subpane.addInput(__data, 'scale', {
-            label: 'Scale',
+            label: 'Box Size',
             step: .01,
             min: 1,
             max: 10,
+        }).on('change', (ev) => {
+            if (ev.last ) {
+                if(__call) __call();
+            }
+          });
+
+          subpane.addInput(__data, 'scaleZ', {
+            label: 'Distancia Z',
+            step: 1,
+            min: 0,
+            max: 1000,
         }).on('change', (ev) => {
             if (ev.last ) {
                 if(__call) __call();
@@ -118,6 +129,13 @@ export default class DebugPane {
             step: .1,
             min: 0,
             max: 1000,
+        });
+
+        subpane.addInput(__data.forces, 'scale', {
+            label: 'Force Size',
+            step: .1,
+            min: 1,
+            max: 100,
         });
     }
 

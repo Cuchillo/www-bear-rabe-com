@@ -26,6 +26,7 @@ export default class Particles {
 		speed: 2.5,
 		total: 10000,
 		scale: Metrics.parseSize("4.3fpx"),
+		scaleZ: 4,
 		logoVisible: true,
 		isPixelMove: false,
 		particleSize: Metrics.parseSize("14fpx"),
@@ -33,7 +34,8 @@ export default class Particles {
 		forces: {
 			x:100,
 			y:100,
-			z:210
+			z:210,
+			scale:30
 		}
 	}
 
@@ -123,7 +125,7 @@ export default class Particles {
 			sampler.sample(position);
 			position.x *= this.defaults.scale;
 			position.y *= this.defaults.scale;
-			position.z *= (this.defaults.scale * 4);
+			position.z *= (this.defaults.scale * this.defaults.scaleZ);
 						
 			this.points.push({
 					...item,
@@ -212,8 +214,8 @@ export default class Particles {
 					scaleY = this.defaults.particleSize;
 					//z = 0;
 				} else {
-					scaleX = (this.points[i].scaleX + this.noise.simplex3(x/100 + 40000, y/100 + 40000, this.tick * .10)) * this.defaults.particleSize;
-					scaleY = (this.points[i].scaleY + this.noise.simplex3(x/100 + 40000, y/100 + 40000, this.tick * .10)) * this.defaults.particleSize;
+					scaleX = this.points[i].scaleX * this.defaults.particleSize + (this.noise.simplex3(x/100 + 40000, y/100 + 40000, this.tick * .10) * this.defaults.forces.scale);
+					scaleY = this.points[i].scaleY * this.defaults.particleSize + (this.noise.simplex3(x/100 + 40000, y/100 + 40000, this.tick * .10) * this.defaults.forces.scale);
 				}
 				
 
