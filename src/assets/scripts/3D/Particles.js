@@ -159,6 +159,8 @@ export default class Particles {
 			const image = !isPixel? IMAGES_PROJECTS[index-1] : {width:1,height:1};
 			const item = {
 				index: index,
+				fixed: false,
+				movable: Math.random() > .4,
 				isPixel: isPixel,
 				scaleX: image.width > image.height? 1 : image.height/image.width,
 				scaleY: image.width < image.height? 1 : image.width/image.height
@@ -236,8 +238,17 @@ export default class Particles {
 		if (this.mesh) {
 			const POSITION = {x:0,y:0,z:0}
 			const SCALE = {x:0,y:0,z:1}
+
+			let speedMod = 1;
 			
 			for ( let i = 0; i < this.defaults.particles.total; i ++ ) {
+
+				if(this.points[i].fixed) {
+					speedMod = 1;
+					this.points[i].fixed = false;
+				} else {
+					speedMod = 1;
+				}
 				
 				POSITION.x = this.points[i].x + this.noise.simplex3(
 					this.points[i].x/this.defaults.x.amplitude + this.defaults.x.period + this.points[i].z*this.defaults.x.z_dif,
@@ -264,7 +275,7 @@ export default class Particles {
 					const tempScale = this.noise.simplex3(
 						this.points[i].x/this.defaults.scale.amplitude + this.defaults.scale.period,
 						this.points[i].y/this.defaults.scale.amplitude + this.defaults.scale.period,
-						this.tick) * this.defaults.scale.force;
+						this.tick * speedMod) * this.defaults.scale.force;
 
 					SCALE.x = this.points[i].scaleX * this.defaults.particles.size + tempScale;
 					SCALE.y = this.points[i].scaleY * this.defaults.particles.size + tempScale;
@@ -318,24 +329,34 @@ export default class Particles {
 	checkCursorDistance(__position, __particle, __scale) {
 		
 		const mod = (__position.z * 0);
-		const p = {
+		const p1 = {
 			x: __position.x + mod,
 			y: __position.y + mod,
 			z: __position.z
 		}
-		if(Maths.isInsideRectagle(p, this.defaults.cursor.rectangle)) {
+		const p2 = {
+			x: __particle.x + mod,
+			y: __particle.y + mod,
+			z: __particle.z
+		}
+		let p=null;
+
+		if(Maths.isInsideRectagle(p1, this.defaults.cursor.rectangle) && __particle.movable) {
+			p = p1;
+		}
+
+		if(p) {
 			const norm = Maths.normalize(200, 0, Maths.lineDistance(p, this.defaults.cursor.position) - 100);
-			const distance = Math.min(1, Math.max(0, norm));
+			const distance = (500 - Maths.lineDistance(p, this.defaults.cursor.position))/100;
 			
-			if(Maths.lineDistance(p, this.defaults.cursor.position) < 200 &&
-			Maths.lineDistance(p, this.defaults.cursor.position) > 150) {
-				__scale.x *= 1.8;
-				__scale.y *= 2;
+			if(Maths.lineDistance(p, this.defaults.cursor.position) < 200 && Maths.lineDistance(p, this.defaults.cursor.position) > 100) {
+				__scale.x =  __particle.scaleX * this.defaults.particles.size * distance
+				__scale.y =  __particle.scaleY * this.defaults.particles.size * distance;
 				__position.z = 0;
-			} else if(Maths.lineDistance(p, this.defaults.cursor.position) < 150 && __position.z < 2) {
-				//__scale.x *= 0;
-				//__scale.y *= 0;
-				__position.z = 0;
+				__particle.fixed = true;
+			} else if(Maths.lineDistance(p, this.defaults.cursor.position) < 100) {
+				
+				//__position.z = 0;
 			}
 			
 			/*__scale.x = __particle.scaleX * this.defaults.particles.size * distance;
