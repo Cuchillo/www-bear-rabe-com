@@ -347,7 +347,7 @@ export default class Particles {
 
 		if(p) {
 			const norm = Maths.normalize(200, 0, Maths.lineDistance(p, this.defaults.cursor.position) - 100);
-			const distance = (500 - Maths.lineDistance(p, this.defaults.cursor.position))/100;
+			const distance = (500 - Maths.lineDistance(p, this.defaults.cursor.position))/60;
 			
 			if(Maths.lineDistance(p, this.defaults.cursor.position) < 200 && Maths.lineDistance(p, this.defaults.cursor.position) > 100) {
 				__scale.x =  __particle.scaleX * this.defaults.particles.size * distance
