@@ -2,12 +2,14 @@ import {Pane} from 'tweakpane';
 import { Maths } from '../_app/cuchillo/utils/Maths';
 
 export default class DebugPane {
-    static pane = new Pane({title: 'BEAR Options'});
+    static pane = new Pane({title: 'BEAR Options', expanded: false});
     static uniforms_image;
 
     static init() {               
         this.setupImageOptions();
         this.setupParticleOptions();
+
+        this.pane.close();
     }
 
     static setupImageOptions() {

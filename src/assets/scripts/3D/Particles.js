@@ -8,6 +8,7 @@ import { BoxGeometry, MeshBasicMaterial, PlaneBufferGeometry, PlaneGeometry, Vec
 import WebGLObject from '../_app/cuchillo/3D/WebGLObject';
 import { MeshSurfaceSampler } from './MeshSurfaceSampler';
 import { Metrics } from '../_app/cuchillo/core/Metrics';
+import { Interaction } from '../_app/cuchillo/core/Interaction';
 import { Maths } from '../_app/cuchillo/utils/Maths';
 import { GetBy } from '../_app/cuchillo/core/Element';
 import SpriteSheetGenerator from '../utils/SpriteSheetGenerator';
@@ -21,7 +22,20 @@ export default class Particles {
 	tickAux = 0;
 	defaults = {
 		spritesheetCols: 20,
-
+		
+		cursor: {
+			position: {
+				x:0,
+				y:0
+			},
+			radius: Metrics.parseSize("200fpx"),
+			rectangle: {
+				x0: 0,
+				x1: 0,
+				y0: 0,
+				y1: 0
+			}
+		},
 		animation: {
 			tick: 0,
 			hasAnimation: true,
@@ -42,7 +56,7 @@ export default class Particles {
 			z_dif: 0
 		},
 		z: {
-			force:130,//210,
+			force:400,//130,//210,
 			amplitude:446,//10,
 			period: 37500,//14674,
 			z_dif: 0.152,//0.807
@@ -136,8 +150,6 @@ export default class Particles {
 
 	initPoints() {
         //const box = new THREE.Mesh(new THREE.TorusGeometry( Metrics.HEIGHT * .3, Metrics.HEIGHT * .15, 16, 100 ));
-
-		const box = new THREE.Mesh(new THREE.BoxGeometry( Metrics.WIDTH * .6, Metrics.HEIGHT * .4));
 		const sampler = new MeshSurfaceSampler(this.logoMesh).build();
 	
 		for (let i = 0; i < this.defaults.particles.total; i++) {
@@ -187,8 +199,6 @@ export default class Particles {
 		/* MESH */  
 		const sprites = [];
 
-		  
-
 		this.mesh = new THREE.InstancedMesh( this.geometry, material, this.defaults.particles.total );		
 		this.mesh.instanceMatrix.setUsage( THREE.DynamicDrawUsage );
 
@@ -200,7 +210,6 @@ export default class Particles {
 			this.dummy.updateMatrix();
 			
 			this.mesh.setMatrixAt(i, this.dummy.matrix );
-
 		}
 		
 		this.mesh.geometry.setAttribute('nSprite', new THREE.InstancedBufferAttribute(new Float32Array(sprites), 1, false));
@@ -214,6 +223,8 @@ export default class Particles {
 	// ---------------------------------------------------------------------------------------------
 
 	update(delta) {
+		this.setCursorPosition();
+
 		if(this.defaults.animation.hasAnimation) {
 			this.tick+=.001*this.defaults.animation.speed;
 			this.defaults.animation.tick = this.tick;
@@ -222,27 +233,23 @@ export default class Particles {
 			this.tick = this.defaults.animation.tick + this.defaults.animation.finePosition/100;
 		}
 
-		if ( this.mesh ) {
-			const sprites = [];
-			let x = 0;
-			let y = 0;
-			let z = 0;
-			let scaleX;
-			let scaleY;
+		if (this.mesh) {
+			const POSITION = {x:0,y:0,z:0}
+			const SCALE = {x:0,y:0,z:1}
 			
 			for ( let i = 0; i < this.defaults.particles.total; i ++ ) {
 				
-				x = this.points[i].x + this.noise.simplex3(
+				POSITION.x = this.points[i].x + this.noise.simplex3(
 					this.points[i].x/this.defaults.x.amplitude + this.defaults.x.period + this.points[i].z*this.defaults.x.z_dif,
 					this.points[i].y/this.defaults.x.amplitude + this.defaults.x.period + this.points[i].z*this.defaults.x.z_dif,
 					this.tick) * this.defaults.x.force;
 
-				y = this.points[i].y + this.noise.simplex3(
+				POSITION.y = this.points[i].y + this.noise.simplex3(
 					this.points[i].x/this.defaults.y.amplitude + this.defaults.y.period + this.points[i].z*this.defaults.y.z_dif,
 					this.points[i].y/this.defaults.y.amplitude + this.defaults.y.period + this.points[i].z*this.defaults.y.z_dif,
 					this.tick) * this.defaults.y.force;
 
-				z = this.points[i].z + this.noise.simplex3(
+				POSITION.z = this.points[i].z + this.noise.simplex3(
 					this.points[i].x/this.defaults.z.amplitude + this.defaults.z.period + this.points[i].z*this.defaults.z.z_dif,
 					this.points[i].y/this.defaults.z.amplitude + this.defaults.z.period + this.points[i].z*this.defaults.z.z_dif,
 					this.tick) * this.defaults.z.force;
@@ -251,38 +258,89 @@ export default class Particles {
 				//z = this.points[i].z + this.noise.simplex3(this.points[i].x/10 + 4000, this.points[i].y/10 + 4000, this.tick) * this.defaults.forces.z;
 
 				if(this.points[i].isPixel && this.defaults.pixels.snap) {
-					scaleX = this.defaults.pixels.size;
-					scaleY = this.defaults.pixels.size;
-					//z = 0;
+					SCALE.x = this.defaults.pixels.size;
+					SCALE.y = this.defaults.pixels.size;
 				} else {
 					const tempScale = this.noise.simplex3(
 						this.points[i].x/this.defaults.scale.amplitude + this.defaults.scale.period,
 						this.points[i].y/this.defaults.scale.amplitude + this.defaults.scale.period,
 						this.tick) * this.defaults.scale.force;
 
-					scaleX = this.points[i].scaleX * this.defaults.particles.size + tempScale;
-					scaleY = this.points[i].scaleY * this.defaults.particles.size + tempScale;
+					SCALE.x = this.points[i].scaleX * this.defaults.particles.size + tempScale;
+					SCALE.y = this.points[i].scaleY * this.defaults.particles.size + tempScale;
 				}
 
 				if(this.defaults.animation.isPixelMove || (this.points[i].isPixel && this.defaults.pixels.snap)) {
-					x = Math.floor(x/Metrics.GRIDSUB) * Metrics.GRIDSUB;
-					y = Math.floor(y/Metrics.GRIDSUB) * Metrics.GRIDSUB;
-				}
-
-				if(this.points[i].isPixel && this.defaults.pixels.snap) {
-					x = Math.floor(x/Metrics.GRIDSUB) * Metrics.GRIDSUB;
-					y = Math.floor(y/Metrics.GRIDSUB) * Metrics.GRIDSUB;
-					z = 0;//Math.floor(z/5) * 5;
+					POSITION.x = Math.floor(POSITION.x/Metrics.GRIDSUB) * Metrics.GRIDSUB;
+					POSITION.y = Math.floor(POSITION.y/Metrics.GRIDSUB) * Metrics.GRIDSUB;
 				}
 				
-				this.dummy.scale.set(scaleX,scaleY,1)
-				this.dummy.position.set(x,y,z);
+				
+				this.checkCursorDistance(POSITION, this.points[i], SCALE)
+				this.dummy.scale.set(SCALE.x,SCALE.y,SCALE.z)
+				this.dummy.position.set(POSITION.x,POSITION.y,POSITION.z);
 				this.dummy.updateMatrix();
 				
 				this.mesh.setMatrixAt(i, this.dummy.matrix );
 			}
 			
 			this.mesh.instanceMatrix.needsUpdate = true;
+		}
+	}
+
+	setCursorPosition() {
+		this.defaults.cursor.position = Maths.point2Dto3D(
+			{
+				x: Interaction.positions.mouse.x,
+				y: Interaction.positions.mouse.y
+			},
+			Metrics.WIDTH,
+			Metrics.HEIGHT
+		);
+
+		const p0 = {
+			x: this.defaults.cursor.position.x - this.defaults.cursor.radius,
+			y: this.defaults.cursor.position.y - this.defaults.cursor.radius
+		}
+		const p1 = {
+			x: this.defaults.cursor.position.x + this.defaults.cursor.radius,
+			y: this.defaults.cursor.position.y + this.defaults.cursor.radius
+		}
+
+		this.defaults.cursor.rectangle = {
+			x0: p0.x,
+			x1: p1.x,
+			y0: p0.y,
+			y1: p1.y,
+		}
+	}
+
+	checkCursorDistance(__position, __particle, __scale) {
+		
+		const mod = (__position.z * 0);
+		const p = {
+			x: __position.x + mod,
+			y: __position.y + mod,
+			z: __position.z
+		}
+		if(Maths.isInsideRectagle(p, this.defaults.cursor.rectangle)) {
+			const norm = Maths.normalize(200, 0, Maths.lineDistance(p, this.defaults.cursor.position) - 100);
+			const distance = Math.min(1, Math.max(0, norm));
+			
+			if(Maths.lineDistance(p, this.defaults.cursor.position) < 200 &&
+			Maths.lineDistance(p, this.defaults.cursor.position) > 150) {
+				__scale.x *= 1.8;
+				__scale.y *= 2;
+				__position.z = 0;
+			} else if(Maths.lineDistance(p, this.defaults.cursor.position) < 150 && __position.z < 2) {
+				//__scale.x *= 0;
+				//__scale.y *= 0;
+				__position.z = 0;
+			}
+			
+			/*__scale.x = __particle.scaleX * this.defaults.particles.size * distance;
+			__scale.y = __particle.scaleY * this.defaults.particles.size * distance;*/
+			__scale.z = 1;
 		}
 	}
 

@@ -30,6 +30,20 @@ const Maths = {
     return Math.round(val * dec) / dec;
   },
 
+  isInsideRectagle(__pos, __rec) {
+    if(
+      __pos.x > __rec.x0 &&
+      __pos.x < __rec.x1 &&
+      __pos.y > __rec.y0 &&
+      __pos.y < __rec.y1
+      ) {
+        
+        return true;
+      } else {
+        return false;
+      }
+  },
+
   getRotationDegrees: function(obj) {
     var angle = 0;
     var matrix = obj.css("-webkit-transform") ||
@@ -96,6 +110,14 @@ const Maths = {
     nArray[0] = nArray[0].toString().split(".")[0].replace(/\B(?=(\d{3})+(?!\d))/g, __separador);
     return nArray.toString();
   },
-};
+
+  point2Dto3D: function(__point, __width, __height) {
+    const x = 0 - __width * .5 + __point.x;
+    const y = __height * .5 - __point.y;
+
+    return {x:x, y:y, z:0}
+  }
+}
+
 
 export { Maths }
