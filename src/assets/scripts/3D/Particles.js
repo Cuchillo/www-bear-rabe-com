@@ -41,7 +41,7 @@ export default class Particles {
 			hasAnimation: true,
 			finePosition: 500,
 			isPixelMove: false,
-			speed: 2.5
+			speed: 5
 		},
 		x: {
 			force:119,//239,
@@ -279,6 +279,7 @@ export default class Particles {
 				if(this.points[i].isPixel && this.defaults.pixels.snap) {
 					SCALE.x = this.defaults.pixels.size;
 					SCALE.y = this.defaults.pixels.size;
+					POSITION.z = 0;
 				} else {
 					const tempScale = this.noise.simplex3(
 						this.points[i].x/this.defaults.scale.amplitude + this.defaults.scale.period,
@@ -292,10 +293,12 @@ export default class Particles {
 				if(this.defaults.animation.isPixelMove || (this.points[i].isPixel && this.defaults.pixels.snap)) {
 					POSITION.x = Math.floor(POSITION.x/Metrics.GRIDSUB) * Metrics.GRIDSUB;
 					POSITION.y = Math.floor(POSITION.y/Metrics.GRIDSUB) * Metrics.GRIDSUB;
+				} else {
+					this.checkCursorDistance(POSITION, this.points[i], SCALE, ROTATION, this.dummy);
 				}
 				
 				
-				this.checkCursorDistance(POSITION, this.points[i], SCALE, ROTATION, this.dummy)
+				
 				this.dummy.scale.set(SCALE.x,SCALE.y,SCALE.z)
 				this.dummy.position.set(POSITION.x,POSITION.y,POSITION.z);
 				this.dummy.updateMatrix();
