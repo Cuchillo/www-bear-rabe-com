@@ -160,10 +160,13 @@ export default class Particles {
 			const item = {
 				index: index,
 				fixed: false,
-				movable: Math.random() > .4,
+				movable: Math.random() > -.6,
 				isPixel: isPixel,
 				scaleX: image.width > image.height? 1 : image.height/image.width,
-				scaleY: image.width < image.height? 1 : image.width/image.height
+				scaleY: image.width < image.height? 1 : image.width/image.height,
+				scaleMod: 1,
+				scaleNoiseMod: 1,
+				scaleMax: 1,
 			}
 
 			sampler.sample(position);
@@ -237,6 +240,7 @@ export default class Particles {
 
 		if (this.mesh) {
 			const POSITION = {x:0,y:0,z:0}
+			const ROTATION = {x:0,y:0,z:0}
 			const SCALE = {x:0,y:0,z:1}
 
 			let speedMod = 1;
@@ -245,8 +249,12 @@ export default class Particles {
 
 				if(this.points[i].fixed) {
 					speedMod = 1;
+					this.points[i].scaleMod = Math.min(this.points[i].scaleMod+1, this.points[i].scaleMax);
+					this.points[i].scaleNoiseMod = 0;//Math.max(this.points[i].scaleMod-.1, 0);
 					this.points[i].fixed = false;
 				} else {
+					this.points[i].scaleMod = Math.max(this.points[i].scaleMod-.1, 1);
+					this.points[i].scaleNoiseMod = Math.min(this.points[i].scaleNoiseMod+.01, 1);
 					speedMod = 1;
 				}
 				
@@ -275,10 +283,10 @@ export default class Particles {
 					const tempScale = this.noise.simplex3(
 						this.points[i].x/this.defaults.scale.amplitude + this.defaults.scale.period,
 						this.points[i].y/this.defaults.scale.amplitude + this.defaults.scale.period,
-						this.tick * speedMod) * this.defaults.scale.force;
+						this.tick * speedMod) * (this.defaults.scale.force * this.points[i].scaleNoiseMod);
 
-					SCALE.x = this.points[i].scaleX * this.defaults.particles.size + tempScale;
-					SCALE.y = this.points[i].scaleY * this.defaults.particles.size + tempScale;
+					SCALE.x = (this.points[i].scaleX * this.defaults.particles.size + tempScale) * this.points[i].scaleMod;
+					SCALE.y = (this.points[i].scaleY * this.defaults.particles.size + tempScale) * this.points[i].scaleMod;
 				}
 
 				if(this.defaults.animation.isPixelMove || (this.points[i].isPixel && this.defaults.pixels.snap)) {
@@ -287,7 +295,7 @@ export default class Particles {
 				}
 				
 				
-				this.checkCursorDistance(POSITION, this.points[i], SCALE)
+				this.checkCursorDistance(POSITION, this.points[i], SCALE, ROTATION, this.dummy)
 				this.dummy.scale.set(SCALE.x,SCALE.y,SCALE.z)
 				this.dummy.position.set(POSITION.x,POSITION.y,POSITION.z);
 				this.dummy.updateMatrix();
@@ -326,7 +334,7 @@ export default class Particles {
 		}
 	}
 
-	checkCursorDistance(__position, __particle, __scale) {
+	checkCursorDistance(__position, __particle, __scale, __rotation, dummy) {
 		
 		const mod = (__position.z * 0);
 		const p1 = {
@@ -347,13 +355,18 @@ export default class Particles {
 
 		if(p) {
 			const norm = Maths.normalize(200, 0, Maths.lineDistance(p, this.defaults.cursor.position) - 100);
-			const distance = (500 - Maths.lineDistance(p, this.defaults.cursor.position))/60;
+			const distance = Maths.lineDistance(p, this.defaults.cursor.position);
 			
-			if(Maths.lineDistance(p, this.defaults.cursor.position) < 200 && Maths.lineDistance(p, this.defaults.cursor.position) > 100) {
-				__scale.x =  __particle.scaleX * this.defaults.particles.size * distance
-				__scale.y =  __particle.scaleY * this.defaults.particles.size * distance;
+			if(distance < 150 && distance > 100) {
+				//__scale.x =  __particle.scaleX * this.defaults.particles.size * 6
+				// __scale.y =  __particle.scaleY * this.defaults.particles.size * 6;
 				__position.z = 0;
 				__particle.fixed = true;
+				__particle.scaleMax = 6;
+				
+
+				
+
 			} else if(Maths.lineDistance(p, this.defaults.cursor.position) < 100) {
 				
 				//__position.z = 0;
@@ -362,6 +375,10 @@ export default class Particles {
 			/*__scale.x = __particle.scaleX * this.defaults.particles.size * distance;
 			__scale.y = __particle.scaleY * this.defaults.particles.size * distance;*/
 			__scale.z = 1;
+		} else {
+			dummy.rotation.set(0,0,0);
+			__rotation.y = 0;
+			__rotation.z = 0;
 		}
 	}
 

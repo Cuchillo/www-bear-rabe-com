@@ -46,7 +46,7 @@ export default class Scene extends WebGLSketch {
     }
 
     update () {
-        this.particles.update(this.tick);
+        if(this.tick%2===0)this.particles.update(this.tick);
     }
 
     resize () {
