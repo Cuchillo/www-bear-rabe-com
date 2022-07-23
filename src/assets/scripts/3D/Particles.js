@@ -41,8 +41,8 @@ export default class Particles {
 			hasAnimation: true,
 			finePosition: 500,
 			isPixelMove: false,
-			speed: 5,
-			scaleHover: 2.5,
+			speed: 7.5,
+			scaleHover: 3.3,
 		},
 		x: {
 			force:119,//239,
@@ -63,7 +63,7 @@ export default class Particles {
 			z_dif: 0.152,//0.807
 		},
 		scale: {
-			force:30,
+			force:41,
 			amplitude:174,
 			period: 40000,
 			z_dif: 0.163,//0.054
@@ -74,7 +74,7 @@ export default class Particles {
 		},
 		pixels: {
 			snap: true,
-			porcentaje: 2,	
+			porcentaje: 5,	
 			size: Metrics.parseSize("14fpx"),
 		},
 		container: {
