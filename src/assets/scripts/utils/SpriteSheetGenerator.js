@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { C } from "../_app/cuchillo/core/Element";
+import { Metrics } from '../_app/cuchillo/core/Metrics';
 
 export default class SpriteSheetGenerator {
   static canvas = document.createElement('canvas');
@@ -71,7 +72,7 @@ export default class SpriteSheetGenerator {
     );
   }
 
-  static drawSquare(__color) {
+  static drawSquare(__color, __isBG = false) {
     console.log("drawSquare")
 
     this.position = {
@@ -81,19 +82,33 @@ export default class SpriteSheetGenerator {
 
     this.ctx.beginPath();
     this.ctx.fillStyle = __color;
-    this.ctx.fillRect(
-      this.position.x,
-      this.position.y,
-      this.options.size,
-      this.options.size,
-    );
+    if(__isBG) {
+      this.ctx.fillStyle = "rgba(255, 255, 255, 0.1)";
+      this.ctx.fillRect(
+        0,
+        0,
+        4000,
+        4000,
+      );
+    } else {
+      this.ctx.fillRect(
+        this.position.x,
+        this.position.y,
+        this.options.size,
+        this.options.size,
+      );
+    }
+    
     this.cont++;
   }
 
   static end() {
+    /*this.drawSquare("#FFFFFF", true);
+    this.cont--;*/
     this.drawSquare("#0000FF");
     this.drawSquare("#00FF00");
     this.drawSquare("#959595");
+   
 
     this.texture = new THREE.TextureLoader().load(this.canvas.toDataURL(), ()=> {
       this.call();
