@@ -41,7 +41,8 @@ export default class Particles {
 			hasAnimation: true,
 			finePosition: 500,
 			isPixelMove: false,
-			speed: 5
+			speed: 5,
+			scaleHover: 2.5,
 		},
 		x: {
 			force:119,//239,
@@ -56,20 +57,20 @@ export default class Particles {
 			z_dif: 0
 		},
 		z: {
-			force:400,//130,//210,
+			force:130,//210,
 			amplitude:446,//10,
 			period: 37500,//14674,
 			z_dif: 0.152,//0.807
 		},
 		scale: {
-			force:50,//30,
-			amplitude:522,//348,
+			force:30,
+			amplitude:174,
 			period: 40000,
 			z_dif: 0.163,//0.054
 		},
 		particles: {
-			total: 10000,
-			size: Metrics.parseSize("10fpx")//Metrics.parseSize("14fpx"),
+			total: 8000,
+			size: Metrics.parseSize("20fpx")//Metrics.parseSize("14fpx"),
 		},
 		pixels: {
 			snap: true,
@@ -77,7 +78,7 @@ export default class Particles {
 			size: Metrics.parseSize("14fpx"),
 		},
 		container: {
-			scale: Metrics.parseSize("5.1fpx"),
+			scale: Metrics.parseSize("4.1fpx"),
 			logoVisible: true,
 			scaleZ: 4,
 		}
@@ -228,12 +229,13 @@ export default class Particles {
 	// ---------------------------------------------------------------------------------------------
 
 	update(delta) {
-		this.setCursorPosition();
+		
 
 		if(this.defaults.animation.hasAnimation) {
 			this.tick+=.001*this.defaults.animation.speed;
 			this.defaults.animation.tick = this.tick;
 			this.defaults.animation.finePosition = 0;
+			this.setCursorPosition();
 		} else {
 			this.tick = this.defaults.animation.tick + this.defaults.animation.finePosition/100;
 		}
@@ -242,18 +244,18 @@ export default class Particles {
 			const POSITION = {x:0,y:0,z:0}
 			const ROTATION = {x:0,y:0,z:0}
 			const SCALE = {x:0,y:0,z:1}
-
+			
 			let speedMod = 1;
 			
 			for ( let i = 0; i < this.defaults.particles.total; i ++ ) {
 
 				if(this.points[i].fixed) {
 					speedMod = 1;
-					this.points[i].scaleMod = Math.min(this.points[i].scaleMod+1, this.points[i].scaleMax);
+					this.points[i].scaleMod = Math.min(this.points[i].scaleMod+10, this.points[i].scaleMax);
 					this.points[i].scaleNoiseMod = 0;//Math.max(this.points[i].scaleMod-.1, 0);
 					this.points[i].fixed = false;
 				} else {
-					this.points[i].scaleMod = Math.max(this.points[i].scaleMod-.1, 1);
+					this.points[i].scaleMod = Math.max(this.points[i].scaleMod-.2, 1);
 					this.points[i].scaleNoiseMod = Math.min(this.points[i].scaleNoiseMod+.01, 1);
 					speedMod = 1;
 				}
@@ -293,7 +295,7 @@ export default class Particles {
 				if(this.defaults.animation.isPixelMove || (this.points[i].isPixel && this.defaults.pixels.snap)) {
 					POSITION.x = Math.floor(POSITION.x/Metrics.GRIDSUB) * Metrics.GRIDSUB;
 					POSITION.y = Math.floor(POSITION.y/Metrics.GRIDSUB) * Metrics.GRIDSUB;
-				} else {
+				} else if(this.defaults.animation.hasAnimation){
 					this.checkCursorDistance(POSITION, this.points[i], SCALE, ROTATION, this.dummy);
 				}
 				
@@ -365,7 +367,7 @@ export default class Particles {
 				// __scale.y =  __particle.scaleY * this.defaults.particles.size * 6;
 				__position.z = 0;
 				__particle.fixed = true;
-				__particle.scaleMax = 6;
+				__particle.scaleMax = this.defaults.animation.scaleHover;
 				
 
 				

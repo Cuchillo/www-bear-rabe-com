@@ -67,6 +67,12 @@ export default class DebugPane {
             min: 0,
             max: 1000,
         });
+        this.pane.addInput(__data, 'scaleHover', {
+            label: 'scaleHover',
+            step: .01,
+            min: 1,
+            max: 20,
+        });
         this.pane.addButton({
             title: 'Random',
           }).on('click', () => {
