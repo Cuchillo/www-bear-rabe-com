@@ -56,7 +56,7 @@ export default class SpriteSheetGenerator {
     if(!__isError) this.cont++;
 
     if(this.cont < this.data.length) {
-      const webp = isWebpSupported && !__isError? ".web" : "";
+      const webp = isWebpSupported && !__isError? ".webp" : "";
       this.img.src = this.data[this.cont].thumb + webp;
     } else {
       this.end();
