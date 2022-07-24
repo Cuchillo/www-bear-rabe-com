@@ -18,6 +18,13 @@ export default class ImageObject extends MediaObject {
         if(__callback != null)  __callback();
       });
 
+      this.item.addEventListener('error', () => {
+        if(this.isWebp) {
+          this.isWebp = false;
+          this.load(__callback);
+        }  
+      });
+
       this.item.setAttribute("src", this.src);
     }
 

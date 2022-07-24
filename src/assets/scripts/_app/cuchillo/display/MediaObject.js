@@ -1,4 +1,5 @@
 import {Sizes} from "assets/scripts/_app/cuchillo/core/Sizes";
+import { isWebpSupported } from "../core/Basics";
 
 export default class MediaObject {
 
@@ -14,17 +15,20 @@ export default class MediaObject {
     height;
     isImportant = false;
     isStatic = false;
+    isWebp = true;
 
 //==================================================================================================================
 //          GETTER SETTER
 //==================================================================================================================
 
+
     get src() {
-      return this.sizes[this.size];
+      const webp = isWebpSupported && this.isWebp? ".webp" : "";
+      return this.sizes[this.size] + webp;
     }
 
     get size() {
-        let __size = Math.min(this.sizes.length, Math.ceil((this.item.offsetWidth * Sizes.RATIO)/this.width));
+        let __size = Math.min(this.sizes.length, Math.floor((this.item.offsetWidth * Sizes.RATIO)/this.width * .85));
         return __size > 1? __size-1 : 0;
     }
 
@@ -43,7 +47,7 @@ export default class MediaObject {
 
         this.isImportant = this.item.getAttribute("data-item-preload") !== undefined;
         this.isStatic = this.item.getAttribute("data-item-static") !== undefined;
-        this.sizes = this.item.getAttribute("data-src").split(",");
+        this.sizes = this.item.getAttribute("data-src")? this.item.getAttribute("data-src").split(",") : [];
 
         if(this.item.getAttribute("data-mobile-src")) {
           this.width = this.item.getAttribute("data-mobile-width")? Number(this.item.getAttribute("data-mobile-width")) : Number(this.item.getAttribute("width"));

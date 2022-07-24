@@ -1,5 +1,11 @@
 import { Sizes } from './Sizes';
 
+let isWebpSupported = false;
+var webp = new Image();
+webp.onerror = function(){isWebpSupported = false};
+webp.onload = () => {isWebpSupported = true};
+webp.src = 'data:image/webp;base64,UklGRjIAAABXRUJQVlA4ICYAAACyAgCdASoBAAEALmk0mk0iIiIiIgBoSygABc6zbAAA/v56QAAAAA==';
+
 const isMobile = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0);
 const isSafari = navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1;
 const isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0);
@@ -68,4 +74,4 @@ if (!isTouch) {
 
 if (isMobile) document.body.classList.add("__mobile");
 
-export { Basics, isMobile, isSafari, isTouch, isDarkMode, isPortrait, isSmartphone, isDebug, isReducedMotion }
+export { isWebpSupported, Basics, isMobile, isSafari, isTouch, isDarkMode, isPortrait, isSmartphone, isDebug, isReducedMotion }

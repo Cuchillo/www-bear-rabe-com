@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { isWebpSupported } from '../_app/cuchillo/core/Basics';
 import { C } from "../_app/cuchillo/core/Element";
 import { Metrics } from '../_app/cuchillo/core/Metrics';
 
@@ -38,6 +39,9 @@ export default class SpriteSheetGenerator {
       this.draw();
       this.nextImage();
     }
+    this.img.onerror = () => {
+      this.nextImage(true);
+    }
 
     this.resize();
   }
@@ -48,11 +52,12 @@ export default class SpriteSheetGenerator {
     this.nextImage();
   }
 
-  static nextImage() {
-    this.cont++;
+  static nextImage(__isError) {
+    if(!__isError) this.cont++;
 
     if(this.cont < this.data.length) {
-      this.img.src = this.data[this.cont].thumb;
+      const webp = isWebpSupported && !__isError? ".web" : "";
+      this.img.src = this.data[this.cont].thumb + webp;
     } else {
       this.end();
     }
