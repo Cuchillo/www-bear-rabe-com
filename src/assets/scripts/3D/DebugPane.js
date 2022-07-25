@@ -57,9 +57,9 @@ export default class DebugPane {
           this.pane.addInput(__data, 'isPixelMove',{label: 'Pixel'});
           this.pane.addInput(__data, 'speed', {
             label: 'Speed',
-            step: .1,
-            min: 0.1,
-            max: 100,
+            step: .001,
+            min: -.1,
+            max: .1,
         });
         this.pane.addInput(__data, 'finePosition', {
             label: 'Fine',
@@ -104,7 +104,7 @@ export default class DebugPane {
             label: 'Size',
             step: .1,
             min: .1,
-            max: 40,
+            max: 100,
         });
     }
 

@@ -41,8 +41,8 @@ export default class Particles {
 			hasAnimation: true,
 			finePosition: 500,
 			isPixelMove: false,
-			speed: 7.5,
-			scaleHover: 3.3,
+			speed: 0.008,
+			scaleHover: 3,
 		},
 		x: {
 			force:119,//239,
@@ -70,21 +70,21 @@ export default class Particles {
 		},
 		particles: {
 			total: 8000,
-			size: Metrics.parseSize("20fpx")//Metrics.parseSize("14fpx"),
+			size: Metrics.parseSize("35fpx")//Metrics.parseSize("14fpx"),
 		},
 		pixels: {
 			snap: true,
-			porcentaje: 5,	
+			porcentaje: 10,	
 			size: Metrics.parseSize("14fpx"),
 		},
 		container: {
-			scale: Metrics.parseSize("4.1fpx"),
+			scale: Metrics.parseSize("4.4fpx"),
 			logoVisible: true,
-			scaleZ: 4,
+			scaleZ: 11,
 		}
 	}
 
-	logoMesh;;
+	logoMesh;
 	mesh;	
 	points = [];
 	noise = new Perlin(Math.random());
@@ -99,6 +99,7 @@ export default class Particles {
 	init() {
 		this.loadLogo(()=> {
 			this.initPoints();
+			this.setupPoints();
 			this.initGeometry();
 			
 			SpriteSheetGenerator.dispose();
@@ -142,6 +143,7 @@ export default class Particles {
 	reset() {
 		this.dispose();
 		this.initPoints();
+		this.setupPoints();
 		this.initGeometry();
 
 		if(isDebug) {
@@ -150,7 +152,6 @@ export default class Particles {
 	}
 
 	initPoints() {
-        //const box = new THREE.Mesh(new THREE.TorusGeometry( Metrics.HEIGHT * .3, Metrics.HEIGHT * .15, 16, 100 ));
 		const sampler = new MeshSurfaceSampler(this.logoMesh).build();
 	
 		for (let i = 0; i < this.defaults.particles.total; i++) {
@@ -163,22 +164,27 @@ export default class Particles {
 				fixed: false,
 				movable: Math.random() > -.6,
 				isPixel: isPixel,
-				scaleX: image.width > image.height? 1 : image.height/image.width,
-				scaleY: image.width < image.height? 1 : image.width/image.height,
+				scaleX: image.width > image.height? 1 : image.width/image.height,
+				scaleY: image.width < image.height? 1 : image.height/image.width,
 				scaleMod: 1,
 				scaleNoiseMod: 1,
 				scaleMax: 1,
 			}
 
 			sampler.sample(position);
-			position.x *= this.defaults.container.scale;
-			position.y *= this.defaults.container.scale;
-			position.z *= (this.defaults.container.scale * this.defaults.container.scaleZ);
 						
 			this.points.push({
 					...item,
 					...position
 				});
+		}
+	}
+
+	setupPoints() {
+		for (let i = 0; i < this.defaults.particles.total; i++) {
+			this.points[i].x *= this.defaults.container.scale;
+			this.points[i].y *= this.defaults.container.scale;
+			this.points[i].z *= (this.defaults.container.scale * this.defaults.container.scaleZ);
 		}
 	}
 
@@ -232,7 +238,7 @@ export default class Particles {
 		
 
 		if(this.defaults.animation.hasAnimation) {
-			this.tick+=.001*this.defaults.animation.speed;
+			this.tick += this.defaults.animation.speed;
 			this.defaults.animation.tick = this.tick;
 			this.defaults.animation.finePosition = 0;
 			this.setCursorPosition();
@@ -322,68 +328,29 @@ export default class Particles {
 			Metrics.HEIGHT
 		);
 
-		const p0 = {
-			x: this.defaults.cursor.position.x - this.defaults.cursor.radius,
-			y: this.defaults.cursor.position.y - this.defaults.cursor.radius
-		}
-		const p1 = {
-			x: this.defaults.cursor.position.x + this.defaults.cursor.radius,
-			y: this.defaults.cursor.position.y + this.defaults.cursor.radius
-		}
-
 		this.defaults.cursor.rectangle = {
-			x0: p0.x,
-			x1: p1.x,
-			y0: p0.y,
-			y1: p1.y,
+			x0: this.defaults.cursor.position.x - this.defaults.cursor.radius,
+			x1: this.defaults.cursor.position.x + this.defaults.cursor.radius,
+			y0: this.defaults.cursor.position.y - this.defaults.cursor.radius,
+			y1: this.defaults.cursor.position.y + this.defaults.cursor.radius,
 		}
 	}
 
 	checkCursorDistance(__position, __particle, __scale, __rotation, dummy) {
 		
-		const mod = (__position.z * 0);
-		const p1 = {
-			x: __position.x + mod,
-			y: __position.y + mod,
-			z: __position.z
-		}
-		const p2 = {
-			x: __particle.x + mod,
-			y: __particle.y + mod,
+		const p = {
+			x: __particle.x,
+			y: __particle.y,
 			z: __particle.z
 		}
-		let p=null;
 
-		if(Maths.isInsideRectagle(p1, this.defaults.cursor.rectangle) && __particle.movable) {
-			p = p1;
-		}
-
-		if(p) {
-			const norm = Maths.normalize(200, 0, Maths.lineDistance(p, this.defaults.cursor.position) - 100);
+		if(Maths.isInsideRectagle(p, this.defaults.cursor.rectangle) && __particle.movable) {
 			const distance = Maths.lineDistance(p, this.defaults.cursor.position);
-			
 			if(distance < 150 && distance > 100) {
-				//__scale.x =  __particle.scaleX * this.defaults.particles.size * 6
-				// __scale.y =  __particle.scaleY * this.defaults.particles.size * 6;
 				__position.z = 0;
 				__particle.fixed = true;
 				__particle.scaleMax = this.defaults.animation.scaleHover;
-				
-
-				
-
-			} else if(Maths.lineDistance(p, this.defaults.cursor.position) < 100) {
-				
-				//__position.z = 0;
 			}
-			
-			/*__scale.x = __particle.scaleX * this.defaults.particles.size * distance;
-			__scale.y = __particle.scaleY * this.defaults.particles.size * distance;*/
-			__scale.z = 1;
-		} else {
-			dummy.rotation.set(0,0,0);
-			__rotation.y = 0;
-			__rotation.z = 0;
 		}
 	}
 
