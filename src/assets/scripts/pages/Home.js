@@ -41,7 +41,7 @@ export default class Home extends Page {
     setTimeout(()=> {
       this._billboard.show();
       Header.show();
-     },200);
+     },400);
     
     this.afterShow();
   }
