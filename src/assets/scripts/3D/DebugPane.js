@@ -1,11 +1,14 @@
 import {Pane} from 'tweakpane';
+import { isDebug } from '../_app/cuchillo/core/Basics';
 import { Maths } from '../_app/cuchillo/utils/Maths';
 
 export default class DebugPane {
     static pane = new Pane({title: 'BEAR Options', expanded: false});
     static uniforms_image;
 
-    static init() {               
+    static init() {      
+        if(!isDebug) return;
+
         this.setupImageOptions();
         this.setupParticleOptions();
 
@@ -13,6 +16,8 @@ export default class DebugPane {
     }
 
     static setupImageOptions() {
+        if(!isDebug) return;
+
         const subpane = this.pane.addFolder({
             title: 'Image',
         });
@@ -33,10 +38,14 @@ export default class DebugPane {
     }
 
     static resetTimeline() {
+        if(!isDebug) return;
+
         this.pane.refresh();
     }
 
     static setupRender(__renderer) {
+        if(!isDebug) return;
+
         const PARAMS = {
             bg: '#ffffff',
         };
@@ -167,6 +176,8 @@ export default class DebugPane {
     }
 
     static setupParticleOptions(__data, __call) {
+        if(!isDebug) return;
+
         this.setupAnimation(__data.animation, __call);
         this.setupContainer(__data.container, __call);
         this.setupParticles(__data.particles, __call);
@@ -174,14 +185,7 @@ export default class DebugPane {
         this.setupAxis(__data.x, "X");
         this.setupAxis(__data.y, "Y");
         this.setupAxis(__data.z, "Z");
-        this.setupAxis(__data.scale, "Scale");    
-
-        const subpane = this.pane.addFolder({   title: 'Misc' });
-        subpane.addMonitor(__data, 'x', {
-            multiline: true,
-        });
-
-          
+        this.setupAxis(__data.scale, "Scale");
     }
 
     static setupAxis(__data, __title) {
