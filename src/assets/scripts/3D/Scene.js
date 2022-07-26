@@ -2,6 +2,7 @@ import { Vector3 } from 'three';
 import WebGLSketch from "../_app/cuchillo/3D/WebGLSketch";
 import DebugPane from './DebugPane';
 import Particles from './Particles';
+import { gsap, Power2 } from "gsap";
 
 export default class Scene extends WebGLSketch {
     constructor () {
@@ -31,6 +32,16 @@ export default class Scene extends WebGLSketch {
 
     update () {
         if(this.tick%2===0)this.particles.update(this.tick);
+    }
+
+    show(){
+        this.resume();
+        gsap.to(this.container,{alpha:1, duration:.2, ease:Power2.easeOut});
+    }
+    hide(){
+        gsap.to(this.container,{alpha:0, duration:.2, ease:Power2.easeOut, onComplete:()=> {
+            this.pause();
+        }});
     }
 
     resize () {

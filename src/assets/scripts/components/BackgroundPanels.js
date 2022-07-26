@@ -14,7 +14,7 @@ export default class BackgroundPanels {
     timeInit: 10,
     timeInc: 20,
   }
-
+  static panelCanvas = GetBy.id("SceneParticles")
   static panels = [...GetBy.selector("[data-bg-panel]")];
   static colors = ["--blue", "--green", "--grey"];
   static positionsH = [0,100,50];
@@ -40,6 +40,10 @@ export default class BackgroundPanels {
       this.colors = Functions.arrayRandom(this.colors);
       this.positionsH = Functions.arrayRandom(this.positionsH);
       this.positionsV = Functions.arrayRandom(this.positionsV);
+
+      gsap.to(this.panels[0],{alpha:1, duration:.2, ease:Power2.easeOut});
+      gsap.to(this.panels[1],{alpha:1, duration:.2, ease:Power2.easeOut});
+
       this.showPanel(this.panels[0], 0);
       this.showPanel(this.panels[1], 1);
       this.loop();
@@ -82,7 +86,7 @@ export default class BackgroundPanels {
     const v1 = this.getVal(10);
     const v2 = this.getVal(v1==1? 0 : 10);
     const position = Functions.arrayRandom([v1,v2]);
-
+    
     gsap.to(this.origins[__index],{
       x:this.positionsH[__index], 
       y:this.positionsV[__index], 
@@ -124,6 +128,8 @@ export default class BackgroundPanels {
         __panel.style.transformOrigin =  `${this.origins[__index].x}% ${this.origins[__index].y}%` 
       }
     });
+
+    gsap.to(__panel,{alpha:0, duration:.2, delay:.2, ease:Power2.easeOut});
   }
 
   static getVal(__n100 = 0) {

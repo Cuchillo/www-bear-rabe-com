@@ -32,7 +32,7 @@ export default class SpriteSheetGenerator {
 			...__opts
 		};
 
-    if(this.hasSpritesheet) {
+    if(!this.hasSpritesheet) {
       this.canvas = document.createElement('canvas');
       this.ctx = this.canvas.getContext('2d');
       this.canvas.id = this.options.id;

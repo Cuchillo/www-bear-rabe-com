@@ -8,6 +8,7 @@ import { Sizes } from "../core/Sizes";
 export default class WebGLSketch {
 	_started = false;
 	_paused = false;
+	container;
 	renderer;
 	scene;
 	camera;
@@ -42,9 +43,9 @@ export default class WebGLSketch {
 			...opts
 		};
 
-		const container = GetBy.id(this.defaults.container)
+		this.container = GetBy.id(this.defaults.container)
 		this.renderer = new WebGLRenderer({
-			canvas: container,
+			canvas: this.container,
 			antialias: this.defaults.antialias,
 			alpha: this.defaults.alpha
 		});

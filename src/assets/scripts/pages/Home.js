@@ -31,6 +31,7 @@ export default class Home extends Page {
 
   show__effect(__call) {
     Wrap.directShow();
+    Main.scene.show();
     Main.scene.showParticles();
     BG.changeBG("#FFFFFF", null, 0);
     BackgroundLogo.setBlack();
@@ -65,6 +66,7 @@ export default class Home extends Page {
     this._visor.isEnabled = false;
     Header.hide();
     BackgroundLogo.hide();
+    Main.scene.hide();
     this._billboard.hide();
     setTimeout(()=> {
       Wrap.directHide();
