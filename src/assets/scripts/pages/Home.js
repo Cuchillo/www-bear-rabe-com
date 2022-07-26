@@ -7,6 +7,7 @@ import VisorImage from '../components/VisorImage';
 import Header from '../layout/Header';
 import BackgroundLogo from '../components/BackgroundLogo';
 import Main from '../main';
+import BG from '../_app/cuchillo/layout/Background';
 
 
 export default class Home extends Page {
@@ -29,6 +30,11 @@ export default class Home extends Page {
   }
 
   show__effect(__call) {
+    BG.changeBG("#FFFFFF", null, 0);
+    BackgroundLogo.setBlack();
+    BackgroundLogo.setInverted();
+
+
     Wrap.directShow();
     BackgroundLogo.show();
     this._billboard.show();

@@ -118,20 +118,19 @@ export default class Main {
       TopCanvas.cols = 0;
       BG.changeBG("#000000", null, 0);
       BackgroundLogo.setWhite();
-      
-      setTimeout(()=>{
-        this.start();
-      }, 1000);
+      this.start();
     })
   }
 
   static start() {
     SpriteSheetGenerator.start(IMAGES_PROJECTS, ()=> {
-        this.scene.init();
-        BG.changeBG("#FFFFFF", null, 0);
+      this.scene.init();
+      setTimeout(()=>{
+        /*BG.changeBG("#FFFFFF", null, 0);
         BackgroundLogo.setBlack();
-        BackgroundLogo.setInverted();
+        BackgroundLogo.setInverted();*/
         ControllerPage.init(Wrap.mainholder);
+      }, 1000);
     });
   }
 
