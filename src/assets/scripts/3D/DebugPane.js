@@ -73,6 +73,16 @@ export default class DebugPane {
             min: 1,
             max: 20,
         });
+
+        this.pane.addInput(__data, 'gridSize', {
+            label: 'Grid Size',
+            step: 1,
+            min: 1,
+            max: 100,
+        });
+
+        
+
         this.pane.addButton({
             title: 'Random',
           }).on('click', () => {

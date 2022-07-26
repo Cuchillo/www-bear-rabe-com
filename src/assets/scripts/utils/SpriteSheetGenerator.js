@@ -1,11 +1,12 @@
 import * as THREE from 'three';
 import { isWebpSupported } from '../_app/cuchillo/core/Basics';
-import { C } from "../_app/cuchillo/core/Element";
+import { C, GetBy } from "../_app/cuchillo/core/Element";
 import { Metrics } from '../_app/cuchillo/core/Metrics';
 
 export default class SpriteSheetGenerator {
-  static canvas = document.createElement('canvas');
-  static ctx = this.canvas.getContext('2d');
+  static canvas;
+  static ctx;
+  static hasSpritesheet = true;
   static cont = -1;
   static texture;
   static img;
@@ -31,25 +32,36 @@ export default class SpriteSheetGenerator {
 			...__opts
 		};
 
-    this.canvas.id = this.options.id;
-    this.options.container.appendChild(this.canvas);
-    this.img = new Image();
-    this.img.crossOrigin="anonymous";
-    this.img.onload = () => {
-      this.draw();
-      this.nextImage();
-    }
-    this.img.onerror = () => {
-      this.nextImage(true);
-    }
+    if(this.hasSpritesheet) {
+      this.canvas = document.createElement('canvas');
+      this.ctx = this.canvas.getContext('2d');
+      this.canvas.id = this.options.id;
+      this.options.container.appendChild(this.canvas);
+      
+      this.img = new Image();
+      this.img.crossOrigin="anonymous";
+      this.img.onload = () => {
+        this.draw();
+        this.nextImage();
+      }
+      this.img.onerror = () => {
+        this.nextImage(true);
+      }
 
-    this.resize();
+      this.resize();
+    }    
   }
 
   static start(__data, __call) {
     this.data = __data;
     this.call = __call;
-    this.nextImage();
+
+    if(this.hasSpritesheet) {
+      this.laodTexture();
+    } else {
+      this.nextImage();
+    }
+    
   }
 
   static nextImage(__isError) {
@@ -108,8 +120,6 @@ export default class SpriteSheetGenerator {
   }
 
   static end() {
-    /*this.drawSquare("#FFFFFF", true);
-    this.cont--;*/
     this.drawSquare("#0000FF");
     this.drawSquare("#00FF00");
     this.drawSquare("#959595");
@@ -120,10 +130,16 @@ export default class SpriteSheetGenerator {
     });    
   }
 
-  static dispose() {
-    C.remove(this.canvas);
+  static laodTexture() {
+    this.texture = new THREE.TextureLoader().load(GetBy.id("__spritesheet").getAttribute("href"), ()=> {
+      this.call();
+    });    
+  }
 
-    this.ctx = this.canvas.getContext('2d');
+  static dispose() {
+    if(this.canvas) C.remove(this.canvas);
+
+    this.ctx = null;
     this.cont = null;
     this.img = null;
     this.data = null;

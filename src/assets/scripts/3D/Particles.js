@@ -41,6 +41,7 @@ export default class Particles {
 			hasAnimation: true,
 			finePosition: 500,
 			isPixelMove: false,
+			gridSize: Metrics.GRIDSUB,
 			speed: 0.008,
 			scaleHover: 3,
 		},
@@ -102,7 +103,7 @@ export default class Particles {
 			this.setupPoints();
 			this.initGeometry();
 			
-			SpriteSheetGenerator.dispose();
+			//SpriteSheetGenerator.dispose();
 			DebugPane.setupParticleOptions(this.defaults, ()=> {this.reset();});
 		})
 	}
@@ -299,8 +300,8 @@ export default class Particles {
 				}
 
 				if(this.defaults.animation.isPixelMove || (this.points[i].isPixel && this.defaults.pixels.snap)) {
-					POSITION.x = Math.floor(POSITION.x/Metrics.GRIDSUB) * Metrics.GRIDSUB;
-					POSITION.y = Math.floor(POSITION.y/Metrics.GRIDSUB) * Metrics.GRIDSUB;
+					POSITION.x = Math.floor(POSITION.x/this.defaults.animation.gridSize) * this.defaults.animation.gridSize;
+					POSITION.y = Math.floor(POSITION.y/this.defaults.animation.gridSize) * this.defaults.animation.gridSize;
 				} else if(this.defaults.animation.hasAnimation){
 					this.checkCursorDistance(POSITION, this.points[i], SCALE, ROTATION, this.dummy);
 				}

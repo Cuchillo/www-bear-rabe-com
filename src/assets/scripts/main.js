@@ -50,11 +50,13 @@ import { formatWithCursor } from "prettier";
 import VisorImage from "./components/VisorImage";
 import { GetBy } from "./_app/cuchillo/core/Element";
 import SpriteSheetGenerator from "./utils/SpriteSheetGenerator";
+import Scene from "./3D/Scene";
 
 export default class Main {
 
   static scrollbar;
   static stats;
+  static scene = new Scene();
 
   static init () {
     Basics.id = "w11p_v005"; // ID para cookies
@@ -67,8 +69,6 @@ export default class Main {
     ControllerWindow.init(); // Control ventanas
     MaskedLinks.init();
     SpriteSheetGenerator.init();
-    /*Guides.init();
-    Guides.add({cols:Metrics.COLS, rows:'auto', color:'#fa4d56'});*/
     TopCanvas.init();
     BG.init(CMS_COLORS); // Control de paletas y color de fondo de pantallas. Automatico si añadimos un data-palette='loquesea' en el div con data-page
     InterfaceCanvas.init(); // Canvas de interface, se usa con Cursor
@@ -106,8 +106,7 @@ export default class Main {
       if(!isDebug) {
         setTimeout(()=>{this.intro()}, 1000); 
       } else {
-        BackgroundLogo.setInverted();
-        ControllerPage.init(Wrap.mainholder);
+        this.start();
       }
     });
   }
@@ -121,23 +120,19 @@ export default class Main {
       BackgroundLogo.setWhite();
       
       setTimeout(()=>{
+        this.start();
+      }, 1000);
+    })
+  }
+
+  static start() {
+    SpriteSheetGenerator.start(IMAGES_PROJECTS, ()=> {
+        this.scene.init();
         BG.changeBG("#FFFFFF", null, 0);
         BackgroundLogo.setBlack();
         BackgroundLogo.setInverted();
         ControllerPage.init(Wrap.mainholder);
-      }, 1000);
-    })
-   /* setTimeout(()=>{TopCanvas.cols = 18}, 500);
-    setTimeout(()=>{TopCanvas.cols = 6}, 800);
-    setTimeout(()=>{TopCanvas.cols = 9}, 1100);
-    setTimeout(()=>{TopCanvas.cols = 3}, 1400);
-    setTimeout(()=>{TopCanvas.cols = 6}, 1700);    
-    setTimeout(()=>{TopCanvas.cols = 9}, 2000); 
-    setTimeout(()=>{TopCanvas.cols = 2}, 2300); 
-    setTimeout(()=>{TopCanvas.cols = 5}, 2600); 
-    setTimeout(()=>{TopCanvas.cols = 12}, 2900); 
-    setTimeout(()=>{TopCanvas.cols = 7}, 3100); 
-    setTimeout(()=>{TopCanvas.cols = 3}, 3400); */
+    });
   }
 
   static setupEvents () {
@@ -157,6 +152,7 @@ export default class Main {
   }
 
   static resize () {
+    this.scene.resize();
     TopCanvas.resize();
     Guides.resize();
     MaskedLinks.resize();
@@ -168,6 +164,7 @@ export default class Main {
     InterfaceCanvas.loop();
     ControllerPage.loop();
     TopCanvas.loop();
+    if(this.scene) this.scene.loop();
 
     if(!isTouch) Cursor.loop();
         
