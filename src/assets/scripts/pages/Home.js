@@ -30,18 +30,19 @@ export default class Home extends Page {
   }
 
   show__effect(__call) {
+    Wrap.directShow();
+    Main.scene.showParticles();
     BG.changeBG("#FFFFFF", null, 0);
     BackgroundLogo.setBlack();
     BackgroundLogo.setInverted();
-
-
-    Wrap.directShow();
     BackgroundLogo.show();
-    this._billboard.show();
-    Header.show();
-    this.afterShow();
 
+    setTimeout(()=> {
+      this._billboard.show();
+      Header.show();
+     },1000);
     
+    this.afterShow();
   }
 
   showText() {

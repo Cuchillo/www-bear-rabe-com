@@ -123,6 +123,9 @@ export default class Main {
   }
 
   static start() {
+    
+    BG.changeBG("#000000", null, 0);
+      BackgroundLogo.setWhite();
     SpriteSheetGenerator.start(IMAGES_PROJECTS, ()=> {
       this.scene.init();
       setTimeout(()=>{

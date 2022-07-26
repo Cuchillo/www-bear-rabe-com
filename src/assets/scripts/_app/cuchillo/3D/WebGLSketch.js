@@ -101,10 +101,6 @@ export default class WebGLSketch {
 	start() {
 		if(this._started) return;
 		this._started = true;
-
-		// this.clock = new Clock(true);
-
-		this.addEventListeners();
 	}
 
 	pause() {

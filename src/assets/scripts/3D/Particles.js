@@ -255,7 +255,6 @@ export default class Particles {
 			let speedMod = 1;
 			
 			for ( let i = 0; i < this.defaults.particles.total; i ++ ) {
-
 				if(this.points[i].fixed) {
 					speedMod = 1;
 					this.points[i].scaleMod = Math.min(this.points[i].scaleMod+10, this.points[i].scaleMax);

@@ -8,6 +8,7 @@ import { Maths } from "../_app/cuchillo/utils/Maths";
 export default class BillboardText {
   _tl;
   _tlHide;
+  _callback;
 
   constructor(__container) {
     this.container = __container;
@@ -41,6 +42,8 @@ export default class BillboardText {
         cont = 0;
       }
     }
+
+    this._tl.call(()=> {if(this._callback)this._callback()}, [], time + .1);
 
     time+= .5;
     cont = 0;
@@ -76,7 +79,8 @@ export default class BillboardText {
     });
   }
 
-  show() {
+  show(__call) {
+    this._callback = __call;
     this._tl.restart();
   }
 

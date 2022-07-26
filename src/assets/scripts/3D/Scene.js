@@ -19,6 +19,10 @@ export default class Scene extends WebGLSketch {
         DebugPane.setupRender(this.renderer);
     }
 
+    showParticles() {
+        this.particles.show();
+    }
+
     initParticles() {
         this.particles = new Particles(this);
 		this.scene.add(this.particles.container);
