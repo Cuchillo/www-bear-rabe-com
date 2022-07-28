@@ -40,10 +40,17 @@ export default class BackgroundLogo {
   }
 
   static setInverted() {
+    this.container.classList.remove("--rabe");
     this.container.classList.add("--inv");
   }
 
   static setNormal() {
+    this.container.classList.remove("--rabe");
+    this.container.classList.remove("--inv");
+  }
+
+  static setRabe() {
+    this.container.classList.add("--rabe");
     this.container.classList.remove("--inv");
   }
 }

@@ -51,6 +51,14 @@
   display: flex;
   flex-direction: row;
   flex: 0 0 auto;
+
+  a {
+    text-transform: lowercase;
+  }
+
+  a[aria-current='page'] {
+    display: none;
+  }
 }
 
 .header__nav > ul > li {

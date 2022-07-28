@@ -12,11 +12,19 @@
   &.--inv {
     .logo-bear { display: none; }
     .logo-bear--inv { display: block; }
+    .logo-rabe { display: none; }
+  }
+
+  &:not(.--inv).--rabe {
+    .logo-bear { display: none; }
+    .logo-bear--inv { display: none; }
+    .logo-rabe { display: block; }
   }
 
   &:not(.--inv) {
     .logo-bear { display: block; }
     .logo-bear--inv { display: none; }
+    .logo-rabe { display: none; }
   }
 
   position: fixed;

@@ -1,0 +1,19 @@
+{% import "blocks/billboard_text.njk" as billboard_text with context %}
+
+{% macro block(data) %}
+    {{ billboard_text.block(data.headline) }}
+
+    <section id="SliderPhotos" class="block-slider-photos" scroll-item>
+        <div class="holder __holder">
+            <div class="block-slider-photos__item" scroll-slider-item></div>
+            {% for item in data.images %}
+                <div class="block-slider-photos__item" scroll-slider-item>
+                    <div class="image">
+                        {% img item %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+{% endmacro %}
+                 
