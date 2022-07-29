@@ -19,6 +19,6 @@ layout: layout/default
 {% import "flexible.njk" as FlexibleContent with context %}
 {% import "modules/acordion.njk" as acordion with context %}
 
-<article class='default' data-page='{{ __page }}' data-palette='{{ __palette }}'>
+<article class='default {{ __page }}' data-page='{{ __page }}' data-palette='{{ __palette }}'>
     {{ FlexibleContent.flexible(data.acf.blocks_custom) }}
 </article>

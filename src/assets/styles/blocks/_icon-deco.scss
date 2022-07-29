@@ -1,0 +1,53 @@
+//↗ → ← ↖
+
+.icon-deco {
+    --width-deco: 1em;
+    --height-deco: calc(1em * .85);
+    --border-size: clamp(1px, .055em, 20px);
+    --font-size-deco: 1em;
+    --opacity: 1;
+   
+    &.--double {
+        --font-size-deco: .5em;
+        --width-deco: calc(var(--font-size) * 2);
+    }
+    
+    &.--quint {
+        --font-size-deco: .5em;
+        --width-deco: calc(var(--font-size) * 2.5);
+    }
+
+    display: inline-block;
+    position: relative;
+    color: var(--color);
+    font-size: var(--font-size);
+    width: 1em;
+                
+    > .deco {
+        opacity: var(--opacity);
+        position: absolute;
+        display: block;
+        bottom: -.05em;
+        left: 0;
+        width: var(--width-deco);
+        height: var(--height-deco);
+        border-bottom: var(--border-size) solid currentColor;  
+        
+        .icon {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            top: 0;
+            right: 0;
+            width: 0;
+            height: var(--width-deco); 
+            transform: rotate(90deg);
+            transform-origin: 100% 0;
+            @include font-serif();
+            font-size: var(--font-size-deco);
+            line-height: 1;
+            background-color: aqua
+        }
+    }
+}

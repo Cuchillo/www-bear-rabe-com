@@ -7,8 +7,6 @@ export default class DebugPane {
     static uniforms_image;
 
     static init() {      
-        if(!isDebug) return;
-
         this.setupImageOptions();
         this.setupParticleOptions();
 
@@ -16,8 +14,6 @@ export default class DebugPane {
     }
 
     static setupImageOptions() {
-        if(!isDebug) return;
-
         const subpane = this.pane.addFolder({
             title: 'Image',
         });
@@ -38,14 +34,10 @@ export default class DebugPane {
     }
 
     static resetTimeline() {
-        if(!isDebug) return;
-
         this.pane.refresh();
     }
 
     static setupRender(__renderer) {
-        if(!isDebug) return;
-
         const PARAMS = {
             bg: '#ffffff',
         };
@@ -176,8 +168,6 @@ export default class DebugPane {
     }
 
     static setupParticleOptions(__data, __call) {
-        if(!isDebug) return;
-
         this.setupAnimation(__data.animation, __call);
         this.setupContainer(__data.container, __call);
         this.setupParticles(__data.particles, __call);

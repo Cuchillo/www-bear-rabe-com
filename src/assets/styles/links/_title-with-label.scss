@@ -13,6 +13,10 @@
         --width-deco: calc(var(--font-size) * 2);
     }
 
+    &.--big-icon {
+        --font-size-deco: 1em;
+    }
+
     &.--show {
         --opacity: 1;
     }

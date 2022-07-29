@@ -44,7 +44,6 @@ export default class About extends Default {
   //HIDE
   beforeHide() {}
   hide__effect() {
-    this._visor.isEnabled = false;
     Header.hide();
     BackgroundLogo.hide();
 

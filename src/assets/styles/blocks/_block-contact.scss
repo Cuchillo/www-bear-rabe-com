@@ -1,0 +1,16 @@
+
+.block-contact {
+    --bg: var(--green);
+    --font-size: var(--font-size-xl);
+    --color: var(--primary-color);
+    --padding: var(--grid);
+}
+
+.block-contact {
+    background-color: var(--bg);
+    padding: var(--padding);
+
+    @include font-sans();
+    line-height: .85;
+    font-size: var(--font-size);
+}

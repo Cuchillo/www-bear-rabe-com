@@ -1,6 +1,17 @@
 {% import "blocks/billboard_text.njk" as billboard_text with context %}
 
 {% macro block(data) %}
+    <div class="block-visor-videos">
+        <video data-autoplay
+            muted
+            loop
+            playsinline
+            webkit-playsinline
+            preload
+            poster="/assets/images/blank.png"
+            src="{{ data.videos[2].url }}"></video>
+    </div>
+
     {{ billboard_text.block(data.headline) }}
 
     <section id="SliderPhotos" class="block-slider-photos" scroll-item>
@@ -14,6 +25,19 @@
                 </div>
             {% endfor %}
         </div>
+    </section>
+
+    <section  class="block-contact" scroll-item>
+        <h2 class="title-with-label --show --big-icon">
+            <span class="deco"><span class="icon">i</span></span>
+            <span class="text">Ubicación y contacto</span>
+        </h2>
+        <div class="block-contact__adress">
+            We are at Travesia Tiboli <span class="icon-deco"><span class="deco"><span class="icon">№</span></span></span>17 bajo izda Bilbao <span class="icon-deco --quint"><span class="deco"><span class="icon"><span>4</span><span>8</span><span>0</span><span>0</span><span>4</span></span></span></span>
+        </div>
+
+        
+
     </section>
 {% endmacro %}
                  
