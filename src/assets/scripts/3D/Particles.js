@@ -71,17 +71,17 @@ export default class Particles {
 		},
 		particles: {
 			total: 8000,
-			size: Metrics.parseSize("35fpx")//Metrics.parseSize("14fpx"),
+			size: Metrics.parseSize("30fpx")//Metrics.parseSize("14fpx"),
 		},
 		pixels: {
 			snap: true,
-			porcentaje: 10,	
+			porcentaje: 2,	
 			size: Metrics.parseSize("14fpx"),
 		},
 		container: {
-			scale: Metrics.parseSize("4.4fpx"),
+			scale: Metrics.parseSize("4.4fpx"),//Metrics.parseSize("4.4fpx"),
 			logoVisible: true,
-			scaleZ: 11,
+			scaleZ: 20,
 		}
 	}
 
@@ -95,6 +95,8 @@ export default class Particles {
 	constructor(webgl) {
 		this.webgl = webgl;
 		this.container = new THREE.Object3D();
+
+		this.randomValues();
 	}
 
 	init() {
@@ -235,9 +237,81 @@ export default class Particles {
 	// PUBLIC
 	// ---------------------------------------------------------------------------------------------
 
-	update(delta) {
+	randomValues() {
+		gsap.to(this.defaults.x, {
+			force: Maths.maxminRandom(150, 100),
+			amplitude: Maths.maxminRandom(530, 400),
+			//period: Maths.maxminRandom(10, 1)/100,
+			//z_dif: Maths.maxminRandom(0.15, 0.05),
+			ease: Power2.easeInOut,
+			duration: 4
+		});
+		gsap.to(this.defaults.y, {
+			//force: Maths.maxminRandom(300, 50),
+			amplitude: Maths.maxminRandom(530, 400),
+			//period: Maths.maxminRandom(10, 1)/100,
+			//z_dif: Maths.maxminRandom(0.15, 0.05),
+			ease: Power2.easeInOut,
+			duration: 4
+		});
+		gsap.to(this.defaults.z, {
+			//force: Maths.maxminRandom(60, 10),
+			amplitude: Maths.maxminRandom(530, 400),
+			//period: Maths.maxminRandom(10, 1)/100,
+			//z_dif: Maths.maxminRandom(0.15, 0.05),
+			ease: Power2.easeInOut,
+			duration: 4
+		});
 		
+		gsap.to(this.defaults.container, {
+			scaleZ: Maths.maxminRandom(2, 0),
+			ease: Power2.easeInOut,
+			duration: 4
+		});
+		/*gsap.to(this.defaults.scale, {
+			force: Maths.maxminRandom(100, 20),
+			amplitude: Maths.maxminRandom(611, 411),
+			//period: Maths.maxminRandom(50000, 1000),
+			ease: Power2.easeInOut,
+			duration: 8
+		});*/
+		/*gsap.to(this.defaults.y, {
+			force: Maths.maxminRandom(300, 10),
+			amplitude: Maths.maxminRandom(1000, 100),
+			period: Maths.maxminRandom(50000, 1000),
+			z_dif: Maths.maxminRandom(0.5, 0.05),
+			ease: Power2.easeInOut,
+			duration: 1
+		});
+		gsap.to(this.defaults.z, {
+			force: Maths.maxminRandom(300, 10),
+			amplitude: Maths.maxminRandom(1000, 100),
+			period: Maths.maxminRandom(50000, 1000),
+			z_dif: Maths.maxminRandom(0.5, 0.05),
+			ease: Power2.easeInOut,
+			duration: 1
+		});
+		gsap.to(this.defaults.scale, {
+			force: Maths.maxminRandom(300, 10),
+			amplitude: Maths.maxminRandom(1000, 100),
+			period: Maths.maxminRandom(50000, 1000),
+			z_dif: Maths.maxminRandom(0.5, 0.05),
+			ease: Power2.easeInOut,
+			duration: 1
+		});
+		gsap.to(this.defaults.particles, {
+			size: Maths.maxminRandom(50, 4),
+			amplitude: Maths.maxminRandom(1000, 100),
+			period: Maths.maxminRandom(50000, 1000),
+			z_dif: Maths.maxminRandom(0.5, 0.05),
+			ease: Power2.easeInOut,
+			duration: 1
+		});*/
 
+		setTimeout(()=> {this.randomValues()}, Maths.maxminRandom(60, 30) * 100);
+	}
+
+	update(delta) {
 		if(this.defaults.animation.hasAnimation) {
 			this.tick += this.defaults.animation.speed;
 			this.defaults.animation.tick = this.tick;
@@ -275,7 +349,8 @@ export default class Particles {
 					this.points[i].x/this.defaults.y.amplitude + this.defaults.y.period + this.points[i].z*this.defaults.y.z_dif,
 					this.points[i].y/this.defaults.y.amplitude + this.defaults.y.period + this.points[i].z*this.defaults.y.z_dif,
 					this.tick) * this.defaults.y.force;
-
+				
+				
 				POSITION.z = this.points[i].z + this.noise.simplex3(
 					this.points[i].x/this.defaults.z.amplitude + this.defaults.z.period + this.points[i].z*this.defaults.z.z_dif,
 					this.points[i].y/this.defaults.z.amplitude + this.defaults.z.period + this.points[i].z*this.defaults.z.z_dif,
