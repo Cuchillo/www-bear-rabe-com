@@ -43,7 +43,7 @@ export default class Particles {
 			isPixelMove: false,
 			gridSize: Metrics.GRIDSUB,
 			speed: 0.008,
-			scaleHover: 3,
+			scaleHover: 2,
 		},
 		x: {
 			force:119,//239,
@@ -64,14 +64,14 @@ export default class Particles {
 			z_dif: 0.152,//0.807
 		},
 		scale: {
-			force:41,
+			force:19,
 			amplitude:174,
 			period: 40000,
 			z_dif: 0.163,//0.054
 		},
 		particles: {
 			total: 8000,
-			size: Metrics.parseSize("30fpx")//Metrics.parseSize("14fpx"),
+			size: Metrics.parseSize("35fpx")//Metrics.parseSize("14fpx"),
 		},
 		pixels: {
 			snap: true,
@@ -79,9 +79,9 @@ export default class Particles {
 			size: Metrics.parseSize("14fpx"),
 		},
 		container: {
-			scale: Metrics.parseSize("4.4fpx"),//Metrics.parseSize("4.4fpx"),
+			scale: Metrics.parseSize("5.05fpx"),//Metrics.parseSize("4.4fpx"),
 			logoVisible: true,
-			scaleZ: 20,
+			scaleZ: 10,
 		}
 	}
 
@@ -247,7 +247,7 @@ export default class Particles {
 			duration: 4
 		});
 		gsap.to(this.defaults.y, {
-			//force: Maths.maxminRandom(300, 50),
+			force: Maths.maxminRandom(80, 30),
 			amplitude: Maths.maxminRandom(530, 400),
 			//period: Maths.maxminRandom(10, 1)/100,
 			//z_dif: Maths.maxminRandom(0.15, 0.05),
@@ -255,7 +255,7 @@ export default class Particles {
 			duration: 4
 		});
 		gsap.to(this.defaults.z, {
-			//force: Maths.maxminRandom(60, 10),
+			force: Maths.maxminRandom(300, 100),
 			amplitude: Maths.maxminRandom(530, 400),
 			//period: Maths.maxminRandom(10, 1)/100,
 			//z_dif: Maths.maxminRandom(0.15, 0.05),
@@ -263,11 +263,6 @@ export default class Particles {
 			duration: 4
 		});
 		
-		gsap.to(this.defaults.container, {
-			scaleZ: Maths.maxminRandom(2, 0),
-			ease: Power2.easeInOut,
-			duration: 4
-		});
 		/*gsap.to(this.defaults.scale, {
 			force: Maths.maxminRandom(100, 20),
 			amplitude: Maths.maxminRandom(611, 411),
