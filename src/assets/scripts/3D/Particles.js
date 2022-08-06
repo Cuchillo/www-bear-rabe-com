@@ -43,7 +43,7 @@ export default class Particles {
 			isPixelMove: false,
 			gridSize: Metrics.GRIDSUB,
 			speed: 0.008,
-			scaleHover: 2,
+			scaleHover: 3,
 		},
 		x: {
 			force:119,//239,
