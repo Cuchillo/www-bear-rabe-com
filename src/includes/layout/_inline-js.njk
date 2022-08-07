@@ -18,7 +18,13 @@
               url: "{{ item.link | url }}",
               images: [ 
                  {% for image in item.acf.images %}
-                    "{{ image.sizes['@1x'] }}",
+                 {
+                    cover: "{{ image.sizes['@3x'] }}",
+                    image: "{{ image.sizes['@1x'] }}",
+                    thumb: "{{ image.sizes['thumb_mobile'] }}",
+                    width: {{ image.sizes['@1x-width'] }},
+                    height: {{ image.sizes['@1x-height'] }},
+                  },
                  {% endfor %}
                  ]
             },

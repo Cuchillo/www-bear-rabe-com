@@ -79,6 +79,10 @@ export default class Header {
     [...GetBy.selector("figure",__dom)].map((item,index) => {
       if(index!=__index) {
         C.remove(item);
+      } else {
+        const image = GetBy.selector("img",item)[0];
+        const ratio = Number(image.getAttribute("width"))/Number(image.getAttribute("height"));
+        __dom.style.setProperty('--ratio', ratio);
       }
     })
   }

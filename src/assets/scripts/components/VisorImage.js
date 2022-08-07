@@ -57,6 +57,7 @@ export default class VisorImage {
   ctx = InterfaceCanvas.ctx;
   visor = new VisorImage__Image(this.ctx);
   images = [];
+  projects = [];
   isEnabled = true;
   position = {
     x:0,
@@ -85,18 +86,39 @@ export default class VisorImage {
   }
 
   setupImages() {
-    IMAGES_PROJECTS.map(item => {
-      const dom = new Image();
-      dom.src = item.image;
+    
+    PROJECTS.map(item => {
+      const images = [];
 
-      this.images.push({
-        index: this.images.length,
-        image: dom,
-        project: item.project,
-        width: item.width,
-        height: item.height,
+      item.images.map(item => {
+        const dom = new Image();
+        dom.src = item.image;
+
+        this.images.push({
+          order: images.length,
+          load: () => {dom.src = item.image}
+        });
+  
+        images.push({
+          index: images.length,
+          image: dom,
+          project: item.project,
+          width: item.width,
+          height: item.height,
+        })
+      });
+      
+      this.projects.push({
+        id: item.project_id,
+        images: images,
+        url: item.url,
+        actual: 0,
+        total: images.length,
       })
     });
+
+    this.images.sort((a, b) => a.order - b.order);
+    this.images.map(item => item.load());
   }
 
 
@@ -119,7 +141,9 @@ export default class VisorImage {
   }
 
   changeImage() {
-    const img = this.images[this.actual];
+    const project = this.projects[this.actual];
+    const img = project.images[project.actual];
+    project.actual = project.actual + 1 === project.total? 0 : project.actual + 1;
   
     this.visor.image = img.image;
 
@@ -131,11 +155,16 @@ export default class VisorImage {
       this.visor.width = this.maxSize * (img.width/img.height);
     }
 
-    this.actual = this.actual+1 == IMAGES_PROJECTS.length? 0 : this.actual + 1;
+    if(this.actual+1 == this.projects.length) {
+      this.actual = 0;
+      Functions.arrayRandom(this.projects);
+    } else {
+      this.actual++;
+    }
 
     //link
-    this.container.setAttribute("href", PROJECTS[img.project].url);
-    this.container.setAttribute("data-temp-value", `${PROJECTS[img.project].id},${img.index}`);
+    this.container.setAttribute("href", project.url);
+    this.container.setAttribute("data-temp-value", `${project.id},${img.index}`);
   }
 
   resize() {

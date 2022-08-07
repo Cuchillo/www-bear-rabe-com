@@ -23,7 +23,7 @@ export default class BarProject {
     const data = DataHolder.getProject(__id);
     __dom.setAttribute("data-temp-value", `${__id},0`);
     __dom.setAttribute("href", data.url);
-    __dom.setAttribute("data-cursor-image", data.images[0]);
+    __dom.setAttribute("data-cursor-image", data.images[0].image);
   }
   
   static show(){

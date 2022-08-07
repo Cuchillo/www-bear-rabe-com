@@ -34,7 +34,6 @@ layout: layout/default
 
   {% set ratio = data.acf.images[0].sizes['@1x-width']/data.acf.images[0].sizes['@1x-height'] %}
   
-
   <div class="block-project-cover __imgcover" style="--ratio:{{ ratio }}" scroll-item data-speed=".5">
     <div class="__movable">
       {% for image in data.acf.images %}
