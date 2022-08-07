@@ -90,6 +90,7 @@ export default class VisorImage {
       dom.src = item.image;
 
       this.images.push({
+        index: this.images.length,
         image: dom,
         project: item.project,
         width: item.width,
@@ -134,6 +135,7 @@ export default class VisorImage {
 
     //link
     this.container.setAttribute("href", PROJECTS[img.project].url);
+    this.container.setAttribute("data-temp-value", `${PROJECTS[img.project].id},${img.index}`);
   }
 
   resize() {

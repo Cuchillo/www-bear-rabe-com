@@ -37,7 +37,9 @@ layout: layout/default
 
   <div class="block-project-cover __imgcover" style="--ratio:{{ ratio }}" scroll-item data-speed=".5">
     <div class="__movable">
-    {% img data.acf.images[0] %}
+      {% for image in data.acf.images %}
+        {% img image %}
+      {% endfor %}
     </div>
   </div>
 
@@ -120,18 +122,4 @@ layout: layout/default
       </div>
     {% endif %}
   </div>
-
-  <!-- <ul class="block-ul-projects" aria-label="{{ texts[renderData.language].credits }}">
-      {% for item in all[renderData.language].projects %}
-      <li><a href="{{ item.link | url }}">{{ item.title.rendered }}</a></li>
-      {% endfor %}
-  </ul> -->
-  
-
-  {# {{ HeaderProject.block(data.title.rendered, data.acf, data.magazine_counter) }}
-  {{ InfoProject.block(data.title.rendered, data.acf, __palette) }}
-  {{ FlexibleContent.flexible(data.acf.blocks_custom) }}
-  {{ FooterProject.block(data.title.rendered, data.acf) }}
-  {% set next = utils.getNext(all[renderData.language].projects, data.id) %}
-  {{ NextProject.block(next) }} #}
 </article>

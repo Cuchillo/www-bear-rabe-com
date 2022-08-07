@@ -20,6 +20,7 @@ import InterfaceCanvas from '../_app/cuchillo/layout/InterfaceCanvas';
 export default class Project extends Page {
 
   data;
+  indexCover;
   domDescription;
 
   constructor() {
@@ -29,6 +30,7 @@ export default class Project extends Page {
 
   setup() {
     this.data = DataHolder.getProject(Number(this.container.getAttribute("data-project")));
+    this.indexCover = Basics.tempValue? Basics.tempValue.split(",")[1] : 0;
     this.domDescription = GetBy.class("__description", this.container)[0];
     this.setupCover();
     BarProject.next = Number(this.container.getAttribute("data-next"));
@@ -41,7 +43,8 @@ export default class Project extends Page {
   }
 
   setupCover() {
-    Header.addCover(GetBy.class("__imgcover", this.container)[0]);
+    Basics.tempValue = null;
+    Header.addCover(GetBy.class("__imgcover", this.container)[0], this.indexCover);
   }
 
   //SHOW

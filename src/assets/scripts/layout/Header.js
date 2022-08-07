@@ -71,9 +71,16 @@ export default class Header {
     gsap.to(this.nav,{alpha:0, ease: Power2.easeOut, duration:.1, delay:.3});
   }
 
-  static addCover(__dom) {
+  static addCover(__dom, __index = 0) {
     this.cover = __dom;
     this.container.appendChild(__dom);
+
+    //REMOVE IMAGES
+    [...GetBy.selector("figure",__dom)].map((item,index) => {
+      if(index!=__index) {
+        C.remove(item);
+      }
+    })
   }
 
   static showCover() {

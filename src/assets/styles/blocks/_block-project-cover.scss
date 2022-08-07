@@ -22,7 +22,8 @@
     width: var(--width);
     height: auto;
     user-select: none;
-   
+    display: grid;
+
     cursor: grab;
 
     &:active {
