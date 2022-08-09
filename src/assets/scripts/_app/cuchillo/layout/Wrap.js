@@ -10,7 +10,7 @@ export default class _Wrap {
       ease: ""
     },
     hide: {
-      duration: .1,
+      duration: .2,
       delay: 0,
       ease: ""
     }

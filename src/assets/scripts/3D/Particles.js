@@ -96,7 +96,7 @@ export default class Particles {
 		this.webgl = webgl;
 		this.container = new THREE.Object3D();
 
-		this.randomValues();
+		//this.randomValues();
 	}
 
 	init() {

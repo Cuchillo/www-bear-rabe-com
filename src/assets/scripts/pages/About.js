@@ -10,15 +10,18 @@ import BackgroundLogo from '../components/BackgroundLogo';
 import Main from '../main';
 import BG from '../_app/cuchillo/layout/Background';
 import { SliderScroll } from '../_app/cuchillo/components/SliderScroll';
+import VisorVideos from '../components/VisorVideo';
 
 
 export default class About extends Default {
 
   _billboard;
   _slider;
+  _visorVideos;
   
   constructor() {
     super();
+    this._visorVideos = new VisorVideos(GetBy.class("__blockVideos", this.container)[0]);
     this._billboard = new BillboardText(GetBy.class("__billboard", this.container)[0]);
     this._slider = new SliderScroll(document.getElementById("SliderPhotos"), {
         onDragStart: () => { },
@@ -26,6 +29,8 @@ export default class About extends Default {
         interaction: true,
         hasScrollbar: false
     });
+
+    this._visorVideos.play();
   }
 
   show__effect(__call) {
@@ -60,6 +65,7 @@ export default class About extends Default {
     Main.scene.stop();
     this._slider.dispose();
     this._billboard.dispose();
+    this._visorVideos.dispose();
     super.dispose();
   }
 
@@ -74,6 +80,7 @@ export default class About extends Default {
     if(this._isActive) {
       super.loop();
       this._slider.loop();
+      this._visorVideos.loop();
     }
   }
 }

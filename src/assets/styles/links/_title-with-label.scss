@@ -23,7 +23,6 @@
 
     @include basic-a();
     position: relative;
-    overflow: hidden;
     
     color: var(--color);
     font-size: var(--font-size);
@@ -75,7 +74,6 @@
         line-height: .85;
         padding-left: .05em;
         padding-top: 0;
-        padding-bottom: .15em;
     }
 
     .masked-item {

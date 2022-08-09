@@ -1,15 +1,15 @@
 {% import "blocks/billboard_text.njk" as billboard_text with context %}
 
 {% macro block(data) %}
-    <div class="block-visor-videos">
-        <video data-autoplay
-            muted
-            loop
-            playsinline
-            webkit-playsinline
-            preload
-            poster="/assets/images/blank.png"
-            src="{{ data.videos[2].url }}"></video>
+    {% set videosList = "" %}
+    {% for video in data.videos %}
+        {% set videosList = videosList + video.url + "," %}
+    {% endfor %}
+    <div class="block-visor-videos __blockVideos" data-videos="{{ videosList }}">
+        <video muted playsinline webkit-playsinline></video>    
+        <video muted playsinline webkit-playsinline></video>        
+
+        
     </div>
 
     {{ billboard_text.block(data.headline) }}
@@ -33,10 +33,40 @@
             <span class="text">Ubicación y contacto</span>
         </h2>
         <div class="block-contact__adress">
-            We are at Travesia Tiboli <span class="icon-deco"><span class="deco"><span class="icon">№</span></span></span>17 bajo izda Bilbao <span class="icon-deco --quint"><span class="deco"><span class="icon"><span>4</span><span>8</span><span>0</span><span>0</span><span>4</span></span></span></span>
+            <a href="https://www.google.com/maps/place/Tr.%C2%AA+Tiboli,+17,+48007+Bilbao,+Vizcaya/@43.2662213,-2.9244295,3a,75y,61.58h,89.59t/data=!3m6!1e1!3m4!1sKbpSM01In_rQ5kXf0f99mg!2e0!7i16384!8i8192!4m5!3m4!1s0xd4e4fc44f607c91:0xf9b04553cef7c531!8m2!3d43.2661865!4d-2.9243256" target="_blank">
+            We are at <span class="--grey">Travesia Tiboli</span> <span class="icon-deco"><span class="deco"><span class="icon">№</span></span></span>17 bajo izda Bilbao <span class="icon-deco --quint"><span class="deco"><span class="icon"><span>4</span><span>8</span><span>0</span><span>0</span><span>4</span></span></span></span>
+            </a>
         </div>
 
-        
+        <h3 class="title-with-label --show --big-icon">
+            <span class="deco"><span class="icon">½</span></span>
+            <span class="text">Ane<br>Arce</span>
+        </h3>
+        <a class="link-with-label --multiline __link" href="mailto:ane@bear-rabe.com">
+            <span class="deco"><span class="icon">@</span></span>
+            <span class="text">ane@bear-rabe.com</span>
+            <span class="mask"></span>
+        </a>
+        <a class="link-with-label --multiline __link" href="tel:+34600063975">
+            <span class="deco"><span class="icon">t</span></span>
+            <span class="text">600 063 975</span>
+            <span class="mask"></span>
+        </a>
+
+        <h3 class="title-with-label --show --big-icon">
+            <span class="deco"><span class="icon">½</span></span>
+            <span class="text">Iñigo<br>Berasategui</span>
+        </h3>
+        <a class="link-with-label --multiline __link" href="mailto:ane@bear-rabe.com">
+            <span class="deco"><span class="icon">@</span></span>
+            <span class="text">iñigo@bear-rabe.com</span>
+            <span class="mask"></span>
+        </a>
+        <a class="link-with-label --multiline __link" href="tel:+34670876847">
+            <span class="deco"><span class="icon">t</span></span>
+            <span class="text">670 876 847</span>
+            <span class="mask"></span>
+        </a>
 
     </section>
 {% endmacro %}

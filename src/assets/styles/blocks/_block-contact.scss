@@ -2,15 +2,33 @@
 .block-contact {
     --bg: var(--green);
     --font-size: var(--font-size-xl);
-    --color: var(--primary-color);
+    --color: var(--black);
     --padding: var(--grid);
 }
 
 .block-contact {
     background-color: var(--bg);
-    padding: var(--padding);
+    padding: var(--padding) var(--padding) calc(var(--font-size) * .8);
 
     @include font-sans();
     line-height: .85;
     font-size: var(--font-size);
+
+    a {
+        --color: var(--blue);
+        @include basic-a();
+        color: var(--color);
+
+        .--grey {
+            color: var(--grey);
+        }
+    }
+
+    .title-with-label {
+        --color: var(--black);
+    }
+
+    h3 {
+        margin-top: 1em;
+    }
 }

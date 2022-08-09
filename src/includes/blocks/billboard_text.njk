@@ -1,7 +1,9 @@
 {% macro block(data) %}
 <section class="billboard-text __billboard" scroll-item>
     {% for item in data %}
-        {% if item.line.is_especial %}
+        {% if item.line.text == "br" %}
+            <span class="break-line"></span>
+        {% elif item.line.is_especial %}
             <span class="billboard-item --arrow">{{ item.line.text }}<span class="mask"></span></span>
         {% elif item.line.link %}
             <a class="billboard-item link-with-label __link" href="{{ item.line.link.url }}">

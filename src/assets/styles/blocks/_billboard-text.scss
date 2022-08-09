@@ -39,6 +39,11 @@
     color: var(--color);
     background-color: var(--bg);    
 
+    .break-line {
+        display: block;
+        height: 1em;
+    }
+
     .billboard-item {
         position: relative;
         opacity: 0;
