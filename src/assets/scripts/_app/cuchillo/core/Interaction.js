@@ -31,8 +31,8 @@ const Interaction = {
       this._move();
     }
 
-    this.positions.mouse.x = Metrics.CENTER_X;
-    this.positions.mouse.y = Metrics.CENTER_Y;
+    this.positions.mouse.x = 0;//Metrics.CENTER_X;
+    this.positions.mouse.y = 0;//Metrics.CENTER_Y;
   },
 
   setOptions(options = {}) {

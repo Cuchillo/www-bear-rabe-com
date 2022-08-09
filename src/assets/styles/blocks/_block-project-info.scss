@@ -47,6 +47,16 @@
             margin-right: .1em;
         }
     }
+
+    a {
+        &:hover {
+            background-color: var(--black);
+            > * {
+                --color: var(--white);
+                color: var(--color);
+            }
+        }
+    }
 }
 
 .block-project-info__a {
