@@ -134,7 +134,7 @@ export default class Main {
         BackgroundLogo.setBlack();
         BackgroundLogo.setInverted();*/
         ControllerPage.init(Wrap.mainholder);
-      }, 1000);
+      }, 200);
     });
   }
 
