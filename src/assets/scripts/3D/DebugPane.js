@@ -1,5 +1,6 @@
 import {Pane} from 'tweakpane';
-import { isDebug } from '../_app/cuchillo/core/Basics';
+import { isDebug, isSmartphone } from '../_app/cuchillo/core/Basics';
+import { GetBy } from '../_app/cuchillo/core/Element';
 import { Maths } from '../_app/cuchillo/utils/Maths';
 
 export default class DebugPane {
@@ -19,6 +20,12 @@ export default class DebugPane {
         this.setupAxis(__item.defaults.y, "Y");
         this.setupAxis(__item.defaults.z, "Z");
         this.setupAxis(__item.defaults.scale, "Scale");
+
+        if(isSmartphone) {
+            const holder = GetBy.class("tp-dfwv")[0];
+            holder.style.top = "auto";
+            holder.style.bottom = "8px";
+        }
     }
 
     static setupImageOptions() {

@@ -13,7 +13,7 @@ import { Maths } from '../_app/cuchillo/utils/Maths';
 import { GetBy } from '../_app/cuchillo/core/Element';
 import SpriteSheetGenerator from '../utils/SpriteSheetGenerator';
 import DebugPane from './DebugPane';
-import { isDebug } from '../_app/cuchillo/core/Basics';
+import { isDebug, isSmartphone } from '../_app/cuchillo/core/Basics';
 import { Sizes } from '../_app/cuchillo/core/Sizes';
 
 export default class Particles {
@@ -79,7 +79,7 @@ export default class Particles {
 			size: Metrics.parseSize("1vw"),
 		},
 		container: {
-			scale: Metrics.parseSize("5.05fpx"),//Metrics.parseSize("4.4fpx"),
+			scale: isSmartphone? Metrics.parseSize(".65vw") : Metrics.parseSize(".35vw"),
 			logoVisible: true,
 			scaleZ: 10,
 		}
@@ -111,7 +111,7 @@ export default class Particles {
 	setupOptions() {
 		if(this.is404) {
 			this.defaults.container.scaleZ = 0;
-			this.defaults.container.scale = Metrics.parseSize("4fpx");
+			this.defaults.container.scale = Metrics.parseSize(".35vw");
 			this.defaults.x.force = 60;
 			this.defaults.y.force = 32;
 			this.defaults.z.force = 54;
@@ -129,7 +129,7 @@ export default class Particles {
 						
 			//SpriteSheetGenerator.dispose();
 			if(!this.is404) {
-				setTimeout(()=> {this.randomValues()},4000);
+				//setTimeout(()=> {this.randomValues()},4000);
 			}
 
 			if(this.is404 || isDebug) {
