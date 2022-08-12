@@ -111,13 +111,13 @@ export default class Particles {
 	setupOptions() {
 		if(this.is404) {
 			this.defaults.container.scaleZ = 0;
-			this.defaults.container.scale = Metrics.parseSize(".35vw");
+			this.defaults.container.scale = Metrics.parseSize(".30vw");
 			this.defaults.x.force = 60;
 			this.defaults.y.force = 32;
 			this.defaults.z.force = 54;
 			this.defaults.pixels.porcentaje = 0;
 			this.defaults.scale.force = 28;
-			this.defaults.particles.size = Metrics.parseSize("10fpx")//Metrics.parseSize("14fpx"),
+			this.defaults.particles.size = Metrics.parseSize("1vw");
 		}
 	}
 

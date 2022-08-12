@@ -206,14 +206,14 @@ export default class DebugPane {
         subpane.addInput(__data, 'amplitude', {
             label: 'Amplitude',
             step: 1,
-            min: 0,
-            max: 1000
+            min: 1,
+            max: 1300
         });
 
         subpane.addInput(__data, 'period', {
             label: 'Period',
             step: 1,
-            min: 0,
+            min: 1,
             max: 50000
         });
 
