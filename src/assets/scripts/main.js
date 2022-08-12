@@ -22,6 +22,7 @@ import { Metrics } from './_app/cuchillo/core/Metrics';
 import Default from './pages/Default';
 import Home from './pages/Home';
 import Project from './pages/Project';
+import Error404 from './pages/Error404';
 import About from './pages/About';
 import Legal from './pages/Legal';
 import EventDispatcher from './_app/cuchillo/core/EventDispatcher';
@@ -124,11 +125,12 @@ export default class Main {
   }
 
   static start() {
-    
+    const is404 = GetBy.selector('[data-page]')[0].getAttribute("data-page") == "error404";
+
     BG.changeBG("#000000", null, 0);
-      BackgroundLogo.setWhite();
+    BackgroundLogo.setWhite();
     SpriteSheetGenerator.start(IMAGES_PROJECTS, ()=> {
-      this.scene.init();
+    this.scene.init(is404);
       setTimeout(()=>{
         /*BG.changeBG("#FFFFFF", null, 0);
         BackgroundLogo.setBlack();

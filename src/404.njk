@@ -1,13 +1,23 @@
 ---
+renderData:
+  language: "es"
+  title: "404 - Page not found"
+  description: "Page not found"
 layout: layout/default
 permalink: 404.html
-title: 404 - Page not found
-description: Page not found
 eleventyExcludeFromCollections: true
 ---
-<div>
-  {% markdown %}
-  # Page not found
-  Go [home](/){style="font-weight: bold"}
-  {% endmarkdown %}
-</div>
+
+{% set __page = 'error404' %}
+{% set __palette = 'primary' %}
+
+<article class='default {{ __page }}' data-page='{{ __page }}' data-palette='{{ __palette }}'>
+  <section class="billboard-text __billboard" scroll-item>
+    <span class="billboard-item">Ooooops!<span class="mask"></span></span>
+    <a class="billboard-item link-with-label __link" href="/" data-internal>
+        <span class="deco"><span class="icon">B</span></span>
+        <span class="text">ack to <b>home</b></span>
+        <span class="mask"></span>
+    </a>
+  </section>
+</article>

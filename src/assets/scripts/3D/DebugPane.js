@@ -3,14 +3,22 @@ import { isDebug } from '../_app/cuchillo/core/Basics';
 import { Maths } from '../_app/cuchillo/utils/Maths';
 
 export default class DebugPane {
-    static pane = new Pane({title: 'BEAR Options', expanded: false});
+    static item;
+    static pane;
     static uniforms_image;
 
-    static init() {      
-        this.setupImageOptions();
-        this.setupParticleOptions();
-
-        this.pane.close();
+    static init(__item) {
+        this.item = __item;
+        this.pane = new Pane({title: 'BEAR Options', expanded: true});
+                        
+        this.setupAnimation(__item.defaults.animation, ()=> {__item.reset();});
+        this.setupContainer(__item.defaults.container, ()=> {__item.reset();});
+        this.setupParticles(__item.defaults.particles, ()=> {__item.reset();});
+        this.setupPixeles(__item.defaults.pixels, ()=> {__item.reset();});
+        this.setupAxis(__item.defaults.x, "X");
+        this.setupAxis(__item.defaults.y, "Y");
+        this.setupAxis(__item.defaults.z, "Z");
+        this.setupAxis(__item.defaults.scale, "Scale");
     }
 
     static setupImageOptions() {
@@ -49,8 +57,7 @@ export default class DebugPane {
         });
     }
 
-    static setupAnimation(__data) {
-       
+    static setupAnimation(__data) {       
         this.pane.addInput(__data, 'hasAnimation',{label: 'Animation'}).on('change', (ev) => {
             __data.finePosition = 0;
             this.pane.refresh();
@@ -68,12 +75,15 @@ export default class DebugPane {
             min: 0,
             max: 1000,
         });
-        this.pane.addInput(__data, 'scaleHover', {
-            label: 'scaleHover',
-            step: .01,
-            min: 1,
-            max: 20,
-        });
+
+        if(isDebug) {
+            this.pane.addInput(__data, 'scaleHover', {
+                label: 'scaleHover',
+                step: .01,
+                min: 1,
+                max: 20,
+            });
+        }
 
         this.pane.addInput(__data, 'gridSize', {
             label: 'Grid Size',
@@ -91,6 +101,12 @@ export default class DebugPane {
             __data.tick = Maths.maxminRandom(10000, 1);
             this.pane.refresh();
           });
+
+        this.pane.addButton({
+            title: 'Download Image',
+          }).on('click', () => {
+            this.item.webgl.saveImage("bear-ooooops");
+          });  
     }
 
     static setupParticles(__data, __call) {
@@ -123,7 +139,7 @@ export default class DebugPane {
         const subpane = this.pane.addFolder({   title: 'Pixels' });
         subpane.addInput(__data, 'snap',{label: 'Snap'});
         subpane.addInput(__data, 'porcentaje', {
-            label: '%',
+            label: 'Quantity',
             step: 1,
             min: 0,
             max: 100,
@@ -167,17 +183,6 @@ export default class DebugPane {
           });
     }
 
-    static setupParticleOptions(__data, __call) {
-        this.setupAnimation(__data.animation, __call);
-        this.setupContainer(__data.container, __call);
-        this.setupParticles(__data.particles, __call);
-        this.setupPixeles(__data.pixels, __call);
-        this.setupAxis(__data.x, "X");
-        this.setupAxis(__data.y, "Y");
-        this.setupAxis(__data.z, "Z");
-        this.setupAxis(__data.scale, "Scale");
-    }
-
     static setupAxis(__data, __title) {
         const subpane = this.pane.addFolder({   title: __title });
        
@@ -206,7 +211,7 @@ export default class DebugPane {
         });
 
         subpane.addInput(__data, 'z_dif', {
-            label: 'Depth mod',
+            label: 'Z Force',
             step: .001,
             min: 0,
             max: 1

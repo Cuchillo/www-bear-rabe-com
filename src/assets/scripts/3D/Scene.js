@@ -1,10 +1,11 @@
 import { Vector3 } from 'three';
 import WebGLSketch from "../_app/cuchillo/3D/WebGLSketch";
-import DebugPane from './DebugPane';
 import Particles from './Particles';
 import { gsap, Power2 } from "gsap";
 
 export default class Scene extends WebGLSketch {
+    is404 = false;
+
     constructor () {
         super({
             container: 'SceneParticles',
@@ -15,9 +16,9 @@ export default class Scene extends WebGLSketch {
         });
     }
 
-    init() {
+    init(__is404 = false) {
+        this.is404 = __is404;
         this.initParticles();
-        DebugPane.setupRender(this.renderer);
     }
 
     showParticles() {
@@ -25,7 +26,7 @@ export default class Scene extends WebGLSketch {
     }
 
     initParticles() {
-        this.particles = new Particles(this);
+        this.particles = new Particles(this, this.is404);
 		this.scene.add(this.particles.container);
         this.particles.init();
     }

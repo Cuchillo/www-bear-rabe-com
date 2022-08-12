@@ -91,12 +91,34 @@ export default class Particles {
 	noise = new Perlin(Math.random());
 	dummy = new THREE.Object3D();
 	geometry = new PlaneBufferGeometry(1,1);
-		
-	constructor(webgl) {
+	_is404 = false;
+	objUrl;
+	
+	get is404() { return this._is404; }
+	set is404(__bol) {
+		this._is404 = __bol;
+		this.objUrl = !this.is404? '/assets/obj/logo_v02.obj' : '/assets/obj/logo-404.obj';
+	}
+
+	constructor(webgl, is404 = false) {
 		this.webgl = webgl;
+		this.is404 = is404;
 		this.container = new THREE.Object3D();
 
-		//this.randomValues();
+		this.setupOptions();
+	}
+
+	setupOptions() {
+		if(this.is404) {
+			this.defaults.container.scaleZ = 0;
+			this.defaults.container.scale = Metrics.parseSize("4fpx");
+			this.defaults.x.force = 60;
+			this.defaults.y.force = 32;
+			this.defaults.z.force = 54;
+			this.defaults.pixels.porcentaje = 0;
+			this.defaults.scale.force = 28;
+			this.defaults.particles.size = Metrics.parseSize("10fpx")//Metrics.parseSize("14fpx"),
+		}
 	}
 
 	init() {
@@ -104,9 +126,14 @@ export default class Particles {
 			this.initPoints();
 			this.setupPoints();
 			this.initGeometry();
-			
+						
 			//SpriteSheetGenerator.dispose();
-			DebugPane.setupParticleOptions(this.defaults, ()=> {this.reset();});
+			if(this.is404 || isDebug) {
+				this.defaults.container.scaleZ = 0;
+				DebugPane.init(this);
+			} else {
+				this.randomValues();
+			}
 		})
 	}
 
@@ -114,7 +141,7 @@ export default class Particles {
 		console.log("LOAD")
 		const loader = new OBJLoader();
 		loader.load(
-			'/assets/obj/logo_v02.obj',
+			this.objUrl,
 			( object ) => {
 				object.traverse((child) => {
 					if (child.isMesh) {
@@ -238,6 +265,8 @@ export default class Particles {
 	// ---------------------------------------------------------------------------------------------
 
 	randomValues() {
+		if(this.is404) return;
+
 		gsap.to(this.defaults.x, {
 			force: Maths.maxminRandom(150, 100),
 			amplitude: Maths.maxminRandom(530, 400),
@@ -263,46 +292,6 @@ export default class Particles {
 			duration: 4
 		});
 		
-		/*gsap.to(this.defaults.scale, {
-			force: Maths.maxminRandom(100, 20),
-			amplitude: Maths.maxminRandom(611, 411),
-			//period: Maths.maxminRandom(50000, 1000),
-			ease: Power2.easeInOut,
-			duration: 8
-		});*/
-		/*gsap.to(this.defaults.y, {
-			force: Maths.maxminRandom(300, 10),
-			amplitude: Maths.maxminRandom(1000, 100),
-			period: Maths.maxminRandom(50000, 1000),
-			z_dif: Maths.maxminRandom(0.5, 0.05),
-			ease: Power2.easeInOut,
-			duration: 1
-		});
-		gsap.to(this.defaults.z, {
-			force: Maths.maxminRandom(300, 10),
-			amplitude: Maths.maxminRandom(1000, 100),
-			period: Maths.maxminRandom(50000, 1000),
-			z_dif: Maths.maxminRandom(0.5, 0.05),
-			ease: Power2.easeInOut,
-			duration: 1
-		});
-		gsap.to(this.defaults.scale, {
-			force: Maths.maxminRandom(300, 10),
-			amplitude: Maths.maxminRandom(1000, 100),
-			period: Maths.maxminRandom(50000, 1000),
-			z_dif: Maths.maxminRandom(0.5, 0.05),
-			ease: Power2.easeInOut,
-			duration: 1
-		});
-		gsap.to(this.defaults.particles, {
-			size: Maths.maxminRandom(50, 4),
-			amplitude: Maths.maxminRandom(1000, 100),
-			period: Maths.maxminRandom(50000, 1000),
-			z_dif: Maths.maxminRandom(0.5, 0.05),
-			ease: Power2.easeInOut,
-			duration: 1
-		});*/
-
 		setTimeout(()=> {this.randomValues()}, Maths.maxminRandom(60, 30) * 100);
 	}
 
@@ -407,7 +396,8 @@ export default class Particles {
 	}
 
 	checkCursorDistance(__position, __particle, __scale, __rotation, dummy) {
-		
+		if(this.is404) return;
+
 		const p = {
 			x: __particle.x,
 			y: __particle.y,

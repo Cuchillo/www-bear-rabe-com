@@ -47,7 +47,8 @@ export default class WebGLSketch {
 		this.renderer = new WebGLRenderer({
 			canvas: this.container,
 			antialias: this.defaults.antialias,
-			alpha: this.defaults.alpha
+			alpha: this.defaults.alpha,
+			preserveDrawingBuffer: true
 		});
 
 		this.size.set(Metrics.WIDTH, Metrics.HEIGHT);
@@ -155,6 +156,32 @@ export default class WebGLSketch {
 
 		this.camera.updateProjectionMatrix();
 	}
+
+	saveImage(__name = "cuchillo") {
+        try {
+            const strMime = "image/jpeg";
+			const strMimeDown = "image/octet-stream";
+            const imgData = this.renderer.domElement.toDataURL(strMime);
+            this._saveFile(imgData.replace(strMime, strMimeDown), __name + ".jpg");
+        } catch (e) {
+            console.log(e);
+            return;
+        }
+
+    }
+
+    _saveFile (strData, filename) {
+        var link = document.createElement('a');
+        if (typeof link.download === 'string') {
+            document.body.appendChild(link); //Firefox requires the link to be in the body
+            link.download = filename;
+            link.href = strData;
+            link.click();
+            document.body.removeChild(link); //remove the link when done
+        } else {
+            location.replace(uri);
+        }
+    }
 
 	dispose () {}
 

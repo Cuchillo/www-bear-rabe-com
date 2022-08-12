@@ -1,10 +1,7 @@
-import { GetBy } from "../_app/cuchillo/core/Element";
 import { gsap, Power2 } from "gsap";
 import { Functions } from "../_app/cuchillo/utils/Functions";
-import { Ease } from "../_app/cuchillo/utils/Ease";
-import { Basics, isSmartphone } from "../_app/cuchillo/core/Basics";
+import { isSmartphone } from "../_app/cuchillo/core/Basics";
 import { Interaction } from "../_app/cuchillo/core/Interaction";
-import { Maths } from "../_app/cuchillo/utils/Maths";
 import InterfaceCanvas from "../_app/cuchillo/layout/InterfaceCanvas";
 import { Metrics } from "../_app/cuchillo/core/Metrics";
 import { Sizes } from "../_app/cuchillo/core/Sizes";
@@ -86,7 +83,6 @@ export default class VisorImage {
   }
 
   setupImages() {
-    
     PROJECTS.map(item => {
       const images = [];
 
