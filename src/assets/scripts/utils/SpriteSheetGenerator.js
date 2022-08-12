@@ -57,7 +57,7 @@ export default class SpriteSheetGenerator {
     this.call = __call;
 
     if(this.hasSpritesheet) {
-      this.laodTexture();
+      this.loadTexture();
     } else {
       this.nextImage();
     }
@@ -130,8 +130,13 @@ export default class SpriteSheetGenerator {
     });    
   }
 
-  static laodTexture() {
-    this.texture = new THREE.TextureLoader().load(GetBy.id("__spritesheet").getAttribute("href"), ()=> {
+  static loadTexture() {
+    const url = GetBy.id("__spritesheet").getAttribute("href");
+    const spritesheet = !isWebpSupported? url.replace(".webp", "") : url;
+
+    console.log(isWebpSupported,spritesheet)
+
+    this.texture = new THREE.TextureLoader().load(spritesheet, ()=> {
       this.call();
     });    
   }

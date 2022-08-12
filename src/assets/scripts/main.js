@@ -102,7 +102,7 @@ export default class Main {
   }
 
   static setup () {
-    SpriteSheetGenerator.start(IMAGES_PROJECTS, ()=> {
+    //SpriteSheetGenerator.start(IMAGES_PROJECTS, ()=> {
       this.setupEvents();
 
       if(!isDebug) {
@@ -110,7 +110,7 @@ export default class Main {
       } else {
         this.start();
       }
-    });
+    //});
   }
 
   static intro() {
