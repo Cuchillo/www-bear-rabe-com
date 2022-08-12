@@ -64,19 +64,19 @@ export default class Particles {
 			z_dif: 0.152,//0.807
 		},
 		scale: {
-			force:19,
+			force:34,
 			amplitude:174,
 			period: 40000,
 			z_dif: 0.163,//0.054
 		},
 		particles: {
 			total: 8000,
-			size: Metrics.parseSize("35fpx")//Metrics.parseSize("14fpx"),
+			size: Metrics.parseSize("2vw")//Metrics.parseSize("35fpx")//Metrics.parseSize("14fpx"),
 		},
 		pixels: {
 			snap: true,
 			porcentaje: 2,	
-			size: Metrics.parseSize("14fpx"),
+			size: Metrics.parseSize("1vw"),
 		},
 		container: {
 			scale: Metrics.parseSize("5.05fpx"),//Metrics.parseSize("4.4fpx"),
@@ -128,11 +128,12 @@ export default class Particles {
 			this.initGeometry();
 						
 			//SpriteSheetGenerator.dispose();
+			if(!this.is404) {
+				setTimeout(()=> {this.randomValues()},4000);
+			}
+
 			if(this.is404 || isDebug) {
-				this.defaults.container.scaleZ = 0;
 				DebugPane.init(this);
-			} else {
-				this.randomValues();
 			}
 		})
 	}
@@ -276,7 +277,7 @@ export default class Particles {
 			duration: 4
 		});
 		gsap.to(this.defaults.y, {
-			force: Maths.maxminRandom(80, 30),
+			force: Maths.maxminRandom(150, 30),
 			amplitude: Maths.maxminRandom(530, 400),
 			//period: Maths.maxminRandom(10, 1)/100,
 			//z_dif: Maths.maxminRandom(0.15, 0.05),

@@ -52,7 +52,6 @@ export default class Error404 extends Page {
 
       this._billboard.show(()=> {
         Main.scene.start();
-        BackgroundLogo.hide();
         BG.changePalette("primary", null, 0)
         Main.scene.show();
         Main.scene.showParticles();  

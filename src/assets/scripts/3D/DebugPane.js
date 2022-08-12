@@ -9,7 +9,7 @@ export default class DebugPane {
 
     static init(__item) {
         this.item = __item;
-        this.pane = new Pane({title: 'BEAR Options', expanded: true});
+        this.pane = new Pane({title: 'Ooooops!', expanded: true});
                         
         this.setupAnimation(__item.defaults.animation, ()=> {__item.reset();});
         this.setupContainer(__item.defaults.container, ()=> {__item.reset();});
@@ -110,7 +110,7 @@ export default class DebugPane {
     }
 
     static setupParticles(__data, __call) {
-        const subpane = this.pane.addFolder({   title: 'Particles' });
+        const subpane = this.pane.addFolder({   title: 'Particles', expanded: isDebug});
         const params = {
             total: __data.total
         }
@@ -136,7 +136,7 @@ export default class DebugPane {
     }
 
     static setupPixeles(__data, __call) {
-        const subpane = this.pane.addFolder({   title: 'Pixels' });
+        const subpane = this.pane.addFolder({   title: 'Pixels', expanded: isDebug});
         subpane.addInput(__data, 'snap',{label: 'Snap'});
         subpane.addInput(__data, 'porcentaje', {
             label: 'Quantity',
@@ -158,7 +158,7 @@ export default class DebugPane {
     }
 
     static setupContainer(__data, __call) {
-        const subpane = this.pane.addFolder({   title: 'Container' });
+        const subpane = this.pane.addFolder({   title: 'Container', expanded: isDebug});
 
         subpane.addInput(__data, 'scale', {
             label: 'Size',
@@ -184,7 +184,7 @@ export default class DebugPane {
     }
 
     static setupAxis(__data, __title) {
-        const subpane = this.pane.addFolder({   title: __title });
+        const subpane = this.pane.addFolder({   title: __title, expanded: isDebug});
        
         const step = __title === "Scale"? 0.01 : .1;
         const max = __title === "Scale"? 100 : 1000;
@@ -220,7 +220,7 @@ export default class DebugPane {
     }
 
     static setupObject(obj, __call) {
-        const subpane = this.pane.addFolder({   title: 'Object 3D' });
+        const subpane = this.pane.addFolder({   title: 'Object 3D', expanded: isDebug});
 
         
         const params = {

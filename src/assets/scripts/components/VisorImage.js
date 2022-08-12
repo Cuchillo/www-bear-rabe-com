@@ -55,7 +55,7 @@ export default class VisorImage {
   visor = new VisorImage__Image(this.ctx);
   images = [];
   projects = [];
-  isEnabled = true;
+  isEnabled = false;
   position = {
     x:0,
     y:0

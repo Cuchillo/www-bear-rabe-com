@@ -62,6 +62,8 @@ export default class Home extends Page {
         BackgroundLogo.setBlack();
         BackgroundLogo.setInverted();
         BackgroundLogo.show();
+
+        this._visor.isEnabled = true;
       });
 
     } else {
@@ -74,6 +76,8 @@ export default class Home extends Page {
       BackgroundLogo.setBlack();
       BackgroundLogo.setInverted();
       BackgroundLogo.show();
+
+      this._visor.isEnabled = true;
 
       setTimeout(()=> {
         this._billboard.show();
