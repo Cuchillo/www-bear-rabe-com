@@ -57,6 +57,10 @@
   flex-direction: row;
   flex: 0 0 auto;
 
+  @media (max-width: $smartphone) {
+    flex-direction: column;
+  }
+
   a {
     text-transform: lowercase;
   }
@@ -109,6 +113,28 @@
 
     a:not(:last-of-type) {
       margin-bottom: .4em;
+    }
+  }
+}
+
+@media (max-width: $smartphone) {
+  .header__nav > ul > li > .link-with-mask{
+    --width: var(--size-show);
+    --mask-scale: 0;
+    --bg-scale: 0;
+    --delay-bg: 0s;
+
+    > .text {
+      &::before,
+      &::after {
+          transform-origin: top left;
+      }
+    }
+
+    &:hover {
+      &.--open {
+        --bg-scale: 1;
+      }
     }
   }
 }
