@@ -81,7 +81,7 @@ export default class Particles {
 		container: {
 			scale: isSmartphone? Metrics.parseSize(".65vw") : Metrics.parseSize(".35vw"),
 			logoVisible: true,
-			scaleZ: 5,
+			scaleZ: 10,
 		}
 	}
 
