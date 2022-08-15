@@ -9,6 +9,8 @@ export default class DebugPane {
     static uniforms_image;
 
     static init(__item) {
+        return;
+        
         this.item = __item;
         this.pane = new Pane({title: 'Ooooops!', expanded: true});
                         

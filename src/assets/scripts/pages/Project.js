@@ -11,7 +11,7 @@ import { DataHolder } from '../DataHolder';
 import TextMaskedEffect from '../components/TextMaskedEffect';
 import { Scroll } from '../_app/cuchillo/scroll/Scroll';
 import Scrollbar from '../_app/cuchillo/scroll/Scrollbar';
-import { Basics, isMobile } from '../_app/cuchillo/core/Basics';
+import { Basics, isMobile, isSmartphone } from '../_app/cuchillo/core/Basics';
 import BarProject from '../components/BarProject';
 import Movable from '../components/Movable';
 import InterfaceCanvas from '../_app/cuchillo/layout/InterfaceCanvas';
@@ -49,7 +49,7 @@ export default class Project extends Page {
 
   //SHOW
   beforeShow() {
-    Scroll.init(Scroll.AXIS_Y, {domResize:this.container, smooth:!isMobile, multiplicator:1});
+    Scroll.init(Scroll.AXIS_Y, {domResize:this.container, smooth:!isSmartphone, multiplicator:1});
     Scroll.setScrollbar(new Scrollbar());
     Scroll.start();
   }

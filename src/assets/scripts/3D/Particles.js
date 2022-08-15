@@ -75,7 +75,7 @@ export default class Particles {
 		},
 		pixels: {
 			snap: true,
-			porcentaje: 2,	
+			porcentaje: .5,	
 			size: Metrics.parseSize("1vw"),
 		},
 		container: {
@@ -217,6 +217,14 @@ export default class Particles {
 			this.points[i].y *= this.defaults.container.scale;
 			this.points[i].z *= (this.defaults.container.scale * this.defaults.container.scaleZ);
 		}
+
+		/*this.points.sort((a, b) => {
+			return a.z - b.z;
+		});*/
+
+		this.points.sort((a, b) => {
+			return a.isPixel - b.isPixel;
+		});
 	}
 
 	initGeometry() {

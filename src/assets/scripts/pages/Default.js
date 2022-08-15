@@ -3,7 +3,7 @@ import Scrollbar from '../_app/cuchillo/scroll/Scrollbar';
 import Page from '../_app/cuchillo/pages/Page';
 import { ControllerPage } from '../_app/cuchillo/pages/ControllerPage';
 import Wrap from '../layout/Wrap';
-import { isMobile } from '../_app/cuchillo/core/Basics';
+import { isMobile, isSmartphone } from '../_app/cuchillo/core/Basics';
 import { Videos } from '../_app/cuchillo/components/Videos';
 import { Acordions } from '../_app/cuchillo/components/Acordions';
 import Forms from '../_app/cuchillo/forms/FormValidator';
@@ -20,7 +20,7 @@ export default class Default extends Page {
 
   //SHOW
   beforeShow() {
-    Scroll.init(Scroll.AXIS_Y, {domResize:this.container, smooth:!isMobile, multiplicator:1});
+    Scroll.init(Scroll.AXIS_Y, {domResize:this.container, smooth:!isSmartphone, multiplicator:1});
     Scroll.setScrollbar(new Scrollbar());
     Scroll.start();
   }

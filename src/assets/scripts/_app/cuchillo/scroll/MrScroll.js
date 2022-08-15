@@ -109,7 +109,7 @@ export default class MrScroll {
   }
 
   _check() {
-    const tempY = this.element === window?  window.pageYOffset : this.element.scrollTop;
+    const tempY = this._element === window?  window.pageYOffset : this._element.scrollTop;
 
     Scroll.isScrolling = true;
     Scroll.direction =  Scroll.y > -tempY? 1 : -1;

@@ -1,11 +1,20 @@
 
 .block-project-info {
+    --display: grid;
     --font-size: var(--font-size-base);
     --font-size-title: var(--font-size-base);
     --font-size-description: var(--font-size-xl);
     --padding-top: #{gridSize(12)};
     --padding-h: #{gridSize(1)};
     --padding-bottom: #{gridSize(12)};
+
+    @media (max-width: $smartphone) {
+        position: relative;
+        @include z-index(2);
+        --padding-top: 50vh;
+        --display: block;
+        --font-size-description: var(--font-size-l);
+    }
 }
 
 .block-project-info {
@@ -13,8 +22,7 @@
     min-height: 100vh;
     font-size: var(--font-size);
     padding: var(--padding-top) var(--padding-h) var(--padding-bottom) ;
-    padding-top: #{gridSize(12)};
-    display: grid;
+    display: var(--display);
     grid-template-columns: repeat(3, 1fr);
     column-gap: #{gridSize(1)};
 
@@ -28,6 +36,10 @@
 
     .col-text {
         grid-column: 1 / 4;
+    }
+
+    @media (max-width: $smartphone) {
+        display: block;
     }
 }
 

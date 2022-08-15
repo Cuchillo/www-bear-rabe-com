@@ -4,16 +4,20 @@
     --color: var(--primary-color);
     --bg: transparent;
     --font-size: var(--font-size-l);
+    --font-size-title: var(--font-size-xl);
+    
+    @media (max-width: $smartphone) {
+      --font-size-title: var(--font-size-l);
+    }
 }
 
-.header__title {
+#Header .header__title {
     @include z-index($z-index-header-title);
     position: fixed;
     width: var(--width);
     left: var(--grid);
     top: var(--grid);
-    --font-size: var(--font-size-xl)
-
+    --font-size: var(--font-size-title)
 }
 
 .header__nav {
