@@ -61,7 +61,7 @@ export default class Main {
   static scene = new Scene();
 
   static init () {
-    Basics.id = "w11p_v005"; // ID para cookies
+    Basics.id = "w11p_v007"; // ID para cookies
 
     Metrics.init(() => Main.resize()); // Tamaños y resize
     Keyboard.enable(); // ESC para cerrar ventana
