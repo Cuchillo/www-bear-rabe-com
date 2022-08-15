@@ -201,13 +201,10 @@ export default class Main {
     console.log('Font: Compagnon Roman by Juliette Duhé + Léa Pradine');
     console.log('⟶ https://velvetyne.fr/fonts/compagnon/');
     console.log('');
-    console.log('Text to ASCII');
-    console.log('⟶ https://patorjk.com/');
-    console.log('');
-    console.log('SVGOMG');
+    console.log('Tool: SVGOMG');
     console.log('⟶ https://jakearchibald.github.io/svgomg/');
     console.log('');
-    console.log('Favicon Generator');
+    console.log('Tool: Favicon Generator');
     console.log('⟶ https://realfavicongenerator.net');
   }
 

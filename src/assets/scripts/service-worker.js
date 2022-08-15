@@ -2,7 +2,7 @@
 
 // Incrementing CACHE_VERSION will kick off the install event and force previously cached
 // resources to be cached again.
-const URL = "www.mrcorrales.com"
+const URL = "bear-rabe.netlify.app"
 const CACHE_VERSION = 1;
 let CURRENT_CACHES = {
   offline: URL + CACHE_VERSION
