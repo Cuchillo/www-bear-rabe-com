@@ -6,7 +6,7 @@
         {% elif item.line.is_especial %}
             <span class="billboard-item --arrow">{{ item.line.text }}<span class="mask"></span></span>
         {% elif item.line.link %}
-            <a class="billboard-item link-with-label __link" href="{{ item.line.link.url }}">
+            <a class="billboard-item link-with-label __link" href="{{ item.line.link.url }}" target="_blank">
                 <span class="deco"><span class="icon">{{ item.line.deco_link }}</span></span>
                 <span class="text">{{ item.line.text | decoName | safe }}</span>
                 <span class="mask"></span>
