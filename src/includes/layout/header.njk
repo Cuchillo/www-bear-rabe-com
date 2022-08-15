@@ -25,7 +25,7 @@
           {% endfor %}
         {% endif %}
         {% for item in menu[renderData.language] %}
-          <li>
+          <li class="--open">
             {% set activeLink = 'aria-current=page' if page.url === item.url else "" %}
             <a class="link-with-mask --open" href="{{ item.url }}" {{ activeLink }} data-masked-link>
               <span class="deco">

@@ -118,11 +118,21 @@
 }
 
 @media (max-width: $smartphone) {
+  .header__nav > ul > li {
+    order: 2;
+    margin-top: .1em;
+
+    &.--open {
+      order: 1;
+    }
+  }
   .header__nav > ul > li > .link-with-mask{
     --width: var(--size-show);
     --mask-scale: 0;
     --bg-scale: 0;
     --delay-bg: 0s;
+
+    
 
     > .text {
       &::before,

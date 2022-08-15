@@ -12,6 +12,7 @@ import BG from '../_app/cuchillo/layout/Background';
 import { SliderScroll } from '../_app/cuchillo/components/SliderScroll';
 import VisorVideos from '../components/VisorVideo';
 import { isSmartphone } from '../_app/cuchillo/core/Basics';
+import { Scroll } from '../_app/cuchillo/scroll/Scroll';
 
 
 export default class About extends Default {
@@ -57,6 +58,7 @@ export default class About extends Default {
   hide__effect() {
     Header.hide();
     BackgroundLogo.hide();
+    Scroll.goto(0);
 
     this._billboard.hide();
     setTimeout(()=> {

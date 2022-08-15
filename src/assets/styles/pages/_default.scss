@@ -10,8 +10,8 @@
 
 @media (max-width: $smartphone) {
     .home {
-        //position: relative;
-        //@include z-index(3)
+        position: relative;
+        @include z-index(3)
     }
 
     .about .block-slider-photos {
