@@ -4,6 +4,10 @@
     --font-size: var(--font-size-xl);
     --color: var(--black);
     --padding: var(--grid);
+
+    @media (max-width: $smartphone) {
+        --font-size: var(--font-size-l);
+    }
 }
 
 .block-contact {

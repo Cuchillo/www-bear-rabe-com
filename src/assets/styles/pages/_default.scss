@@ -7,3 +7,14 @@
 .about .block-slider-photos {
     margin-top: 25vh;
 }
+
+@media (max-width: $smartphone) {
+    .about {
+        //position: relative;
+        //@include z-index(3)
+    }
+
+    .about .block-slider-photos {
+        margin-top: 5vh;
+    }
+}

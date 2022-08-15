@@ -4,21 +4,33 @@
     --ratio: 1;
     --scale: 1;
     --width: calc(38vw * var(--ratio));
+    --z-index: 3;
+    --z-transform: 3px;
+    --top:0;
+    --left:0;
+
+    @media (max-width: $smartphone) {
+        --width: 70vw;
+        --z-index: 2;
+        --z-transform: 2px;
+        --top:10vw;
+        --left:25vw;
+    }
 }
 
 #Header > .block-project-cover {
-    @include z-index($z-index-header-title);
+    z-index: var(--z-index);
     opacity: 0;
     transform: 
         scale3d(var(--scale), var(--scale), var(--scale))
-        translate3d(0,0,3px);
+        translate3d(0,0,var(--z-transform));
     --position: fixed;
 }
 
 .block-project-cover {
     position: var(--position);
-    top:0;
-    left:0;
+    top:var(--top);
+    left:var(--left);
     width: var(--width);
     height: auto;
     user-select: none;

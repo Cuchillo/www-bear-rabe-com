@@ -11,6 +11,7 @@ import Main from '../main';
 import BG from '../_app/cuchillo/layout/Background';
 import { SliderScroll } from '../_app/cuchillo/components/SliderScroll';
 import VisorVideos from '../components/VisorVideo';
+import { isSmartphone } from '../_app/cuchillo/core/Basics';
 
 
 export default class About extends Default {
@@ -35,8 +36,13 @@ export default class About extends Default {
 
   show__effect(__call) {
     Wrap.directShow();  
-    BackgroundLogo.setRabe();
-    BackgroundLogo.show();
+    
+    if(!isSmartphone) {
+      BackgroundLogo.setRabe();
+      BackgroundLogo.show();
+    } else {
+      BackgroundLogo.hide();
+    }
 
     setTimeout(()=> {
       this._billboard.show();

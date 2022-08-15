@@ -38,7 +38,7 @@ export default class Project extends Page {
     Header.title.subtext = String(this.data.id).padStart(2, "0"); 
     Header.title.text = this.data.title;
     TextMaskedEffect.setup();
-    Movable.start();
+    if(!isSmartphone) Movable.start();
     InterfaceCanvas.frameSkip = 1;
   }
 
