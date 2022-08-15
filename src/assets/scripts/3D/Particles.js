@@ -65,7 +65,7 @@ export default class Particles {
 		},
 		scale: {
 			force:34,
-			amplitude:174,
+			amplitude:298,
 			period: 40000,
 			z_dif: 0.163,//0.054
 		},
@@ -81,7 +81,7 @@ export default class Particles {
 		container: {
 			scale: isSmartphone? Metrics.parseSize(".65vw") : Metrics.parseSize(".35vw"),
 			logoVisible: true,
-			scaleZ: 10,
+			scaleZ: 5,
 		}
 	}
 
@@ -218,9 +218,9 @@ export default class Particles {
 			this.points[i].z *= (this.defaults.container.scale * this.defaults.container.scaleZ);
 		}
 
-		/*this.points.sort((a, b) => {
+		this.points.sort((a, b) => {
 			return a.z - b.z;
-		});*/
+		});
 
 		this.points.sort((a, b) => {
 			return a.isPixel - b.isPixel;
@@ -437,6 +437,15 @@ export default class Particles {
 	}
 
 	resize() {
+		if(this.is404) {
+			this.defaults.container.scale = Metrics.parseSize(".30vw");
+			this.defaults.particles.size = Metrics.parseSize("1vw");
+		} else {
+			this.defaults.particles.size = Metrics.parseSize("2vw");
+			this.defaults.pixels.size = Metrics.parseSize("1vw");
+			this.defaults.container.scale =  isSmartphone? Metrics.parseSize(".65vw") : Metrics.parseSize(".35vw");
+		}
+		this.reset();
 		/*if (!this.object3D) return;
 
 		const scale = this.webgl.fovHeight / this.height;

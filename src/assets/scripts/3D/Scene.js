@@ -46,6 +46,7 @@ export default class Scene extends WebGLSketch {
     }
 
     resize () {
+        if(this.particles) this.particles.resize();
         super.resize();
     }
 }
