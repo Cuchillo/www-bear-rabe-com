@@ -6,6 +6,12 @@
     --bottom: #{gridSize(3)};
     --height: calc(100% - var(--top) - var(--bottom));
 
+    @media (max-width: $smartphone) {
+        --top: #{gridSize(10)};
+        --bottom: #{gridSize(10)};
+        --height: calc(100vh - var(--top) - var(--bottom));
+    }
+
     position: fixed;
     @include z-index($z-index-header);
     top: var(--top);
