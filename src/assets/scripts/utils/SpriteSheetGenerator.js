@@ -133,9 +133,7 @@ export default class SpriteSheetGenerator {
   static loadTexture() {
     const url = GetBy.id("__spritesheet").getAttribute("href");
     const spritesheet = !isWebpSupported? url.replace(".webp", "") : url;
-
-    console.log(isWebpSupported,spritesheet)
-
+    
     this.texture = new THREE.TextureLoader().load(spritesheet, ()=> {
       this.call();
     });    

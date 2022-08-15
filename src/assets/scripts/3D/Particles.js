@@ -139,7 +139,6 @@ export default class Particles {
 	}
 
 	loadLogo(__call) {
-		console.log("LOAD")
 		const loader = new OBJLoader();
 		loader.load(
 			this.objUrl,
