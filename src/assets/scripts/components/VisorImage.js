@@ -1,6 +1,6 @@
 import { gsap, Power2 } from "gsap";
 import { Functions } from "../_app/cuchillo/utils/Functions";
-import { isSmartphone } from "../_app/cuchillo/core/Basics";
+import { isSmartphone, isWebpSupported } from "../_app/cuchillo/core/Basics";
 import { Interaction } from "../_app/cuchillo/core/Interaction";
 import InterfaceCanvas from "../_app/cuchillo/layout/InterfaceCanvas";
 import { Metrics } from "../_app/cuchillo/core/Metrics";
@@ -88,11 +88,10 @@ export default class VisorImage {
 
       item.images.map(item => {
         const dom = new Image();
-        dom.src = item.image;
 
         this.images.push({
           order: images.length,
-          load: () => {dom.src = item.image}
+          load: () => {dom.src = isWebpSupported? item.image + ".webp" : item.image;}
         });
   
         images.push({
