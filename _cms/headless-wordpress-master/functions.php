@@ -27,7 +27,7 @@ add_image_size( '@1x', 916);
 add_image_size( 'thumb', 200);
 add_image_size( 'thumb_mobile', 100);
 add_image_size( 'facebook', 1200, 630, true);
-add_image_size( 'twitter', 1200, 628, true);
+add_image_size( 'twitter', 600, 330, true);
 
 ///// OPTIONS
 if( function_exists('acf_add_options_page') ) {
