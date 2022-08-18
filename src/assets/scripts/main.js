@@ -103,9 +103,10 @@ export default class Main {
 
   static setup () {
     //SpriteSheetGenerator.start(IMAGES_PROJECTS, ()=> {
+      const is404 = GetBy.selector('[data-page]')[0].getAttribute("data-page") == "error404";
       this.setupEvents();
       this.scene.init(is404);
-      
+
       if(!isDebug) {
         setTimeout(()=>{this.intro()}, 1000); 
       } else {
@@ -126,8 +127,6 @@ export default class Main {
   }
 
   static start() {
-    const is404 = GetBy.selector('[data-page]')[0].getAttribute("data-page") == "error404";
-
     BG.changeBG("#000000", null, 0);
     BackgroundLogo.setWhite();
     SpriteSheetGenerator.start(IMAGES_PROJECTS, ()=> {
