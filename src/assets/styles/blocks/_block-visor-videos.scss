@@ -38,25 +38,3 @@
         background: radial-gradient(circle, rgba(0,0,0,0) 65%, rgba(0,0,0,.8) 100%);
     }
 }
-
-.block-visor-videos > .logo {
-    --top: calc(var(--grid) * 5);
-    --left: calc(var(--grid) * 1);
-    --width: calc(100% - var(--grid) * 2);
-    --height: calc(100% - var(--grid) * 10);
-    --color: var(--black);
-
-    position: absolute;
-    top: var(--top);
-    left: var(--left);
-    width: var(--width);
-    height: var(--height);
-    pointer-events: none;
-
-    svg {
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-        object-position: center;
-    }
-}

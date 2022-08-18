@@ -7,12 +7,11 @@ import { Maths } from "../_app/cuchillo/utils/Maths";
 
 
 export default class BackgroundPanels {
-  static maxSteps = 10;
-
   static options = {
-    steps: 8,
+    steps: 9,
     timeInit: 10,
     timeInc: 20,
+    times:  [40,120,120,80,80,160,120,120,160],//[40,40,120,80,80,160,120,120,160]
   }
   static panelCanvas = GetBy.id("SceneParticles")
   static panels = [...GetBy.selector("[data-bg-panel]")];
@@ -35,8 +34,11 @@ export default class BackgroundPanels {
     this._steps = 0;
     this._isInfinite = __isInfinite;
     this._call = __call;
-
+    
     if(!this._isRunning) {
+
+      Functions.arrayRandom(this.options.times);
+
       this.colors = Functions.arrayRandom(this.colors);
       this.positionsH = Functions.arrayRandom(this.positionsH);
       this.positionsV = Functions.arrayRandom(this.positionsV);
@@ -71,7 +73,7 @@ export default class BackgroundPanels {
       setTimeout(()=> {
         this.loop();
         if(this._call) this._call(this.colors[2]);
-      }, this.options.timeInit + (this.options.timeInc * this._cont));
+      }, this.options.times[this._cont]);
     } else {
       if(this._call) this._call(this.colors[2]);
       this._isRunning = false;

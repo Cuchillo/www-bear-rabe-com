@@ -131,10 +131,7 @@ export default class Main {
     BackgroundLogo.setWhite();
     SpriteSheetGenerator.start(IMAGES_PROJECTS, ()=> {
     
-      setTimeout(()=>{
-        /*BG.changeBG("#FFFFFF", null, 0);
-        BackgroundLogo.setBlack();
-        BackgroundLogo.setInverted();*/
+    setTimeout(()=>{
         ControllerPage.init(Wrap.mainholder);
       }, 200);
     });

@@ -129,7 +129,7 @@ export default class Particles {
 						
 			//SpriteSheetGenerator.dispose();
 			if(!this.is404) {
-				this.randomValues();
+				setTimeout(()=>this.randomValues(), 3500);
 			}
 
 			if(this.is404 || isDebug) {
@@ -207,9 +207,9 @@ export default class Particles {
 			this.points[i].z *= (this.defaults.container.scale * this.defaults.container.scaleZ);
 		}
 
-		/*this.points.sort((a, b) => {
+		this.points.sort((a, b) => {
 			return a.z - b.z;
-		});
+		});/*
 
 		this.points.sort((a, b) => {
 			return a.isPixel - b.isPixel;
@@ -266,7 +266,7 @@ export default class Particles {
 		if(this.is404) return;
 
 		gsap.to(this.defaults.x, {
-			force: Maths.maxminRandom(150, 100),
+			force: Maths.maxminRandom(250, 100),
 			amplitude: Maths.maxminRandom(530, 400),
 			//period: Maths.maxminRandom(10, 1)/100,
 			//z_dif: Maths.maxminRandom(0.15, 0.05),
@@ -290,7 +290,7 @@ export default class Particles {
 			duration: 4
 		});
 		
-		setTimeout(()=> {this.randomValues()}, Maths.maxminRandom(60, 30) * 100);
+		setTimeout(()=> {this.randomValues()}, Maths.maxminRandom(20, 1) * 1000);
 	}
 
 	update(delta) {
