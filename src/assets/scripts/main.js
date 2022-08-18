@@ -104,7 +104,8 @@ export default class Main {
   static setup () {
     //SpriteSheetGenerator.start(IMAGES_PROJECTS, ()=> {
       this.setupEvents();
-
+      this.scene.init(is404);
+      
       if(!isDebug) {
         setTimeout(()=>{this.intro()}, 1000); 
       } else {
@@ -130,7 +131,7 @@ export default class Main {
     BG.changeBG("#000000", null, 0);
     BackgroundLogo.setWhite();
     SpriteSheetGenerator.start(IMAGES_PROJECTS, ()=> {
-    this.scene.init(is404);
+    
       setTimeout(()=>{
         /*BG.changeBG("#FFFFFF", null, 0);
         BackgroundLogo.setBlack();

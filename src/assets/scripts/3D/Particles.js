@@ -129,7 +129,7 @@ export default class Particles {
 						
 			//SpriteSheetGenerator.dispose();
 			if(!this.is404) {
-				//setTimeout(()=> {this.randomValues()},4000);
+				this.randomValues();
 			}
 
 			if(this.is404 || isDebug) {
@@ -151,7 +151,9 @@ export default class Particles {
 					}
 				})
 
-				if(__call) __call();
+				if(__call) {
+					setTimeout(()=> __call(), 100);
+				}
 			},
 			function ( xhr ) {},
 			function ( error ) {}
