@@ -75,7 +75,7 @@ export default class Particles {
 		},
 		pixels: {
 			snap: true,
-			porcentaje: .5,	
+			porcentaje: 3,	
 			size: Metrics.parseSize("1vw"),
 		},
 		container: {
@@ -151,18 +151,6 @@ export default class Particles {
 					}
 				})
 
-				if(isDebug && false) {
-					const mat = new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true });
-					this.logoMesh.material = mat					
-					this.logoMesh.material.visible = this.defaults.logoVisible;
-
-					this.container.add(this.logoMesh);
-					DebugPane.setupObject(this.logoMesh, ()=> {
-						this.defaults.container.scale = this.logoMesh.scale.x;
-						this.reset();
-					});
-				}
-
 				if(__call) __call();
 			},
 			function ( xhr ) {},
@@ -217,13 +205,13 @@ export default class Particles {
 			this.points[i].z *= (this.defaults.container.scale * this.defaults.container.scaleZ);
 		}
 
-		this.points.sort((a, b) => {
+		/*this.points.sort((a, b) => {
 			return a.z - b.z;
 		});
 
 		this.points.sort((a, b) => {
 			return a.isPixel - b.isPixel;
-		});
+		});*/
 	}
 
 	initGeometry() {
