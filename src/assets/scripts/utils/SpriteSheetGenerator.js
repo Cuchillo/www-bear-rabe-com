@@ -6,7 +6,7 @@ import { Metrics } from '../_app/cuchillo/core/Metrics';
 export default class SpriteSheetGenerator {
   static canvas;
   static ctx;
-  static hasSpritesheet = true;
+  static hasSpritesheet = false;
   static cont = -1;
   static texture;
   static img;
@@ -38,6 +38,8 @@ export default class SpriteSheetGenerator {
       this.canvas.id = this.options.id;
       this.options.container.appendChild(this.canvas);
       
+      
+
       this.img = new Image();
       this.img.crossOrigin="anonymous";
       this.img.onload = () => {
@@ -81,6 +83,7 @@ export default class SpriteSheetGenerator {
       y: Math.floor(this.cont/this.limits.x) * this.options.size
     }
 
+    this.ctx.filter = 'contrast(1.1) saturate(125%)';
     this.ctx.drawImage(this.img, 
       this.position.x,
       this.position.y,
@@ -90,8 +93,6 @@ export default class SpriteSheetGenerator {
   }
 
   static drawSquare(__color, __isBG = false) {
-    console.log("drawSquare")
-
     this.position = {
       x: (this.cont%this.limits.x) * this.options.size,
       y: Math.floor(this.cont/this.limits.x) * this.options.size
@@ -99,8 +100,9 @@ export default class SpriteSheetGenerator {
 
     this.ctx.beginPath();
     this.ctx.fillStyle = __color;
+
     if(__isBG) {
-      this.ctx.fillStyle = "rgba(255, 255, 255, 0.1)";
+      this.ctx.fillStyle = "rgba(0, 0, 0, 0.2)";
       this.ctx.fillRect(
         0,
         0,
@@ -114,16 +116,15 @@ export default class SpriteSheetGenerator {
         this.options.size,
         this.options.size,
       );
+
+      this.cont++;
     }
-    
-    this.cont++;
   }
 
   static end() {
     this.drawSquare("#0000FF");
     this.drawSquare("#00FF00");
-    this.drawSquare("#959595");
-   
+    this.drawSquare("#959595");   
 
     this.texture = new THREE.TextureLoader().load(this.canvas.toDataURL(), ()=> {
       this.call();
