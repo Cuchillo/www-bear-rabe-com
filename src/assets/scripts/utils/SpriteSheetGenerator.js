@@ -6,7 +6,7 @@ import { Metrics } from '../_app/cuchillo/core/Metrics';
 export default class SpriteSheetGenerator {
   static canvas;
   static ctx;
-  static hasSpritesheet = false;
+  static hasSpritesheet = true;
   static cont = -1;
   static texture;
   static img;
@@ -38,8 +38,6 @@ export default class SpriteSheetGenerator {
       this.canvas.id = this.options.id;
       this.options.container.appendChild(this.canvas);
       
-      
-
       this.img = new Image();
       this.img.crossOrigin="anonymous";
       this.img.onload = () => {
@@ -83,7 +81,7 @@ export default class SpriteSheetGenerator {
       y: Math.floor(this.cont/this.limits.x) * this.options.size
     }
 
-    this.ctx.filter = 'contrast(1.1) saturate(125%)';
+    this.ctx.filter = 'contrast(1.1) saturate(131%)';
     this.ctx.drawImage(this.img, 
       this.position.x,
       this.position.y,
@@ -126,9 +124,38 @@ export default class SpriteSheetGenerator {
     this.drawSquare("#00FF00");
     this.drawSquare("#959595");   
 
+    if(!this.hasSpritesheet) {
+      this.saveImage();
+    }
+
     this.texture = new THREE.TextureLoader().load(this.canvas.toDataURL(), ()=> {
       this.call();
     });    
+  }
+
+  static saveImage(__name = "spritesheet") {
+    try {
+        const strMime = "image/jpeg";
+        const strMimeDown = "image/octet-stream";
+        const imgData = this.canvas.toDataURL(strMime);
+        this._saveFile(imgData.replace(strMime, strMimeDown), __name + ".jpg");
+      } catch (e) {
+          console.log(e);
+          return;
+      }
+  }
+
+  static _saveFile (strData, filename) {
+    var link = document.createElement('a');
+    if (typeof link.download === 'string') {
+        document.body.appendChild(link); //Firefox requires the link to be in the body
+        link.download = filename;
+        link.href = strData;
+        link.click();
+        document.body.removeChild(link); //remove the link when done
+    } else {
+        location.replace(uri);
+    }
   }
 
   static loadTexture() {
