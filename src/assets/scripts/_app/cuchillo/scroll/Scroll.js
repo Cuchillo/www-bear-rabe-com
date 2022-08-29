@@ -47,7 +47,6 @@ export const Scroll = {
       itemClass: options.itemClass,
       infinity: options.infinity || false,
       wheel: options.wheel || true,
-      hasSlowly: options.hasSlowly || false,
       hasZeroLimit: !!options.hasZeroLimit,
     };
 

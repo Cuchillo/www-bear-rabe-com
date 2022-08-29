@@ -43,7 +43,7 @@ export default class Particles {
 			isPixelMove: false,
 			gridSize: Metrics.GRIDSUB,
 			speed: 0.008,
-			scaleHover: 5,
+			scaleHover: 4,
 		},
 		x: {
 			force:119,//239,
@@ -154,7 +154,7 @@ export default class Particles {
 						
 			//SpriteSheetGenerator.dispose();
 			if(!this.is404) {
-				setTimeout(()=>this.randomValues(), 3500);
+				//setTimeout(()=>this.randomValues(), 3500);
 			}
 
 			if(this.is404 || isDebug) {
@@ -455,7 +455,7 @@ export default class Particles {
 			this.defaults.container.scale = Metrics.parseSize(".30vw");
 			this.defaults.particles.size = Metrics.parseSize("1vw");
 		} else {
-			this.defaults.particles.size = Metrics.parseSize("1.25vw");
+			this.defaults.particles.size = Metrics.parseSize("1.45vw");
 			this.defaults.pixels.size = Metrics.parseSize(".8vw");
 			this.defaults.container.scale =  this.getContainerSize();
 		}

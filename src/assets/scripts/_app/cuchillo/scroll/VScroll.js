@@ -305,7 +305,6 @@ export default class VScroll {
     this._setTarget(Maths.precission(this.target + __n, 2));
   }
 
-
   calcSpeed() {
     this.speed = Maths.precission((this.target - this.position) * this.options.easing,2);
 
@@ -392,7 +391,7 @@ export default class VScroll {
     this.width = this._container.offsetWidth;
     this.height = this._container.offsetHeight;
     this.p1 = this.p0;
-    
+
     for (let i = 0; i < this.total_items; i++) {
       this._items[i].resize(this.width, this.height);
     }
@@ -416,11 +415,7 @@ export default class VScroll {
     }
   }
 
-  /*
-
-  HIDE
-
-   */
+  /*HIDE*/
 
   hide() {
     this.enabled = false;
@@ -430,11 +425,7 @@ export default class VScroll {
     if (this.scrollbar) this.scrollbar.end();
   }
 
-  /*
-
-  DISPOSE
-
-   */
+  /*DISPOSE*/
 
   dispose() {
     this.enabled = false;
