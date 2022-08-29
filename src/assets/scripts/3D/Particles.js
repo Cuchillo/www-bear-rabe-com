@@ -290,6 +290,10 @@ export default class Particles {
 	randomValues() {
 		if(this.is404) return;
 
+		const n = Maths.maxminRandom(3,1);
+
+		if(n===1) {
+
 		gsap.to(this.defaults.x, {
 			force: Maths.maxminRandom(250, 100),
 			amplitude: Maths.maxminRandom(530, 400),
@@ -298,6 +302,9 @@ export default class Particles {
 			ease: Power2.easeInOut,
 			duration: 4
 		});
+
+	} else if(n===2) {
+
 		gsap.to(this.defaults.y, {
 			force: Maths.maxminRandom(150, 60),
 			amplitude: Maths.maxminRandom(530, 400),
@@ -306,6 +313,8 @@ export default class Particles {
 			ease: Power2.easeInOut,
 			duration: 4
 		});
+
+	}else {
 		gsap.to(this.defaults.z, {
 			force: Maths.maxminRandom(300, 100),
 			amplitude: Maths.maxminRandom(530, 400),
@@ -314,8 +323,9 @@ export default class Particles {
 			ease: Power2.easeInOut,
 			duration: 4
 		});
+	}
 		
-		setTimeout(()=> {this.randomValues()}, Maths.maxminRandom(20, 1) * 1000);
+		setTimeout(()=> {this.randomValues()}, Maths.maxminRandom(20, 1) * 100);
 	}
 
 	update(delta) {

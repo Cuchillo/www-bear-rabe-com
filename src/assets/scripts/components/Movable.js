@@ -41,7 +41,7 @@ export default class Movable {
     const xMod = this.container.offsetWidth;
     const yMod = this.container.offsetHeight;
     
-    this._position.x = Maths.maxminRandom(Metrics.WIDTH - xMod * .75, -xMod * .25);
+    this._position.x = Metrics.WIDTH*.4 + Maths.maxminRandom(Metrics.WIDTH*.6 - xMod * .75, -xMod * .25);
     this._position.y = Maths.maxminRandom(Metrics.HEIGHT - yMod * .75, Metrics.GRID * 4);
     this._position.z = 10;
 
