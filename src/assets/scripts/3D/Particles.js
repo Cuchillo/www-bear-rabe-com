@@ -154,7 +154,7 @@ export default class Particles {
 						
 			//SpriteSheetGenerator.dispose();
 			if(!this.is404) {
-				//setTimeout(()=>this.randomValues(), 3500);
+				setTimeout(()=>this.randomValues(), 3500);
 			}
 
 			if(this.is404 || isDebug) {
@@ -299,7 +299,7 @@ export default class Particles {
 			duration: 4
 		});
 		gsap.to(this.defaults.y, {
-			force: Maths.maxminRandom(150, 30),
+			force: Maths.maxminRandom(150, 60),
 			amplitude: Maths.maxminRandom(530, 400),
 			//period: Maths.maxminRandom(10, 1)/100,
 			//z_dif: Maths.maxminRandom(0.15, 0.05),
