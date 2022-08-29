@@ -6,7 +6,7 @@ import { Metrics } from '../_app/cuchillo/core/Metrics';
 export default class SpriteSheetGenerator {
   static canvas;
   static ctx;
-  static hasSpritesheet = true;
+  static hasSpritesheet = false;
   static cont = -1;
   static texture;
   static img;
