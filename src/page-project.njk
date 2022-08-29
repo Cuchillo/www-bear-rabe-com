@@ -48,18 +48,16 @@ layout: layout/default
       <h2 class="block-project-info__title masked-item __maskedText">{{ data.acf.info.type }}<span class="mask"></span></h2>
       <!-- PROJECT INFO -->
       <ul aria-label="Project info">
-        
         {% if data.acf.client.name %}
         <li class="masked-item __maskedText">
           <span class="label">for</span>
           <a class="link-with-label __link" href="{{ data.acf.client.url }}" target="_blank">
             <span class="deco"><span class="icon">@</span></span>
-            <span class="text">{{ data.acf.client.name }}</span>
+            <span class="text">{{ data.acf.client.name | split(" ", "_")}}</span>
           </a>
           <span class="mask"></span>
         </li>
         {% endif %}
-        
         {% if data.acf.place.name %}
         <li class="masked-item __maskedText">
           <span class="label">at</span>
