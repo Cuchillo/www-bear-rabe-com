@@ -43,7 +43,7 @@ export default class Particles {
 			isPixelMove: false,
 			gridSize: Metrics.GRIDSUB,
 			speed: 0.008,
-			scaleHover: 3,
+			scaleHover: 5,
 		},
 		x: {
 			force:119,//239,
@@ -64,24 +64,24 @@ export default class Particles {
 			z_dif: 0.152,//0.807
 		},
 		scale: {
-			force:34,
+			force:28,
 			amplitude:298,
 			period: 40000,
 			z_dif: 0.163,//0.054
 		},
 		particles: {
 			total: 8000,
-			size: Metrics.parseSize("2vw")//Metrics.parseSize("35fpx")//Metrics.parseSize("14fpx"),
+			size: Metrics.parseSize("1vw")//Metrics.parseSize("35fpx")//Metrics.parseSize("14fpx"),
 		},
 		pixels: {
 			snap: true,
-			porcentaje: 3,	
+			porcentaje: 2,	
 			size: Metrics.parseSize("1vw"),
 		},
 		container: {
-			scale: isSmartphone? Metrics.parseSize(".65vw") : Metrics.parseSize(".35vw"),
+			scale: this.getContainerSize(),
 			logoVisible: true,
-			scaleZ: 10,
+			scaleZ: 3,
 		}
 	}
 
@@ -106,6 +106,31 @@ export default class Particles {
 		this.container = new THREE.Object3D();
 
 		this.setupOptions();
+	}
+
+	getContainerSize() {
+		const dom = GetBy.id("Logos");
+
+		const max = {
+			x: 1380,
+			y: 508,
+			ratio: 1380/508
+		}
+
+		const actual = {
+			x: Metrics.WIDTH,
+			y: Metrics.HEIGHT,
+			ratio: dom.offsetWidth/dom.offsetHeight,
+		}
+
+		console.log(max.ratio, actual.ratio)
+
+		if(actual.ratio < max.ratio) {
+			return isSmartphone? Metrics.parseSize(".65vw") : Metrics.parseSize(".35vw")
+		} else {
+			return isSmartphone? Metrics.parseSize(".65vw") : Metrics.parseSize(".54vh")
+		}
+		
 	}
 
 	setupOptions() {
@@ -430,9 +455,9 @@ export default class Particles {
 			this.defaults.container.scale = Metrics.parseSize(".30vw");
 			this.defaults.particles.size = Metrics.parseSize("1vw");
 		} else {
-			this.defaults.particles.size = Metrics.parseSize("2vw");
-			this.defaults.pixels.size = Metrics.parseSize("1vw");
-			this.defaults.container.scale =  isSmartphone? Metrics.parseSize(".65vw") : Metrics.parseSize(".35vw");
+			this.defaults.particles.size = Metrics.parseSize("1vw");
+			this.defaults.pixels.size = Metrics.parseSize(".8vw");
+			this.defaults.container.scale =  this.getContainerSize();
 		}
 		this.reset();
 		/*if (!this.object3D) return;
