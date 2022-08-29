@@ -455,7 +455,7 @@ export default class Particles {
 			this.defaults.container.scale = Metrics.parseSize(".30vw");
 			this.defaults.particles.size = Metrics.parseSize("1vw");
 		} else {
-			this.defaults.particles.size = Metrics.parseSize("1vw");
+			this.defaults.particles.size = Metrics.parseSize("1.25vw");
 			this.defaults.pixels.size = Metrics.parseSize(".8vw");
 			this.defaults.container.scale =  this.getContainerSize();
 		}

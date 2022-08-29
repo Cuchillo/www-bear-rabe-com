@@ -49,7 +49,7 @@ export default class Project extends Page {
 
   //SHOW
   beforeShow() {
-    Scroll.init(Scroll.AXIS_Y, {domResize:this.container, smooth:!isSmartphone, multiplicator:1});
+    Scroll.init(Scroll.AXIS_Y, {domResize:this.container, smooth:!isSmartphone, multiplicator:1, hasZeroLimit:true});
     Scroll.setScrollbar(new Scrollbar());
     Scroll.start();
   }

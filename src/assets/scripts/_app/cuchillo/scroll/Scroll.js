@@ -48,6 +48,7 @@ export const Scroll = {
       infinity: options.infinity || false,
       wheel: options.wheel || true,
       hasSlowly: options.hasSlowly || false,
+      hasZeroLimit: !!options.hasZeroLimit,
     };
 
     if(this.options.smooth) {

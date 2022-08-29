@@ -102,7 +102,8 @@ export default class VScroll {
       itemClass: options.itemClass || VScroll_Item,
       wheel: options.wheel === undefined ? true : options.wheel,
       isMain: options.isMain || true,
-      hasLimits: options.hasLimits !== false
+      hasLimits: options.hasLimits !== false,
+      hasZeroLimit: !!options.hasZeroLimit,
     };
 
     this._call = (e) => {
@@ -304,68 +305,82 @@ export default class VScroll {
     this._setTarget(Maths.precission(this.target + __n, 2));
   }
 
-  /*
 
-  LOOP
+  calcSpeed() {
+    this.speed = Maths.precission((this.target - this.position) * this.options.easing,2);
 
-   */
-
-  loop(__force = false) {
-    if (this.target !== this.position || __force) {
-      this.speed = Maths.precission(
-        (this.target - this.position) * this.options.easing,
-        2
-      );
-      if (this.speed === 0) this.position = this.target;
-
-      ///SI TIENE LIMITES HACE UN EASE BASICO AL LLEGAR AL LIMITE
-      if (this.options.hasLimits) {
-        if (this.speed > 0) {
-          this.speed = Math.min(this.speed, -this.position / 10);
-        } else if (this.speed < 0) {
-          //SCROLL DOWN
-          this.speed = Math.max(this.speed, (this.p1 - this.position) / 10);
-        }
-      }
-
-      this.position = Maths.precission(this.position + this.speed, 2);
-
-      Scroll[this._axis] = this.position;
-
-      for (let i = 0; i < this.total_items; i++) {
-        this._items[i][this._axis] = this.position;
-      }
-
-      this.progress = this.position === 0 ? 0 : this.position / this.p1;
-
-      if (this.scrollbar) {
-        this.scrollbar.update(this.progress);
-      }
-
-      if (this.options.wheel && this.options.isMain) {
-        Scroll.speed = this.speed;
-      }
-    } else if (this.target === this.p1 && this.hasLinkNext) {
-      this._items[this.total_items - 1][this._axis] = this.position;
-    } else {
-      if (this.options.wheel) {
-        Scroll.isScrolling = false;
+    ///SI TIENE LIMITES HACE UN EASE BASICO AL LLEGAR AL LIMITE
+    if (this.options.hasLimits) {
+      if (this.speed > 0) {
+        this.speed = Math.min(this.speed, -this.position / 10);
+      } else if (this.speed < 0) {
+        //SCROLL DOWN
+        this.speed = Math.max(this.speed, (this.p1 - this.position) / 10);
       }
     }
   }
 
-  /*
+  calcPositionSpeed() {
+    if (this.speed === 0) 
+      this.position = this.target;
+    else if(this.options.hasZeroLimit) 
+      this.position = Math.min(0, this.position + this.speed);
+    else 
+      this.position = this.position + this.speed;
+  }
 
-  RESIZES
+  calcProgress() {
+    this.progress = this.position === 0 ? 0 : this.position / this.p1;
+  }
 
-   */
+  updateScrollValues() {
+    if(this.options.isMain) {
+      Scroll[this._axis] = this.position;
+
+      if (this.options.wheel && this.options.isMain) {
+        Scroll.speed = this.speed;
+      }
+    }
+  }
+
+  updateItemsPosition() {
+    for (let i = 0; i < this.total_items; i++) {
+      this._items[i][this._axis] = this.position;
+    }
+  }
+
+  updateScrollbar() {
+    if (this.scrollbar) {
+      this.scrollbar.update(this.progress);
+    }
+  }
+  
+  /*LOOP*/
+
+  loop(__force = false) {
+    if (this.target !== this.position || __force) {      
+      this.calcSpeed();
+      this.calcPositionSpeed();
+      this.calcProgress();
+      this.updateScrollValues();
+      this.updateItemsPosition();
+      this.updateScrollbar();
+
+    } else if (this.target === this.p1 && this.hasLinkNext) {
+      this._items[this.total_items - 1][this._axis] = this.position;
+    
+    } else if (this.options.wheel) {
+      Scroll.isScrolling = false;
+    }
+  }
+
+  /*RESIZES*/
 
   resetPositions() {
     this.p1 = this.p0;
 
     for (let i = 0; i < this.total_items; i++) {
       let temp = this._items[i]._item[this._offsetAxis];
-      //this._items[i].setPositions(0, temp);
       this.p1 = Math.max(this.p1, temp + this._items[i][this._measure]);
     }
 
@@ -376,8 +391,8 @@ export default class VScroll {
   resize() {
     this.width = this._container.offsetWidth;
     this.height = this._container.offsetHeight;
-
     this.p1 = this.p0;
+    
     for (let i = 0; i < this.total_items; i++) {
       this._items[i].resize(this.width, this.height);
     }
