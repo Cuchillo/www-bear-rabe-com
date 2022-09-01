@@ -471,7 +471,7 @@ export default class Particles {
 			this.defaults.pixels.size = Metrics.parseSize(".8vw");
 			this.defaults.container.scale =  this.getContainerSize();
 			this.defaults.cursor.radius = Metrics.parseSize("300fpx");
-			this.defaults.cursor.limits.max = Metrics.parseSize("150fpx");
+			this.defaults.cursor.limits.max = Metrics.parseSize("200fpx");
 			this.defaults.cursor.limits.min = Metrics.parseSize("100fpx");
 		}
 		this.reset();
