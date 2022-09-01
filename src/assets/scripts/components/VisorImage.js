@@ -127,9 +127,9 @@ export default class VisorImage {
 
     if(this.position.x != x || this.position.y != y) {
       this.changeImage();
-      this.visor.x = (x * Metrics.GRID) + (Metrics.GRID *.5);
-      this.visor.y = (y * Metrics.GRID) + (Metrics.GRID *.5);           
-      this.position = isSmartphone? { x:Metrics.CENTER_X, y:Metrics.CENTER_Y} : { x:x, y:y}
+      this.visor.x = isSmartphone? Metrics.CENTER_X : (x * Metrics.GRID) + (Metrics.GRID *.5);
+      this.visor.y = isSmartphone? Metrics.CENTER_Y : (y * Metrics.GRID) + (Metrics.GRID *.5);           
+      this.position = { x:x, y:y}
     }
 
     this.visor.loop();   
