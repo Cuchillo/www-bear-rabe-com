@@ -22,18 +22,15 @@
   {# Open graph related #}
   <meta property="og:title" content="{{ title }}" />
   <meta property="og:type" content="{{ type }}" />
-  <meta property="og:url" content="{{ url }}" />
   <meta property="og:image" content="{% social image %}" />
   <meta property="og:site_name" content="{{ name }}" />
   <meta property="og:description" content="{{ description }}" />
 
   {# Twitter #}
   <meta property="twitter:card" content="summary_large_image">
-  <meta property="twitter:url" content="{{ url }}" />
   <meta property="twitter:title" content="{{ title }}" />
   <meta property="twitter:description" content="{{ description }}" />
   <meta property="twitter:image" content="{% social image_twitter %}" />
-
 
   {# FAVICONS #}
   {% include "layout/_favicons.njk" %}

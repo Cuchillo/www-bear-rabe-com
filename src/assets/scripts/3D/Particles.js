@@ -28,12 +28,16 @@ export default class Particles {
 				x:0,
 				y:0
 			},
-			radius: Metrics.parseSize("200fpx"),
+			radius: Metrics.parseSize("300fpx"),
 			rectangle: {
 				x0: 0,
 				x1: 0,
 				y0: 0,
 				y1: 0
+			},
+			limits: {
+				max: Metrics.parseSize("250fpx"),
+				min: Metrics.parseSize("100fpx"),
 			}
 		},
 		animation: {
@@ -439,7 +443,7 @@ export default class Particles {
 
 		if(Maths.isInsideRectagle(p, this.defaults.cursor.rectangle) && __particle.movable) {
 			const distance = Maths.lineDistance(p, this.defaults.cursor.position);
-			if(distance < 150 && distance > 100) {
+			if(distance < this.defaults.cursor.limits.max && distance > this.defaults.cursor.limits.min) {
 				__position.z = 0;
 				__particle.fixed = true;
 				__particle.scaleMax = this.defaults.animation.scaleHover;
@@ -468,6 +472,9 @@ export default class Particles {
 			this.defaults.particles.size = Metrics.parseSize("1.45vw");
 			this.defaults.pixels.size = Metrics.parseSize(".8vw");
 			this.defaults.container.scale =  this.getContainerSize();
+			this.defaults.cursor.radius = Metrics.parseSize("300fpx");
+			this.defaults.cursor.limits.max = Metrics.parseSize("150fpx");
+			this.defaults.cursor.limits.min = Metrics.parseSize("100fpx");
 		}
 		this.reset();
 		/*if (!this.object3D) return;
