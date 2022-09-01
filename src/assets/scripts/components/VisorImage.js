@@ -40,7 +40,7 @@ class VisorImage__Image {
     
     this.ctx.beginPath();
     if(isSmartphone) {
-      this.ctx.drawImage(this.image, this.x - this.width * .5, this.y - this.height * 1.1, this.width, this.height);
+      this.ctx.drawImage(this.image, this.x - this.width * .5, this.y - this.height * .5, this.width, this.height);
     } else {
       this.ctx.drawImage(this.image, this.x - this.width * .5, this.y - this.height * .5, this.width, this.height);
     }
