@@ -163,7 +163,7 @@ export default class VisorImage {
   }
 
   resize() {
-    this.maxSize = isSmartphone? Metrics.GRID * 20 : Metrics.GRID * 10;
+    this.maxSize = isSmartphone? Metrics.GRID * 35 : Metrics.GRID * 10;
     this.setupSize();
   }
 }
