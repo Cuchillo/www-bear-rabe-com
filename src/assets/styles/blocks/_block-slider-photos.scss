@@ -32,6 +32,11 @@
         align-items: flex-end;
         flex-wrap: nowrap;
     }
+
+    cursor: grab;
+    &:active {
+        cursor: grabbing;
+    }
 }
 
 .block-slider-photos__item:empty {

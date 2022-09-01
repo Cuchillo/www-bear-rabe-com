@@ -58,8 +58,6 @@ export default class VisorVideos {
   }
 
   preload() {
-    console.log("Preload", this.actual)
-
     this._preloader.pause();
     this.isPreloaded = false;
     this._preloader.setAttribute("src", this.videos[this.actual]);

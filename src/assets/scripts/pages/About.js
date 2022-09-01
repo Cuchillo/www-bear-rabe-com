@@ -25,12 +25,12 @@ export default class About extends Default {
     super();
     this._visorVideos = new VisorVideos(GetBy.class("__blockVideos", this.container)[0]);
     this._billboard = new BillboardText(GetBy.class("__billboard", this.container)[0]);
-    this._slider = new SliderScroll(document.getElementById("SliderPhotos"), {
+    /*this._slider = new SliderScroll(document.getElementById("SliderPhotos"), {
         onDragStart: () => { },
         onDragEnd: () => { },
         interaction: true,
         hasScrollbar: false
-    });
+    });*/
 
     this._visorVideos.play();
   }
@@ -71,7 +71,7 @@ export default class About extends Default {
   //DISPOSE
   dispose() {
     Main.scene.stop();
-    this._slider.dispose();
+    //this._slider.dispose();
     this._billboard.dispose();
     this._visorVideos.dispose();
     super.dispose();
@@ -80,14 +80,17 @@ export default class About extends Default {
   //RESIZE
   resize() {
     super.resize();
-    this._slider.resize();
+   // this._slider.resize();
   }
 
   //LOOP
   loop() {
     if(this._isActive) {
       super.loop();
-      this._slider.loop();
+
+     // this._slider.step(Scroll.speed * 5);
+
+      //this._slider.loop();
       this._visorVideos.loop();
     }
   }

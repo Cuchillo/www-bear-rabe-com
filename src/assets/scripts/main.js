@@ -42,6 +42,7 @@ import Header from './layout/Header';
 
 import { ScrollItem__SliderScrollHorizontal } from './scroll/ScrollItem__SliderScrollHorizontal';
 import { ScrollItem__WebGLSketch } from './scroll/ScrollItem__WebGLSketch';
+import { ScrollItem__SliderAbout } from './scroll/ScrollItem__SliderAbout';
 
 
 import { MaskedLinks } from "./components/MaskedLinks";

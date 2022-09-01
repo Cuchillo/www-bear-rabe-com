@@ -124,6 +124,10 @@ export class SliderScroll {
     this.goto_percetage(Math.max(this.actual - 1, 0) * this._step);
   }
 
+  step(__step) {
+    this._scroll.gotoStep(__step)
+  }
+
   goto_percetage(__p) {
     this._scroll.goto_percetage(__p);
   }
