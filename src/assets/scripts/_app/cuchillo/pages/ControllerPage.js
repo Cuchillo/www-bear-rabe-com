@@ -205,7 +205,6 @@ export const ControllerPage = {
       twitter: {
         title:GetBy.selector('[property="twitter:title"]', xmlDoc.documentElement)[0].getAttribute("content"),
         card:GetBy.selector('[property="twitter:card"]', xmlDoc.documentElement)[0].getAttribute("content"),
-        url:GetBy.selector('[property="twitter:url"]', xmlDoc.documentElement)[0].getAttribute("content"),
         description:GetBy.selector('[property="twitter:description"]', xmlDoc.documentElement)[0].getAttribute("content"),
         image:GetBy.selector('[property="twitter:image"]', xmlDoc.documentElement)[0].getAttribute("content"),
       },
@@ -232,7 +231,6 @@ export const ControllerPage = {
     /* TWITTER */
     document.querySelector('meta[property="twitter:title"]').setAttribute("content", __data.twitter.title);
     document.querySelector('meta[property="twitter:card"]').setAttribute("content", __data.twitter.card);
-    document.querySelector('meta[property="twitter:url"]').setAttribute("content", __data.twitter.url);
     document.querySelector('meta[property="twitter:description"]').setAttribute("content", __data.twitter.description);
     document.querySelector('meta[property="twitter:image"]').setAttribute("content", __data.twitter.image);
     /* LANGS */

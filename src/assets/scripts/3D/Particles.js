@@ -127,8 +127,6 @@ export default class Particles {
 			ratio: dom.offsetWidth/dom.offsetHeight,
 		}
 
-		console.log(max.ratio, actual.ratio)
-
 		if(actual.ratio < max.ratio) {
 			return isSmartphone? Metrics.parseSize(".65vw") : Metrics.parseSize(".35vw")
 		} else {
