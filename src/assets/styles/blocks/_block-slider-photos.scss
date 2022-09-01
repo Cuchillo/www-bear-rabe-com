@@ -1,9 +1,9 @@
 @use "sass:math";
 
 .block-slider-photos {
-    --width-slide: 30vw;
+    --width-slide: 45vw;
     --height-slide: auto;
-    --width-slide-empty: 60vw;
+    --width-slide-empty: 80vw;
     --gap: 0;
 
     @media (max-width: $smartphone) {
