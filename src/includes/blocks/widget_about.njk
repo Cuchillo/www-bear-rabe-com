@@ -15,11 +15,12 @@
     <section id="SliderPhotos" class="block-slider-photos" scroll-item data-class="slider-about">
         <div class="holder __holder">
             <div class="block-slider-photos__item" scroll-slider-item></div>
-            {% for item in data.images %}
+            {% for image in data.images %}
                 <div class="block-slider-photos__item" scroll-slider-item>
-                    <div class="image">
-                        {% img item %}
-                    </div>
+                    
+                        <svg viewbox="0 0 {{ image.sizes['@1x-width'] }} {{ image.sizes['@1x-height'] }}"></svg>
+                        {% img image %}
+                   
                 </div>
             {% endfor %}
             <div class="block-slider-photos__item" scroll-slider-item></div>
