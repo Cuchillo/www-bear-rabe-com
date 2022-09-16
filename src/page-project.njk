@@ -1,10 +1,10 @@
 ---
 renderData:
-  h1: "{{ data.title.rendered }}"
+  h1: "{{ data.title.rendered | safe | remove_ampersand }}"
   id: "{{ data.id }}"
   language: "{{ data.language }}"
-  title: "{{ data.acf.seo.title }}"
-  description: "{{ data.acf.seo.description }}"
+  title: "{{ data.title.rendered | safe | remove_ampersand }}"
+  description: "{{ data.acf.seo.description | safe }}"
   image: "{{ data.acf.images[0].sizes['facebook'] }}"
   image_twitter: "{{ data.acf.images[0].sizes['twitter'] }}"
   url: "{{ data.link }}"
@@ -18,12 +18,6 @@ layout: layout/default
 
 {% set __page = 'project' %}
 {% set __palette = data.acf.options.palette or 'primary' %}
-
-{# {% import "flexible.njk" as FlexibleContent with context %}
-{% import "components/header_project.njk" as HeaderProject with context %}
-
-{% import "components/next_project.njk" as NextProject with context %}
-{% import "components/info_project.njk" as InfoProject with context %} #}
 
 <article
   class='default project'

@@ -37,4 +37,5 @@ module.exports = {
         });
         return newText;
     },
+    remove_ampersand: (text) => text.replace("&#038;", "")
 };
