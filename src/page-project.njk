@@ -87,26 +87,34 @@ layout: layout/default
       </ul>
     </div>
     <div class="col-right" scroll-item data-speed="1.1">
-      <h2 class="block-project-info__title masked-item __maskedText">FEATURED ON<span class="mask"></span></h2>
-      <!-- FEATURED -->
-      <ul aria-label="Featured on">
-        {% for item in data.acf.featured %}
-          <li class="masked-item __maskedText">
-            {% if loop.index < 10 %}
-              {% set cont = '0' +  loop.index %}
-            {% else %}
-              {% set cont = '' +  loop.index + ''%}
-            {% endif %}
-            <a class="block-project-info__a" href="{{ item.url }}" target="_blank">
-              <div class="title-with-label --show">
-                <span class="deco"><span class="icon">{{ cont | labelDeco | safe }}</span></span>
-                <span class="text">{{ item.text }}</span>
-              </div>
-            </a>
-            <span class="mask"></span>
-          </li>
-        {% endfor %}
-      </ul>
+      {% if data.acf.featured | length > 0 %}
+        <h2 class="block-project-info__title masked-item __maskedText">FEATURED ON<span class="mask"></span></h2>
+        <!-- FEATURED -->
+        <ul aria-label="Featured on">
+          {% for item in data.acf.featured %}
+            <li class="masked-item __maskedText">
+              {% if loop.index < 10 %}
+                {% set cont = '0' +  loop.index %}
+              {% else %}
+                {% set cont = '' +  loop.index + ''%}
+              {% endif %}
+              <a class="block-project-info__a" href="{{ item.url }}" target="_blank">
+                <div class="title-with-label --show">
+                  <span class="deco"><span class="icon">{{ cont | labelDeco | safe }}</span></span>
+                  <span class="text">{{ item.text }}</span>
+                </div>
+              </a>
+              <span class="mask"></span>
+            </li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+      {% if data.acf.description_large %}
+        <h2 class="block-project-info__title masked-item __maskedText">DESCRIPTION<span class="mask"></span></h2>
+        <div class="block-project-info__description-large">
+          {{ data.acf.description_large | safe }}
+        </div>
+      {% endif %}
     </div>
      {% if data.acf.description %}
       <div class="col-text" scroll-item>

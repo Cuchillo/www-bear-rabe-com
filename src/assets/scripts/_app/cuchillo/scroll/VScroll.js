@@ -408,6 +408,6 @@ export default class VScroll {
     this._items = [];
     this.scroller.destroy();
 
-    this.resizeObserver.disconnect();
+    if(this.resizeObserver) this.resizeObserver.disconnect();
   }
 }
