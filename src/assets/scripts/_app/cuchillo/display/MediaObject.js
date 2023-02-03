@@ -24,12 +24,17 @@ export default class MediaObject {
 
     get src() {
       const webp = isWebpSupported && this.isWebp? ".webp" : "";
-      return this.sizes[this.size] + webp;
+      return this.sizes[this.size] ? this.sizes[this.size] + webp : null;
     }
 
     get size() {
-        let __size = Math.min(this.sizes.length, Math.floor((this.item.offsetWidth * Sizes.RATIO)/this.width * .85));
-        return __size > 1? __size-1 : 0;
+        const w = Math.min(this.sizes.length, Math.ceil((this.item.offsetWidth * Sizes.RATIO) / this.width * 1));
+        const h = Math.min(this.sizes.length, Math.ceil((this.item.offsetHeight * Sizes.RATIO) / this.height * 1));
+        let __size = Math.max(w,h);
+
+        console.log(__size)
+
+        return __size > 1 ? __size - 1 : 0;
     }
 
     get type() {
