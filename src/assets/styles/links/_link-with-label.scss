@@ -26,6 +26,10 @@
     font-size: var(--font-size);
     padding-left: var(--width-deco);
     white-space: nowrap;
+
+    &[href=""] {
+        pointer-events: none;
+    }
     
     &.--multiline {
         white-space: normal;

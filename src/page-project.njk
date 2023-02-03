@@ -98,7 +98,7 @@ layout: layout/default
               {% else %}
                 {% set cont = '' +  loop.index + ''%}
               {% endif %}
-              <a class="block-project-info__a" href="{{ item.url }}" target="_blank">
+              <a class="block-project-info__a" href="{{ item.url }}" target="_blank" rel="nofollow">
                 <div class="title-with-label --show">
                   <span class="deco"><span class="icon">{{ cont | labelDeco | safe }}</span></span>
                   <span class="text">{{ item.text }}</span>
