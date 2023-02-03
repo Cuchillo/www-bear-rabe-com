@@ -26,16 +26,12 @@
     grid-template-columns: repeat(3, 1fr);
     column-gap: #{gridSize(1)};
 
-    mix-blend-mode: difference;
-
     .col-left {
         grid-column: 1 / 1;
-       // text-shadow: 1px 1px 0px rgba(255,255,255,.4);
     }
 
     .col-right {
         grid-column: 2 / 4;
-       // text-shadow: 1px 1px 0px rgba(255,255,255,.4);
     }
 
     .col-text {
