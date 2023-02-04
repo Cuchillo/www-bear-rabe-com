@@ -2,9 +2,9 @@ const timestamp = new Date();
 
 module.exports = {
     lang: "es",
-    name: "Bear",
-    title: "Bear",
-    description: "Somos un estudio de arquitectura de corte disruptivo formado por Iñigo Berasategui y Ane Arce",
+    name: "BeAr Architects",
+    title: "BeAr Architects",
+    description: "BeAr is an architecture office based in Bilbao that explores the possibilities of architecture as a discursive practice. Directed by Ane Arce and Iñigo Berasategui",
     type: "website",
     image: "/assets/social/facebook-1200x630.jpg",
     image_twitter: "/assets/social/twitter-600x330.jpg",
