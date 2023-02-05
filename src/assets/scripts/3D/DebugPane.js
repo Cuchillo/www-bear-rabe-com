@@ -78,9 +78,9 @@ export default class DebugPane {
         });
         this.pane.addInput(__data, 'finePosition', {
             label: 'Fine',
-            step: .1,
+            step: .01,
             min: 0,
-            max: 1000,
+            max: 100,
         });
 
         if(isDebug) {
@@ -165,7 +165,7 @@ export default class DebugPane {
     }
 
     static setupContainer(__data, __call) {
-        const subpane = this.pane.addFolder({   title: 'Container', expanded: isDebug});
+        const subpane = this.pane.addFolder({   title: 'Box', expanded: isDebug});
 
         subpane.addInput(__data, 'scale', {
             label: 'Size',
