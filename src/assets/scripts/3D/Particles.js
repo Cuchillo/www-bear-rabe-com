@@ -45,7 +45,7 @@ export default class Particles {
 			hasAnimation: true,
 			finePosition: 500,
 			isPixelMove: false,
-			gridSize: Metrics.GRIDSUB,
+			gridSize: 10,//Metrics.GRIDSUB,
 			speed: 0.008,
 			scaleHover: 4,
 		},
