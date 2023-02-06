@@ -25,6 +25,10 @@
         scale3d(var(--scale), var(--scale), var(--scale))
         translate3d(0,0,var(--z-transform));
     --position: fixed;
+
+    figure.--hide {
+        display: none;
+    }
 }
 
 .block-project-cover {

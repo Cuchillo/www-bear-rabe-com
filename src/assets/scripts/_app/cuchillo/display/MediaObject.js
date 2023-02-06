@@ -15,7 +15,7 @@ export default class MediaObject {
     height;
     isImportant = false;
     isStatic = false;
-    isWebp = true;
+    static isWebp = true;
 
 //==================================================================================================================
 //          GETTER SETTER
@@ -32,13 +32,27 @@ export default class MediaObject {
         const h = Math.min(this.sizes.length, Math.ceil((this.item.offsetHeight * Sizes.RATIO) / this.height * 1));
         let __size = Math.max(w,h);
 
-        console.log(__size)
-
         return __size > 1 ? __size - 1 : 0;
     }
 
     get type() {
         return this._type;
+    }
+
+    static getSrc(__img) {
+        const webp = isWebpSupported && this.isWebp? ".webp" : "";
+
+        const width = __img.getAttribute("data-width")? Number(__img.getAttribute("data-width")) : Number(__img.getAttribute("width"));
+        const height = __img.getAttribute("data-height")? Number(__img.getAttribute("data-height")) : Number(__img.getAttribute("height"));
+        const sizes = __img.getAttribute("data-src")? __img.getAttribute("data-src").split(",") : [];
+
+        const w = Math.min(sizes.length, Math.ceil((__img.offsetWidth * Sizes.RATIO) / width * 1));
+        const h = Math.min(sizes.length, Math.ceil((__img.offsetHeight * Sizes.RATIO) /height * 1));
+
+        let __size = Math.max(w,h);
+        const size = __size > 1 ? __size - 1 : 0;
+
+        return sizes[size] ? sizes[size] + webp : null;
     }
 
 //==================================================================================================================

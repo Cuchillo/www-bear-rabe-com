@@ -16,8 +16,17 @@ export default class Movable {
     ry:0
   };
   _isDOwn = false;
+  _calls;
 
   static start() {
+    [...document.querySelectorAll(".__movable")].map(item => {
+      this.items.push(new Movable(item));
+    });
+  }
+
+  static reset() {
+    this.items.map(item => {item.dispose()});
+
     [...document.querySelectorAll(".__movable")].map(item => {
       this.items.push(new Movable(item));
     });
@@ -49,7 +58,8 @@ export default class Movable {
   }
 
   setupEvents() {
-    this.container.addEventListener(this._events.downEvent, (e) => {
+    this._calls = {
+      down: e => {
         this._isDown = true;  
 
         this._offset = {
@@ -57,14 +67,11 @@ export default class Movable {
           y: this._isTouch? e.touches[0].screenY : e.clientY,
           z: this.nextDepth()
         };
-  
-        }, true);
+      },
 
-    document.addEventListener(this._events.upEvent, (e) => {
-        this._isDown = false;  
-    }, true);
+      up: e => { this._isDown = false },
 
-    document.addEventListener(this._events.moveEvent, (e) => {
+      move: e => {
         if(!this._isDown) return;
 
         const pos = {
@@ -84,7 +91,18 @@ export default class Movable {
           };
 
         this.container.style.transform = `translate3d(${this._position.x}px, ${this._position.y}px, ${this._position.z}px)`;
-    }, true);
+      }
+    }
+
+    this.container.addEventListener(this._events.downEvent, this._calls.down, true);
+    document.addEventListener(this._events.upEvent, this._calls.up, true);
+    document.addEventListener(this._events.moveEvent,this._calls.move, true);
+  }
+
+  dispose() {
+    this.container.removeEventListener(this._events.downEvent, this._calls.down);
+    document.removeEventListener(this._events.upEvent, this._calls.up);
+    document.removeEventListener(this._events.moveEvent,this._calls.move);
   }
 
   setupOptions() {
