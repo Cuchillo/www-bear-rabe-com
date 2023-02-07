@@ -10,7 +10,7 @@ module.exports = {
     image_twitter: "/assets/social/twitter-600x330.jpg",
     google_analytics_code: "xxxxx",
     /* URL FRONT */
-    url: "https://bear-rabe.netlify.app",
+    url: "https://bear-rabe.com",
     /* URL BACK */
     dataUrl: "https://bearrabe.cuchillo.tools/",
 };
