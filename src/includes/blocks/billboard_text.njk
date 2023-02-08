@@ -1,5 +1,5 @@
 {% macro block(data) %}
-<section class="billboard-text __billboard" scroll-item>
+<h1 class="billboard-text __billboard" scroll-item>
     {% for item in data %}
         {% if item.line.text == "br" %}
             <span class="break-line"></span>
@@ -20,5 +20,5 @@
             {% endfor %}
         {% endif %}
     {% endfor %}
-</section>
+</h1>
 {% endmacro %}

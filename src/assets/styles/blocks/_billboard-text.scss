@@ -31,6 +31,7 @@
 .billboard-text {
     position: relative;
     padding: var(--padding);
+    margin: 0;
 
     @include font-sans();
     font-size: var(--font-size);
