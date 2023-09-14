@@ -62,6 +62,23 @@ export default class Main {
   static scene = new Scene();
 
   static init () {
+    
+    IMAGES_PROJECTS = [];
+    for(let i = 1; i<38; i++) {
+      const img = `/assets/images/test2/images-${i}.jpg`
+      IMAGES_PROJECTS.push({
+        cover: img,
+        height: 1024,
+        image: img,
+        project: 0,
+        thumb: img,
+        width: 1024
+      })
+    }
+
+    PROJECTS = PROJECTS.slice(0, IMAGES_PROJECTS.length);
+
+
     Basics.id = "w11p_v007"; // ID para cookies
 
     Metrics.init(() => Main.resize()); // Tamaños y resize

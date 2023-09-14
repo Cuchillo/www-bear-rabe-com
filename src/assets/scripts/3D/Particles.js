@@ -101,7 +101,7 @@ export default class Particles {
 	get is404() { return this._is404; }
 	set is404(__bol) {
 		this._is404 = __bol;
-		this.objUrl = !this.is404? '/assets/obj/logo_v02.obj' : '/assets/obj/logo-404.obj';
+		this.objUrl = !this.is404? '/assets/obj/services_b.obj' : '/assets/obj/services_b.obj';
 	}
 
 	constructor(webgl, is404 = false) {
@@ -231,7 +231,7 @@ export default class Particles {
 		for (let i = 0; i < this.defaults.particles.total; i++) {
 			this.points[i].x *= this.defaults.container.scale;
 			this.points[i].y *= this.defaults.container.scale;
-			this.points[i].z *= (this.defaults.container.scale * this.defaults.container.scaleZ);
+			this.points[i].z *= this.defaults.container.scale;
 		}
 
 		this.points.sort((a, b) => {
@@ -370,10 +370,7 @@ export default class Particles {
 					this.tick) * this.defaults.y.force;
 				
 				
-				POSITION.z = this.points[i].z + this.noise.simplex3(
-					this.points[i].x/this.defaults.z.amplitude + this.defaults.z.period + this.points[i].z*this.defaults.z.z_dif,
-					this.points[i].y/this.defaults.z.amplitude + this.defaults.z.period + this.points[i].z*this.defaults.z.z_dif,
-					this.tick) * this.defaults.z.force;
+				POSITION.z = this.points[i].z;
 
 				//y = this.points[i].y + this.noise.simplex3(this.points[i].x/100 + 40000, this.points[i].y/100 + 40000, this.tick) * this.defaults.forces.y;
 				//z = this.points[i].z + this.noise.simplex3(this.points[i].x/10 + 4000, this.points[i].y/10 + 4000, this.tick) * this.defaults.forces.z;
@@ -402,7 +399,7 @@ export default class Particles {
 				
 				
 				this.dummy.scale.set(SCALE.x,SCALE.y,SCALE.z)
-				this.dummy.position.set(POSITION.x,POSITION.y,POSITION.z);
+				this.dummy.position.set(POSITION.x,POSITION.y,this.points[i].z);
 				this.dummy.updateMatrix();
 				
 				this.mesh.setMatrixAt(i, this.dummy.matrix );

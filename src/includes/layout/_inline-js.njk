@@ -13,7 +13,7 @@
     {% endfor %}
   }
 
-  const PROJECTS = [
+  var PROJECTS = [
         {% for item in all[renderData.language].projects %}
             {
               id: {{ loop.index }},
@@ -35,7 +35,7 @@
         {% endfor %}
   ]
 
-  const IMAGES_PROJECTS = [
+  var IMAGES_PROJECTS = [
         {% for item in all[renderData.language].projects %}
             {% set index = loop.index - 1 %}
             {% for image in item.acf.images %}

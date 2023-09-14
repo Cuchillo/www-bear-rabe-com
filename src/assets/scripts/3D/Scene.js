@@ -9,7 +9,7 @@ export default class Scene extends WebGLSketch {
     constructor () {
         super({
             container: 'SceneParticles',
-            clearColor: '#ffffff',
+            clearColor: '#171C2B',
             cameraPos: new Vector3(0, 0, 1500),
             is2D: true,
             distance2D: 1500

@@ -171,7 +171,7 @@ export default class DebugPane {
             label: 'Size',
             step: .01,
             min: 1,
-            max: 10,
+            max: 1000,
         }).on('change', (ev) => {
             if (ev.last ) {
                 if(__call) __call();

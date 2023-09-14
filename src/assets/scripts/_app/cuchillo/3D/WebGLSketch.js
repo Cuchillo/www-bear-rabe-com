@@ -1,5 +1,6 @@
 import { Vector3 } from "three";
 import { Clock, OrthographicCamera, PerspectiveCamera, Scene, Vector2, WebGLRenderer } from "three";
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
 import { GetBy } from "../core/Element";
 import { Metrics } from "../core/Metrics";
@@ -15,7 +16,7 @@ export default class WebGLSketch {
 	tick = 0;
 	// clock;
 	size;
-	// controls;
+	controls;
 	// raycaster;
   	// mouse = new THREE.Vector2();
 	defaults = {
@@ -58,8 +59,10 @@ export default class WebGLSketch {
 
 		this.setupCamera();
 
-		// this.controls = new OrbitControls(this.camera, this.renderer.domElement);
-    	// this.controls.enabled = true;
+		this.controls = new OrbitControls(this.camera, GetBy.class("wrap")[0]);
+    	this.controls.enabled = true;
+		this.controls.update();
+		GetBy.class("wrap")[0].style.pointerEvents = "all"
 		// this.raycaster = new THREE.Raycaster();
 
         if (opts.debug) {
@@ -129,7 +132,8 @@ export default class WebGLSketch {
         if (!this._started || this._paused) return;
 		
 		this.tick++;
-
+		
+		this.controls.update();
         this.update();
         this.render();
     }
