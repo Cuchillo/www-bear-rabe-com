@@ -64,6 +64,8 @@ export default class Main {
   static init () {
     Basics.id = "w11p_v007"; // ID para cookies
 
+    gsap.ticker.fps(60);
+
     Metrics.init(() => Main.resize()); // Tamaños y resize
     Keyboard.enable(); // ESC para cerrar ventana
     Accessibility.init(); // Utils accesibilidad
